@@ -1,7 +1,7 @@
 # AICC mobile
 
 App Flutter (Android e iOS), construida por incrementos M0–M8 (ver `docs/planning/app-movil-incremental.md`).
-**Estado: M0**, pantalla de estado de conexión con la API.
+**Estado: M1**: inicio de sesión, registro, sesión segura con renovación automática y pantalla de estado de conexión.
 
 ## Ejecutar
 
@@ -28,14 +28,24 @@ flutter analyze
 flutter test
 ```
 
-## Estructura (M0)
+## Estructura (M1)
 
 ```
 lib/
-├── main.dart · bootstrap.dart        arranque y construcción de dependencias
-├── app/                              app.dart · theme/ (tokens de diseño, tema claro/oscuro)
-├── core/                             config/ (dart-define) · network/ (ApiClient único) · errors/ (AppError)
+├── main.dart · bootstrap.dart        arranque (ProviderScope)
+├── app/                              app.dart · providers.dart (dependencias) · router/ (guardas de sesión) · theme/
+├── core/                             config/ · network/ (ApiClient + AuthInterceptor) · errors/ (AppError) · security/ (TokenStorage)
 ├── shared/widgets/                   StatusPill
-└── features/connection/              data/ (HealthRepository) · presentation/ (ConnectionScreen)
-test/                                 adaptador HTTP falso: ninguna prueba abre sockets
+└── features/
+    ├── authentication/               data/ (AuthRepository) · application/ (SessionController) · presentation/ (login, registro)
+    ├── connection/                   estado de API y dependencias
+    └── home/                         inicio provisional (saludo + estado)
+test/                                 backend en memoria (fake_backend.dart): ninguna prueba abre sockets
 ```
+
+## Sesión
+
+- Tokens en Keystore/Keychain (`flutter_secure_storage`), nunca en preferencias planas.
+- `AuthInterceptor` adjunta el access token; ante un 401 renueva **una sola vez** aunque fallen varias peticiones a la vez
+  y reintenta. Si el refresh ya no sirve, borra la sesión y la app vuelve al login con el motivo.
+- Al reabrir la app con sesión guardada se entra directo al inicio.

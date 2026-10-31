@@ -80,10 +80,10 @@ soluciones son "programas" que corren sobre él.
 | F0-APP-03 | APP | Pantalla de estado de conexión (M0) | OK / timeout / caída sin bloquear ✅ (hecho) |
 | F0-UX-01 | UX | Principios UX, arquitectura de información y mapa de pantallas | Documento aprobado ✅ (hecho) |
 | F0-UX-02 | UX | Tokens de diseño (color, tipografía, espaciado, estados) + tema claro/oscuro | `app/theme/` refleja tokens ✅ (hecho) |
-| F0-SEC-01 | SEC | Auth propia: `users`, hash Argon2, access JWT 15 min + refresh rotatorio | Tests de expiración/rotación/reuso |
-| F0-SEC-02 | SEC | CORS restringido, límite de body, rate limit básico | Tests |
-| F0-APP-04 | APP | Login + `flutter_secure_storage` + Riverpod + GoRouter (M1) | Login → Home |
-| F0-OPS-05 | OPS | CI GitHub Actions: backend (ruff, pytest con servicios) y mobile (analyze, test) | CI verde |
+| F0-SEC-01 | SEC | Auth propia: `users`, hash Argon2, access JWT 15 min + refresh rotatorio | Tests de expiración/rotación/reuso ✅ (hecho) |
+| F0-SEC-02 | SEC | CORS restringido, límite de body, rate limit básico | Tests ✅ (hecho) |
+| F0-APP-04 | APP | Login + `flutter_secure_storage` + Riverpod + GoRouter (M1) | Login → Home ✅ (hecho) |
+| F0-OPS-05 | OPS | CI GitHub Actions: backend (ruff, pytest con servicios, imagen Docker) y mobile (analyze, test) | CI verde ✅ (hecho) |
 | F0-DOC-01 | DOC | ADR‑001..006 aceptados (004: uv/Python 3.12, 005: cola, 006: auth propia) | Revisados ✅ (hecho) |
 
 **Gate F0 (H1):** DoD de la sección 15 de la guía + CI verde + login desde Android + medición F0 registrada. Tag `v0.1.0`.

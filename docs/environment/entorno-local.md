@@ -65,6 +65,7 @@ Métricas que se agregan conforme existan los componentes:
 |---|---|---|---|---|---|---|
 | [F0-base](resultados/F0-base.md) | 2026‑10‑31 | 7 055 | 18,9 MiB / 4,3 MiB | 2 682 (2,98 ms) | 76 628 / 72 359 | Solo infraestructura; sin API |
 | [F0-0A](resultados/F0-0A.md) | 2026‑10‑31 | 8 745 | 21,2 MiB / 4,8 MiB | 2 192 (3,65 ms) | ver archivo | API activa + emulador Android en paralelo. `/health` p50 3,3 ms (secuencial), `/health/ready` p50 9,8 ms |
+| F0-docker | 2026‑10‑31 | — | API en contenedor: 67 MiB | — | — | Imagen `aicc-api` 323 MB. `/health` p50 3,9 ms, `/health/ready` p50 5,5 ms (secuencial) |
 
 Lectura de F0-0A: con la API y el emulador encendidos, PostgreSQL baja de ~2 700 a ~2 200 TPS (la máquina comparte CPU con el emulador). La API sola responde en ~1 ms; ver notas del archivo.
 

@@ -11,8 +11,8 @@ La app Flutter se construye en **incrementos M0–M8**. Cada incremento:
 
 | Inc. | Nombre | Fase backend | Pantallas / capacidades nuevas | Paquetes que entran |
 |---|---|---|---|---|
-| **M0** | Esqueleto y conexión | F0 | Splash → Estado de conexión (API, versión, entorno) | `dio` |
-| **M1** | Sesión | F0 | Login, registro, cerrar sesión, refresh automático | `flutter_riverpod`, `go_router`, `flutter_secure_storage`, `freezed`, `json_serializable` |
+| **M0** ✅ | Esqueleto y conexión | F0 | Splash → Estado de conexión (API, versión, entorno) | `dio` |
+| **M1** ✅ | Sesión | F0 | Login, registro, cerrar sesión, refresh automático | `flutter_riverpod`, `go_router`, `flutter_secure_storage` (`freezed`/`json_serializable` se pospusieron: con 2 modelos no compensan la generación de código; entran cuando crezcan los DTO) |
 | **M2** | Contexto | F1 | Chip de contexto (workspace › proyecto › ambiente), selector, Actividad | — |
 | **M3** | Command Center v1 | O1 | Entrada "¿Qué necesitas?", lista de tareas, detalle de tarea, cancelar | — |
 | **M4** | Propuesta de plan | O2 | Vista de plan (pasos, costo, supuestos), pedir plan, versiones | — |
