@@ -30,14 +30,28 @@ def eve(client) -> Account:
 
 WORKSPACE_ROUTES = [
     ("GET", "/api/v1/workspaces/current", None),
+    ("PATCH", "/api/v1/workspaces/current", {"name": "Hackeado"}),
+    ("DELETE", "/api/v1/workspaces/current", None),
     ("GET", "/api/v1/projects", None),
     ("POST", "/api/v1/projects", {"name": "Intruso"}),
+    ("GET", "/api/v1/members", None),
+    ("POST", "/api/v1/members/invitations", {"email": "eve2@example.com", "role": "owner"}),
+    ("GET", "/api/v1/activity", None),
 ]
 
 PROJECT_ROUTES = [
     ("GET", "/api/v1/projects/{id}", None),
     ("PATCH", "/api/v1/projects/{id}", {"name": "Hackeado"}),
     ("DELETE", "/api/v1/projects/{id}", None),
+    ("POST", "/api/v1/projects/{id}/environments", {"name": "x", "kind": "production"}),
+    ("PATCH", "/api/v1/projects/{id}/environments/{env}", {"name": "Hackeado"}),
+    ("DELETE", "/api/v1/projects/{id}/environments/{env}", None),
+]
+
+MEMBER_ROUTES = [
+    ("PATCH", "/api/v1/members/{member}", {"role": "viewer"}),
+    ("DELETE", "/api/v1/members/{member}", None),
+    ("DELETE", "/api/v1/members/invitations/{invitation}", None),
 ]
 
 
@@ -58,12 +72,36 @@ def test_unknown_workspace_is_indistinguishable_from_foreign(eve, method, path, 
 @pytest.mark.parametrize("via", ["own-workspace", "foreign-workspace"])
 @pytest.mark.parametrize(("method", "path", "body"), PROJECT_ROUTES)
 def test_foreign_project_is_404(ana, eve, via, method, path, body):
-    project_id = ana.first_project()["id"]
+    project = ana.first_project()
     workspace = eve.workspace_id if via == "own-workspace" else ana.workspace_id
+    url = path.format(id=project["id"], env=project["environments"][0]["id"])
 
-    response = eve.request(method, path.format(id=project_id), workspace_id=workspace, json=body)
+    response = eve.request(method, url, workspace_id=workspace, json=body)
 
     assert response.status_code == 404
+
+
+@pytest.mark.parametrize("via", ["own-workspace", "foreign-workspace"])
+@pytest.mark.parametrize(("method", "path", "body"), MEMBER_ROUTES)
+def test_foreign_members_and_invitations_are_404(ana, eve, via, method, path, body):
+    invitation = ana.request(
+        "POST", "/api/v1/members/invitations", json={"email": "bea@example.com", "role": "viewer"}
+    ).json()
+    member = ana.request("GET", "/api/v1/members").json()["members"][0]
+    workspace = eve.workspace_id if via == "own-workspace" else ana.workspace_id
+    url = path.format(member=member["id"], invitation=invitation["id"])
+
+    response = eve.request(method, url, workspace_id=workspace, json=body)
+
+    assert response.status_code == 404
+
+
+def test_activity_never_shows_foreign_entries(ana, eve):
+    ana.request("POST", "/api/v1/projects", json={"name": "Secreto de Ana"})
+
+    summaries = [i["summary"] for i in eve.request("GET", "/api/v1/activity").json()["items"]]
+
+    assert summaries == ["Creó su cuenta y su espacio personal"]
 
 
 def test_listings_never_include_foreign_data(ana, eve):

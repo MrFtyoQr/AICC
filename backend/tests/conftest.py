@@ -19,7 +19,16 @@ from app.main import create_app
 BACKEND_DIR = Path(__file__).resolve().parents[1]
 TEST_DB = "aicc_test"
 TEST_JWT_SECRET = "test-secret-only-for-pytest-0123456789abcdef"
-TABLES = ("environments", "projects", "memberships", "workspaces", "refresh_tokens", "users")
+TABLES = (
+    "audit_logs",
+    "invitations",
+    "environments",
+    "projects",
+    "memberships",
+    "workspaces",
+    "refresh_tokens",
+    "users",
+)
 
 # Puertos donde no escucha nadie: las conexiones fallan al instante.
 UNREACHABLE = Settings(

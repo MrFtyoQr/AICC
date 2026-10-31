@@ -26,14 +26,34 @@ class ApiClient {
   Future<Map<String, dynamic>> getJson(
     String path, {
     Set<int> acceptedStatuses = const {200},
+    Map<String, String>? headers,
+    Map<String, Object>? query,
   }) => _send(
     () => dio.get<Map<String, dynamic>>(
       path,
+      queryParameters: query,
       options: Options(
+        headers: headers,
         validateStatus: (code) => acceptedStatuses.contains(code),
       ),
     ),
   );
+
+  /// GET de una colección (la API devuelve un arreglo JSON).
+  Future<List<Map<String, dynamic>>> getList(
+    String path, {
+    Map<String, String>? headers,
+  }) async {
+    try {
+      final response = await dio.get<List<dynamic>>(
+        path,
+        options: Options(headers: headers),
+      );
+      return (response.data ?? const []).cast<Map<String, dynamic>>();
+    } on DioException catch (error) {
+      throw AppError.fromDio(error);
+    }
+  }
 
   Future<Map<String, dynamic>> postJson(String path, Object body) =>
       _send(() => dio.post<Map<String, dynamic>>(path, data: body));

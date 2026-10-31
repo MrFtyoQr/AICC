@@ -10,6 +10,33 @@ class FakeBackend {
   final validAccess = <String, String>{}; // access token -> email
   final validRefresh = <String, String>{}; // refresh token -> email
   int refreshCalls = 0;
+
+  /// Workspaces adicionales (de equipo) por email, además del personal.
+  final teamWorkspaces = <String, List<FakeWorkspace>>{};
+
+  /// Proyectos del workspace personal; por defecto "General" con `development`.
+  List<Map<String, dynamic>> personalProjects = [project('General')];
+
+  /// Entradas que devuelve `/api/v1/activity`, más reciente primero.
+  final activity = <Map<String, dynamic>>[];
+
+  /// Valor de `X-Workspace-Id` recibido en cada llamada que depende del workspace.
+  final workspaceHeaders = <String?>[];
+
+  List<FakeWorkspace> workspacesOf(String email) {
+    final u = users[email]!;
+    return [
+      FakeWorkspace(
+        id: 'w-${u.id}',
+        name: 'Espacio de ${u.name ?? email.split('@').first}',
+        personal: true,
+        role: 'owner',
+        projects: personalProjects,
+      ),
+      ...?teamWorkspaces[email],
+    ];
+  }
+
   int _seq = 0;
 
   void addUser(String email, String password, {String? name}) =>
@@ -95,18 +122,74 @@ class FakeBackend {
           'email': email,
           'display_name': u.name,
         });
-      case '/api/v1/workspaces/current':
+      case '/api/v1/workspaces':
         final email = _authenticated(o);
         if (email == null) return jsonBody(401, {'detail': 'No autenticado'});
-        final u = users[email]!;
+        return jsonBody(200, [
+          for (final w in workspacesOf(email))
+            {
+              'id': w.id,
+              'name': w.name,
+              'is_personal': w.personal,
+              'role': w.role,
+              'permissions': ['project.write', 'workspace.read'],
+            },
+        ]);
+      case '/api/v1/projects':
+        final email = _authenticated(o);
+        if (email == null) return jsonBody(401, {'detail': 'No autenticado'});
+        final workspaceId = o.headers['X-Workspace-Id'] as String?;
+        workspaceHeaders.add(workspaceId);
+        final workspace = workspacesOf(email)
+            .where((w) => w.id == workspaceId)
+            .firstOrNull;
+        if (workspace == null) {
+          return jsonBody(404, {'detail': 'Workspace no encontrado'});
+        }
+        return jsonBody(200, workspace.projects);
+      case '/api/v1/activity':
+        final email = _authenticated(o);
+        if (email == null) return jsonBody(401, {'detail': 'No autenticado'});
+        workspaceHeaders.add(o.headers['X-Workspace-Id'] as String?);
+        final cursor = o.queryParameters['cursor'] as String?;
+        final start = cursor == null ? 0 : int.parse(cursor);
+        final end = (start + 20).clamp(0, activity.length);
         return jsonBody(200, {
-          'id': 'w-${u.id}',
-          'name': 'Espacio de ${u.name ?? email.split('@').first}',
-          'is_personal': true,
-          'role': 'owner',
-          'permissions': ['project.write', 'workspace.read'],
+          'items': activity.sublist(start, end),
+          'next_cursor': end < activity.length ? '$end' : null,
         });
     }
     return jsonBody(404, {'detail': 'not found'});
   }
 }
+
+class FakeWorkspace {
+  const FakeWorkspace({
+    required this.id,
+    required this.name,
+    required this.projects,
+    this.personal = false,
+    this.role = 'admin',
+  });
+
+  final String id;
+  final String name;
+  final bool personal;
+  final String role;
+  final List<Map<String, dynamic>> projects;
+}
+
+int _ids = 0;
+
+Map<String, dynamic> project(
+  String name, {
+  List<(String, String)> environments = const [('development', 'development')],
+}) => {
+  'id': 'p-${_ids++}',
+  'name': name,
+  'description': null,
+  'environments': [
+    for (final (envName, kind) in environments)
+      {'id': 'e-${_ids++}', 'name': envName, 'kind': kind},
+  ],
+};

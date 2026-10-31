@@ -12,6 +12,7 @@ class Account:
 
     def __init__(self, client: TestClient, email: str) -> None:
         self.client = client
+        self.email = email
         created = client.post("/api/v1/auth/register", json={"email": email, "password": PASSWORD})
         assert created.status_code == 201, created.text
         self.user_id = uuid.UUID(created.json()["id"])

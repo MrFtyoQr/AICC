@@ -30,6 +30,14 @@ lee la tabla de abajo y falla si no coincide, así que **cambiar un permiso exig
 | **operator** | Lanza y sigue tareas del orquestador (O1+), sin cambiar la configuración. |
 | **viewer** | Solo lectura: tableros, estado y resultados. |
 
+## Reglas de miembros (HU-12)
+
+- Solo un **owner** puede otorgar el rol owner (al invitar o al cambiar un rol), o cambiar/quitar a otro owner.
+- Un workspace siempre conserva **al menos un owner**: no se puede degradar ni quitar al último (409).
+- El workspace **personal** no se puede borrar (409). Uno de equipo solo lo borra un owner.
+- Invitar deja una invitación **pendiente** con su rol; el envío por correo llega con O5.
+- Toda escritura, y todo intento sin permiso, queda en el **registro de actividad** (`GET /api/v1/activity`), sin secretos.
+
 ## Respuestas de la API
 
 | Situación | Código |

@@ -7,7 +7,9 @@ import '../core/security/token_storage.dart';
 import '../features/authentication/application/session_controller.dart';
 import '../features/authentication/data/auth_repository.dart';
 import '../features/connection/data/health_repository.dart';
-import '../features/workspace/data/workspace_repository.dart';
+import '../features/activity/data/activity_repository.dart';
+import '../features/context/application/context_controller.dart';
+import '../features/context/data/context_repository.dart';
 
 /// Dependencias de la app. `bootstrap.dart` y las pruebas sobrescriben config, almacenamiento
 /// y, si hace falta, el cliente HTTP.
@@ -23,9 +25,16 @@ final baseApiClientProvider = Provider<ApiClient>(
   (ref) => ApiClient(baseUrl: ref.watch(appConfigProvider).apiBaseUrl),
 );
 
-/// Cliente con sesión: el interceptor adjunta el token y renueva ante 401.
+final activeWorkspaceProvider = Provider<ActiveWorkspace>(
+  (ref) => ActiveWorkspace(),
+);
+
+/// Cliente con sesión: adjunta el workspace activo y el token, y renueva ante 401.
 final apiClientProvider = Provider<ApiClient>((ref) {
   final client = ref.watch(baseApiClientProvider);
+  client.dio.interceptors.add(
+    WorkspaceHeaderInterceptor(ref.watch(activeWorkspaceProvider)),
+  );
   client.dio.interceptors.add(
     AuthInterceptor(
       dio: client.dio,
@@ -52,12 +61,15 @@ final sessionProvider = NotifierProvider<SessionController, SessionState>(
   SessionController.new,
 );
 
-final workspaceRepositoryProvider = Provider<WorkspaceRepository>(
-  (ref) => WorkspaceRepository(ref.watch(apiClientProvider)),
+final contextRepositoryProvider = Provider<ContextRepository>(
+  (ref) => ContextRepository(ref.watch(apiClientProvider)),
 );
 
-/// Se recalcula al cambiar la sesión, para no mostrar el workspace de otro usuario.
-final currentWorkspaceProvider = FutureProvider<Workspace>((ref) {
-  ref.watch(sessionProvider);
-  return ref.watch(workspaceRepositoryProvider).current();
-});
+/// Workspace › proyecto › ambiente activos (HU-14).
+final contextProvider = AsyncNotifierProvider<ContextController, AppContext>(
+  ContextController.new,
+);
+
+final activityRepositoryProvider = Provider<ActivityRepository>(
+  (ref) => ActivityRepository(ref.watch(apiClientProvider)),
+);
