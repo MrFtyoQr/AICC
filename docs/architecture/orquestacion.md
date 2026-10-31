@@ -124,6 +124,18 @@ Validación determinista antes de mostrarlo al usuario:
 - Límite de steps por plan (inicial: 10) y de profundidad.
 - El LLM **no** puede fijar riesgo, costo, aprobación ni destinatarios fuera de los permitidos: eso lo calcula el backend.
 
+### Implementación (O2)
+
+| Pieza | Dónde |
+|---|---|
+| Capacidades (`llm.generate`, `http.get_allowlisted`, `notify.in_app`) | `backend/app/domain/catalog/capabilities.py` |
+| Recetas con pasos fijos (`resumen_aviso`, `consulta_web`, `borrador_mensaje`) | `backend/app/domain/catalog/recipes.py` |
+| Expansión + validación determinista | `backend/app/domain/catalog/plans.py` |
+| Planner (prompt `planner-v1`, pedido delimitado, `RecipeChoice`) | `backend/app/application/planner.py` |
+| `AgentRuntime`, `FakeRuntime`, `AnthropicRuntime` | `backend/app/infrastructure/ai/runtime.py` |
+
+El planner es **síncrono** en O2 (la petición espera al motor). En O4 pasa al worker y la app sigue el progreso por SSE.
+
 ## 5. Capabilities y riesgo
 
 Cada capability declara:

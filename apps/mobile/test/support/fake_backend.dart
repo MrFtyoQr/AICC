@@ -72,7 +72,37 @@ class FakeBackend {
   final tasks = <Map<String, dynamic>>[];
   final taskEvents = <String, List<Map<String, dynamic>>>{};
 
-  static const _labels = {'DRAFT': 'Borrador', 'CANCELLED': 'Cancelada'};
+  static const _labels = {
+    'DRAFT': 'Borrador',
+    'CANCELLED': 'Cancelada',
+    'AWAITING_APPROVAL': 'Esperando tu aprobación',
+    'PLANNING_FAILED': 'No pude armar un plan',
+  };
+
+  /// Planes guardados por tarea (como el planner con FakeRuntime: "resum" → receta de resumen).
+  final plans = <String, Map<String, dynamic>>{};
+
+  void _transition(
+    Map<String, dynamic> task,
+    String to,
+    List<String> commands, {
+    String? reason,
+  }) {
+    final from = task['status'] as String;
+    task
+      ..['status'] = to
+      ..['status_label'] = _labels[to]
+      ..['status_reason'] = reason
+      ..['version'] = (task['version'] as int) + 1
+      ..['allowed_commands'] = commands;
+    taskEvents[task['id']]!.add({
+      'id': taskEvents[task['id']]!.length + 1,
+      'type': 'task.state_changed',
+      'summary': '${_labels[from]} → ${_labels[to]}',
+      'payload': {},
+      'created_at': DateTime.now().toUtc().toIso8601String(),
+    });
+  }
 
   ResponseBody? _handleTasks(RequestOptions o, Map<String, dynamic> body) {
     if (!o.path.startsWith('/api/v1/tasks')) return null;
@@ -129,6 +159,54 @@ class FakeBackend {
     if (task == null) return jsonBody(404, {'detail': 'Tarea no encontrada'});
     if (segments.length == 1) return jsonBody(200, task);
     if (segments[1] == 'events') return jsonBody(200, taskEvents[task['id']]!);
+    if (segments[1] == 'plan' && o.method == 'GET') {
+      final plan = plans[task['id']];
+      return plan == null
+          ? jsonBody(404, {'detail': 'La tarea todavía no tiene plan'})
+          : jsonBody(200, plan);
+    }
+    if (segments[1] == 'plan' || segments[1] == 'edit') {
+      if (body['version'] != task['version']) {
+        return jsonBody(409, {
+          'detail': 'La tarea cambió mientras tanto; recárgala',
+        });
+      }
+      if (segments[1] == 'edit') {
+        if (body['text'] case final String text) {
+          task
+            ..['title'] = text
+            ..['description'] = text;
+        }
+        _transition(task, 'DRAFT', ['plan', 'cancel']);
+        return jsonBody(200, task);
+      }
+      if (!(task['description'] as String).toLowerCase().contains('resum')) {
+        _transition(task, 'PLANNING_FAILED', [
+          'edit',
+          'cancel',
+        ], reason: 'Todavía no tengo una solución para ese pedido.');
+        return jsonBody(200, task);
+      }
+      plans[task['id'] as String] = {
+        'version': 1,
+        'recipe_title': 'Resumir un tema y avisarte',
+        'steps': [
+          {
+            'title': 'Redactar el resumen',
+            'risk_level': 'read',
+            'risk_label': 'Solo consulta',
+          },
+          {
+            'title': 'Avisarte en la app con el resumen',
+            'risk_level': 'write_internal',
+            'risk_label': 'Cambia algo dentro de AICC',
+          },
+        ],
+        'assumptions': ['El resumen se basa en conocimiento general.'],
+      };
+      _transition(task, 'AWAITING_APPROVAL', ['cancel']);
+      return jsonBody(200, task);
+    }
     if (segments[1] == 'cancel') {
       if (body['version'] != task['version']) {
         return jsonBody(409, {

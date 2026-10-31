@@ -181,7 +181,7 @@ register(
             ),
         ),
         assumptions=(
-            "El mensaje no se envía: enviar llegará con su aprobación en una fase posterior.",
+            "El mensaje no se envía: enviarlo llegará en una fase posterior y con tu aprobación.",
         ),
     )
 )
