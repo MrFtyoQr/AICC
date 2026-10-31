@@ -23,7 +23,10 @@ package = false
 testpaths = ["tests"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
-markers = ["integration: requiere PostgreSQL y Redis de docker compose"]
+markers = [
+    "integration: requiere PostgreSQL y Redis de docker compose",
+    "isolation: suite de aislamiento multi-tenant (gate F1, corre siempre en CI)",
+]
 
 [tool.ruff]
 line-length = 100

@@ -185,7 +185,7 @@ Criterios de aceptación:
 2. Dado el esquema, cuando aplico y revierto la migración, entonces ambas operaciones funcionan.
 
 Tareas: F1-BE-01, F1-BE-02
-Ref: docs/planning/historias-usuario.md#hu-09",F1,S2,,Highest,To Do,AICC S2,5
+Ref: docs/planning/historias-usuario.md#hu-09",F1,S2,,Highest,Done,AICC S2,5
 39,38,Sub-task,"[F1-BE-01] Modelos workspaces, memberships(role), projects, environments + migraciones","Criterio de aceptación: Migración reversible
 
 Ref: docs/planning/plan-maestro.md",F1,be,Backend,Medium,To Do,AICC S2,
@@ -200,7 +200,7 @@ Criterios de aceptación:
 3. Dada la CI, cuando cualquier PR toca el backend, entonces la suite de aislamiento corre siempre.
 
 Tareas: F1-SEC-01, F1-SEC-03, F1-DOC-01
-Ref: docs/planning/historias-usuario.md#hu-10",F1,S2,,Highest,To Do,AICC S2,8
+Ref: docs/planning/historias-usuario.md#hu-10",F1,S2,,Highest,Done,AICC S2,8
 42,41,Sub-task,[F1-SEC-01] Dependencia current_workspace que resuelve por membresía (header X-Workspace-Id validado),"Criterio de aceptación: Test: ID ajeno → 404
 
 Ref: docs/planning/plan-maestro.md",F1,sec,Seguridad,High,To Do,AICC S2,
@@ -217,7 +217,7 @@ Criterios de aceptación:
 2. Dada la matriz de permisos documentada, cuando corren las pruebas, entonces cada rol y acción coincide con la matriz.
 
 Tareas: F1-SEC-02
-Ref: docs/planning/historias-usuario.md#hu-11",F1,S2,,High,To Do,AICC S2,5
+Ref: docs/planning/historias-usuario.md#hu-11",F1,S2,,High,Done,AICC S2,5
 46,45,Sub-task,"[F1-SEC-02] Roles owner, admin, operator, viewer con matriz de permisos en código","Criterio de aceptación: Tabla de permisos documentada + tests
 
 Ref: docs/planning/plan-maestro.md",F1,sec,Seguridad,High,To Do,AICC S2,

@@ -9,6 +9,7 @@ from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.application.workspaces import add_personal_workspace
 from app.core import security
 from app.core.config import Settings
 from app.infrastructure.models import RefreshToken, User
@@ -41,6 +42,7 @@ class AuthService:
         self.settings = settings
 
     async def register(self, email: str, password: str, display_name: str | None) -> User:
+        """Crea la cuenta y, en la misma transacción, su workspace personal (HU-09)."""
         user = User(
             email=email.strip().lower(),
             password_hash=security.hash_password(password),
@@ -48,10 +50,12 @@ class AuthService:
         )
         self.session.add(user)
         try:
-            await self.session.commit()
+            await self.session.flush()
         except IntegrityError as exc:
             await self.session.rollback()
             raise EmailAlreadyRegistered from exc
+        await add_personal_workspace(self.session, user)
+        await self.session.commit()
         return user
 
     async def login(self, email: str, password: str) -> TokenPair:

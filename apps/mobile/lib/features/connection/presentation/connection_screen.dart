@@ -13,12 +13,16 @@ class ConnectionScreen extends StatefulWidget {
     required this.appEnvironment,
     this.title = 'AICC · Estado',
     this.actions = const [],
+    this.header,
   });
 
   final HealthRepository repository;
   final String appEnvironment;
   final String title;
   final List<Widget> actions;
+
+  /// Contenido opcional sobre la tarjeta de estado (p. ej. el contexto de workspace).
+  final Widget? header;
 
   @override
   State<ConnectionScreen> createState() => _ConnectionScreenState();
@@ -59,6 +63,10 @@ class _ConnectionScreenState extends State<ConnectionScreen> {
             return ListView(
               padding: const EdgeInsets.all(Space.lg),
               children: [
+                if (widget.header != null) ...[
+                  widget.header!,
+                  const SizedBox(height: Space.md),
+                ],
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
                   child: content,
