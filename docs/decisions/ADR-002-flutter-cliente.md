@@ -1,6 +1,6 @@
 # ADR-002: Flutter como cliente multiplataforma
 
-**Estado:** Propuesto · **Fecha:** 2026-10-31
+**Estado:** Aceptado · **Fecha:** 2026-10-31
 
 ## Contexto
 El producto es un centro de mando móvil para Android e iOS (web en fase posterior).

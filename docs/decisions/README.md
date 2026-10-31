@@ -4,12 +4,12 @@ Formato: contexto → decisión → consecuencias. Estados: *Propuesto*, *Acepta
 
 | ADR | Decisión | Estado | Fase |
 |---|---|---|---|
-| [001](ADR-001-monolito-modular.md) | Backend como monolito modular + workers separados | Propuesto | F0 |
-| [002](ADR-002-flutter-cliente.md) | Flutter como cliente multiplataforma sin secretos ni trabajos largos | Propuesto | F0 |
-| [003](ADR-003-postgresql-fuente-verdad.md) | PostgreSQL como fuente de verdad; Redis solo cola/cache | Propuesto | F0 |
-| 004 | uv + Python 3.12 como único mecanismo de dependencias | Pendiente | F0 |
-| 005 | Biblioteca de cola (preferencia: arq) | Pendiente | F0 → O4 |
-| 006 | Autenticación propia con JWT (access corto + refresh rotatorio) | Pendiente | F0 |
+| [001](ADR-001-monolito-modular.md) | Backend como monolito modular + workers separados | Aceptado | F0 |
+| [002](ADR-002-flutter-cliente.md) | Flutter como cliente multiplataforma sin secretos ni trabajos largos | Aceptado | F0 |
+| [003](ADR-003-postgresql-fuente-verdad.md) | PostgreSQL como fuente de verdad; Redis solo cola/cache | Aceptado | F0 |
+| [004](ADR-004-uv-python-312.md) | uv + Python 3.12 como único mecanismo de dependencias | Aceptado | F0 |
+| [005](ADR-005-cola-arq.md) | arq como cola de trabajos | Aceptado | F0 → O4 |
+| [006](ADR-006-auth-propia-jwt.md) | Autenticación propia con JWT (access corto + refresh rotatorio) | Aceptado | F0 |
 | 007 | Contrato estructurado del plan | Pendiente | O2 |
 | 008 | Policy Engine propio en código (sin OPA en MVP) | Pendiente | O3 |
 | 009 | SSE para tiempo real (vs. WebSocket) | Pendiente | O4 |
