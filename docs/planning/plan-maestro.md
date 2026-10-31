@@ -17,7 +17,7 @@
 | Seguridad | `SEC` | Auth, aislamiento, secretos, políticas, auditoría |
 | Documentación | `DOC` | ADRs, contratos OpenAPI, guías, changelog |
 
-- Todo se rastrea en Jira (proyecto `AICC`). Cada fase = **Epic**, cada fila de tarea = **Story/Task** con su código (ej. `O2-BE-03`). Ver [jira/README.md](jira/README.md).
+- Todo se rastrea en Jira (proyecto `AICC`): cada fase = **Epic**, las tareas se agrupan en **historias de usuario** ([historias-usuario.md](historias-usuario.md)) y cada tarea es una **subtarea** con su código (ej. `O2-BE-03`). Calendario en [sprints.md](sprints.md). Ver [jira/README.md](jira/README.md).
 
 ## 1. Estrategia: primero orquestación
 

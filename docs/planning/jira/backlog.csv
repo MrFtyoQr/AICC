@@ -1,314 +1,667 @@
-Issue ID,Parent ID,Issue Type,Summary,Description,Labels,Labels,Component,Priority,Status
+Issue ID,Parent ID,Issue Type,Summary,Description,Labels,Labels,Component,Priority,Status,Sprint,Story Points
 1,,Epic,F0 · Fundamentos,"Objetivo: repositorio reproducible y circuito mínimo funcionando. Detalle ampliado en [fase-0-fundamentos.md](fase-0-fundamentos.md).
 
-Gate de salida: DoD de la sección 15 de la guía + CI verde + login desde Android + medición F0 registrada. Tag `v0.1.0`.
+Gate de salida: DoD de la sección 15 de la guía + CI verde + login desde Android + medición F0 registrada. Tag v0.1.0.
 
-Ref: docs/planning/plan-maestro.md",F0,etapa-A,,High,To Do
-,1,Task,"[F0-OPS-01] Monorepo, .gitignore, .env.example, .gitattributes, README","Criterio de aceptación: Clonar no expone secretos
-
-Ref: docs/planning/plan-maestro.md#f0",F0,ops,DevOps,High,Done
-,1,Task,[F0-OPS-02] Publicar en GitHub (privado) + protección de main,"Criterio de aceptación: PR obligatorio para main
-
-Ref: docs/planning/plan-maestro.md#f0",F0,ops,DevOps,Medium,To Do
-,1,Task,[F0-OPS-03] docker-compose.yml: PostgreSQL 16 + Redis 7 en 127.0.0.1 con healthchecks,"Criterio de aceptación: Ambos *healthy*
-
-Ref: docs/planning/plan-maestro.md#f0",F0,ops,DevOps,Medium,Done
-,1,Task,[F0-OPS-04] Medición base del entorno (línea 0) con scripts/medir-entorno.sh,"Criterio de aceptación: Fila ""F0‑base"" en entorno-local.md
-
-Ref: docs/planning/plan-maestro.md#f0",F0,ops,DevOps,Medium,Done
-,1,Task,[F0-OPS-06] Decidir ubicación del repo (fuera de OneDrive o exclusiones) y cambiar Flutter a stable,"Criterio de aceptación: Documentado en entorno-local.md
-
-Ref: docs/planning/plan-maestro.md#f0",F0,ops,DevOps,Medium,Done
-,1,Story,"[F0-BE-01] Proyecto backend/ con uv, Python 3.12, FastAPI, /health","Criterio de aceptación: 200 + /docs
-
-Ref: docs/planning/plan-maestro.md#f0",F0,be,Backend,High,Done
-,1,Story,[F0-BE-02] core/config.py (pydantic‑settings) con falla explícita,"Criterio de aceptación: Test: sin DATABASE_URL → error claro
-
-Ref: docs/planning/plan-maestro.md#f0",F0,be,Backend,Medium,Done
-,1,Story,[F0-BE-03] SQLAlchemy 2 async (asyncpg) + Alembic; migración inicial vacía,"Criterio de aceptación: alembic upgrade head OK
-
-Ref: docs/planning/plan-maestro.md#f0",F0,be,Backend,Medium,Done
-,1,Story,[F0-BE-04] /health/ready comprueba BD y Redis,"Criterio de aceptación: Test con servicios arriba/abajo
-
-Ref: docs/planning/plan-maestro.md#f0",F0,be,Backend,Medium,Done
-,1,Story,[F0-BE-05] Logging estructurado JSON con request_id,"Criterio de aceptación: Cada respuesta lleva X-Request-ID
-
-Ref: docs/planning/plan-maestro.md#f0",F0,be,Backend,Medium,Done
-,1,Story,[F0-BE-06] Exportar OpenAPI a shared/contracts/openapi.json,"Criterio de aceptación: Script + verificación en CI
-
-Ref: docs/planning/plan-maestro.md#f0",F0,be,Backend,Medium,Done
-,1,Story,"[F0-APP-01] Flutter stable, apps/mobile con com.treetech.aicc","Criterio de aceptación: Corre en emulador Android
-
-Ref: docs/planning/plan-maestro.md#f0",F0,app,App movil,High,Done
-,1,Story,"[F0-APP-02] Esqueleto lib/ (app, core, features) + AICC_API_BASE_URL","Criterio de aceptación: Ver incremento M0
-
-Ref: docs/planning/plan-maestro.md#f0",F0,app,App movil,Medium,Done
-,1,Story,[F0-APP-03] Pantalla de estado de conexión (M0),"Criterio de aceptación: OK / timeout / caída sin bloquear
-
-Ref: docs/planning/plan-maestro.md#f0",F0,app,App movil,Medium,Done
-,1,Story,"[F0-UX-01] Principios UX, arquitectura de información y mapa de pantallas","Criterio de aceptación: Documento aprobado
-
-Ref: docs/planning/plan-maestro.md#f0",F0,ux,UX-UI,High,Done
-,1,Story,"[F0-UX-02] Tokens de diseño (color, tipografía, espaciado, estados) + tema claro/oscuro","Criterio de aceptación: app/theme/ refleja tokens
-
-Ref: docs/planning/plan-maestro.md#f0",F0,ux,UX-UI,Medium,Done
-,1,Story,"[F0-SEC-01] Auth propia: users, hash Argon2, access JWT 15 min + refresh rotatorio","Criterio de aceptación: Tests de expiración/rotación/reuso
-
-Ref: docs/planning/plan-maestro.md#f0",F0,sec,Seguridad,High,To Do
-,1,Story,"[F0-SEC-02] CORS restringido, límite de body, rate limit básico","Criterio de aceptación: Tests
-
-Ref: docs/planning/plan-maestro.md#f0",F0,sec,Seguridad,High,To Do
-,1,Story,[F0-APP-04] Login + flutter_secure_storage + Riverpod + GoRouter (M1),"Criterio de aceptación: Login → Home
-
-Ref: docs/planning/plan-maestro.md#f0",F0,app,App movil,Medium,To Do
-,1,Task,"[F0-OPS-05] CI GitHub Actions: backend (ruff, pytest con servicios) y mobile (analyze, test)","Criterio de aceptación: CI verde
-
-Ref: docs/planning/plan-maestro.md#f0",F0,ops,DevOps,Medium,To Do
-,1,Task,"[F0-DOC-01] ADR‑001..006 aceptados (004: uv/Python 3.12, 005: cola, 006: auth propia)","Criterio de aceptación: Revisados
-
-Ref: docs/planning/plan-maestro.md#f0",F0,doc,Documentacion,High,Done
+Ref: docs/planning/plan-maestro.md",F0,etapa-A,,High,To Do,,
 2,,Epic,F1 · Identidad y Workspace,"Objetivo: cada usuario trabaja dentro de un workspace aislado con roles, proyectos y ambientes.
 
 Gate de salida: suite de aislamiento 100 % verde; un usuario no puede leer, listar ni modificar nada de otro workspace.
 
-Ref: docs/planning/plan-maestro.md",F1,etapa-A,,High,To Do
-,2,Story,"[F1-BE-01] Modelos workspaces, memberships(role), projects, environments + migraciones","Criterio de aceptación: Migración reversible
-
-Ref: docs/planning/plan-maestro.md#f1",F1,be,Backend,High,To Do
-,2,Story,"[F1-BE-02] Al registrarse se crea workspace personal + proyecto ""General"" + env development","Criterio de aceptación: Test
-
-Ref: docs/planning/plan-maestro.md#f1",F1,be,Backend,Medium,To Do
-,2,Story,[F1-SEC-01] Dependencia current_workspace que resuelve por membresía (header X-Workspace-Id validado),"Criterio de aceptación: Test: ID ajeno → 404
-
-Ref: docs/planning/plan-maestro.md#f1",F1,sec,Seguridad,High,To Do
-,2,Story,"[F1-SEC-02] Roles owner, admin, operator, viewer con matriz de permisos en código","Criterio de aceptación: Tabla de permisos documentada + tests
-
-Ref: docs/planning/plan-maestro.md#f1",F1,sec,Seguridad,High,To Do
-,2,Story,[F1-SEC-03] Suite de pruebas de aislamiento multi‑tenant (fixture con 2 usuarios/2 workspaces),"Criterio de aceptación: Se ejecuta en CI siempre
-
-Ref: docs/planning/plan-maestro.md#f1",F1,sec,Seguridad,High,To Do
-,2,Story,[F1-BE-03] audit_logs + helper audit() usado en cada comando,"Criterio de aceptación: Cada endpoint de escritura audita
-
-Ref: docs/planning/plan-maestro.md#f1",F1,be,Backend,Medium,To Do
-,2,Story,"[F1-BE-04] CRUD: workspaces, projects, environments, members (invitar por email: solo registro, sin envío aún)","Criterio de aceptación: OpenAPI actualizado
-
-Ref: docs/planning/plan-maestro.md#f1",F1,be,Backend,Medium,To Do
-,2,Story,[F1-APP-01] Selector de workspace / proyecto / ambiente siempre visible (M2),"Criterio de aceptación: Cambio de contexto en 1 toque
-
-Ref: docs/planning/plan-maestro.md#f1",F1,app,App movil,High,To Do
-,2,Story,[F1-APP-02] Pantalla Actividad (lista de audit log),"Criterio de aceptación: Paginada
-
-Ref: docs/planning/plan-maestro.md#f1",F1,app,App movil,Medium,To Do
-,2,Story,"[F1-UX-01] Patrón ""contexto actual"" (chip superior) y ""cambiar contexto"" (bottom sheet)","Criterio de aceptación: Prototipo aprobado
-
-Ref: docs/planning/plan-maestro.md#f1",F1,ux,UX-UI,High,To Do
-,2,Task,[F1-DOC-01] ADR‑010 Workspace lógico ≠ infraestructura,"Criterio de aceptación: Aceptado
-
-Ref: docs/planning/plan-maestro.md#f1",F1,doc,Documentacion,High,To Do
+Ref: docs/planning/plan-maestro.md",F1,etapa-A,,High,To Do,,
 3,,Epic,O1 · Tareas (sin IA todavía),"Objetivo: el ciclo de vida de una Task existe, es estricto y se ve en la app. Aún no hay planner.
 
 Gate de salida: se crea, lista, cancela una tarea desde la app; ninguna transición ilegal es posible.
 
-Ref: docs/planning/plan-maestro.md",O1,etapa-A,,High,To Do
-,3,Story,"[O1-BE-01] Modelo tasks (title, description, status, project_id, environment_id, created_by, version)","Criterio de aceptación: Migración
-
-Ref: docs/planning/plan-maestro.md#o1",O1,be,Backend,High,To Do
-,3,Story,[O1-BE-02] domain/tasks/state_machine.py con tabla de transiciones explícita,"Criterio de aceptación: Test por cada transición válida e inválida
-
-Ref: docs/planning/plan-maestro.md#o1",O1,be,Backend,Medium,To Do
-,3,Story,[O1-BE-03] Tabla events append‑only; cada transición escribe event + audit en la misma transacción,"Criterio de aceptación: Test transaccional
-
-Ref: docs/planning/plan-maestro.md#o1",O1,be,Backend,Medium,To Do
-,3,Story,"[O1-BE-04] Endpoints POST/GET /tasks, GET /tasks/{id}, POST /tasks/{id}/cancel","Criterio de aceptación: Contrato OpenAPI
-
-Ref: docs/planning/plan-maestro.md#o1",O1,be,Backend,Medium,To Do
-,3,Story,[O1-BE-05] Bloqueo optimista (version) → 409 en conflicto,"Criterio de aceptación: Test de concurrencia
-
-Ref: docs/planning/plan-maestro.md#o1",O1,be,Backend,Medium,To Do
-,3,Story,"[O1-APP-01] Command Center v1: campo ""¿Qué necesitas?"" que crea Task en DRAFT (M3)","Criterio de aceptación: Crear en < 3 toques
-
-Ref: docs/planning/plan-maestro.md#o1",O1,app,App movil,High,To Do
-,3,Story,[O1-APP-02] Lista de tareas con filtro por estado y tarjeta de estado,"Criterio de aceptación: Estados con color + icono + texto
-
-Ref: docs/planning/plan-maestro.md#o1",O1,app,App movil,Medium,To Do
-,3,Story,"[O1-UX-01] Diseño del Command Center y de la ""tarjeta de tarea"" (componente central)","Criterio de aceptación: Prototipo interactivo aprobado
-
-Ref: docs/planning/plan-maestro.md#o1",O1,ux,UX-UI,High,To Do
-,3,Story,"[O1-UX-02] Diccionario de estados en lenguaje de negocio (""Borrador"", ""Esperando tu aprobación""…)","Criterio de aceptación: Documento de copy
-
-Ref: docs/planning/plan-maestro.md#o1",O1,ux,UX-UI,Medium,To Do
+Ref: docs/planning/plan-maestro.md",O1,etapa-A,,High,To Do,,
 4,,Epic,O2 · Planner y catálogo de capabilities,"Objetivo: una Task en DRAFT recibe un **plan estructurado y validado**; nada se ejecuta.
 
 Gate de salida: 20 descripciones de prueba → 100 % de planes válidos o rechazados con razón; ningún plan contiene una capability inexistente.
 
-Ref: docs/planning/plan-maestro.md",O2,etapa-A,,High,To Do
-,4,Story,"[O2-BE-01] Catálogo de capabilities en código (registro + JSON Schema + risk_level) con 3 iniciales: llm.generate, http.get_allowlisted, notify.in_app","Criterio de aceptación: GET /capabilities
-
-Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,High,To Do
-,4,Story,[O2-BE-02] AgentRuntime + FakeRuntime determinista para pruebas,"Criterio de aceptación: Tests sin red
-
-Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,Medium,To Do
-,4,Story,[O2-BE-03] Primer proveedor LLM real detrás de AgentRuntime (clave solo en backend),"Criterio de aceptación: Smoke test manual
-
-Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,Medium,To Do
-,4,Story,[O2-BE-04] Planner: prompt versionado + salida estructurada (Pydantic),"Criterio de aceptación: Plan válido con FakeRuntime
-
-Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,Medium,To Do
-,4,Story,"[O2-BE-05] Validador determinista del plan (capability existe, schema, DAG acíclico, límites)","Criterio de aceptación: Tests de planes maliciosos/rotos
-
-Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,Medium,To Do
-,4,Story,"[O2-BE-06] plans y plan_steps versionados; POST /tasks/{id}/plan, GET /plans/{id}","Criterio de aceptación: Contrato
-
-Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,Medium,To Do
-,4,Story,[O2-BE-07] Estimador de costo por step (tokens estimados × tarifa fechada),"Criterio de aceptación: Costo visible en plan
-
-Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,Medium,To Do
-,4,Story,[O2-SEC-01] Defensa ante *prompt injection*: el texto del usuario nunca se interpola en instrucciones del sistema sin delimitar; salida siempre validada,"Criterio de aceptación: Casos de prueba documentados
-
-Ref: docs/planning/plan-maestro.md#o2",O2,sec,Seguridad,High,To Do
-,4,Story,"[O2-APP-01] Vista ""Propuesta de plan"": pasos en lenguaje natural, costo estimado, supuestos (M4)","Criterio de aceptación: Entendible sin conocimientos técnicos
-
-Ref: docs/planning/plan-maestro.md#o2",O2,app,App movil,High,To Do
-,4,Story,"[O2-UX-01] Patrón ""plan como lista de pasos"" con detalle técnico plegable","Criterio de aceptación: Prototipo aprobado
-
-Ref: docs/planning/plan-maestro.md#o2",O2,ux,UX-UI,High,To Do
-,4,Task,[O2-DOC-01] ADR‑007 contrato del plan; ADR‑012 el LLM solo propone,"Criterio de aceptación: Aceptados
-
-Ref: docs/planning/plan-maestro.md#o2",O2,doc,Documentacion,High,To Do
+Ref: docs/planning/plan-maestro.md",O2,etapa-A,,High,To Do,,
 5,,Epic,O3 · Políticas y aprobaciones,"Objetivo: cada plan se evalúa con reglas deterministas y las acciones sensibles exigen aprobación humana.
 
-Gate de salida: ningún plan con step `write_external`/`spend` llega a APPROVED sin approval registrada.
+Gate de salida: ningún plan con step write_external/spend llega a APPROVED sin approval registrada.
 
-Ref: docs/planning/plan-maestro.md",O3,etapa-A,,High,To Do
-,5,Story,[O3-BE-01] Policy Engine (allow/deny/require_approval + reason + policy_id),"Criterio de aceptación: Tabla de decisiones probada
-
-Ref: docs/planning/plan-maestro.md#o3",O3,be,Backend,High,To Do
-,5,Story,"[O3-BE-02] Tabla policies por workspace (sobrescribe valores por defecto, nunca relaja destructive)","Criterio de aceptación: Tests
-
-Ref: docs/planning/plan-maestro.md#o3",O3,be,Backend,Medium,To Do
-,5,Story,[O3-BE-03] approvals + endpoints approve / reject / request‑changes,"Criterio de aceptación: Auditado
-
-Ref: docs/planning/plan-maestro.md#o3",O3,be,Backend,Medium,To Do
-,5,Story,[O3-BE-04] request-changes genera Plan v2 conservando historial,"Criterio de aceptación: Diff entre versiones
-
-Ref: docs/planning/plan-maestro.md#o3",O3,be,Backend,Medium,To Do
-,5,Story,[O3-SEC-01] Solo owner/admin/operator aprueban; nadie aprueba su propio plan si la política exige 2 personas (opcional por workspace),"Criterio de aceptación: Tests
-
-Ref: docs/planning/plan-maestro.md#o3",O3,sec,Seguridad,High,To Do
-,5,Story,[O3-APP-01] Bandeja de Aprobaciones con badge y acciones aprobar / rechazar / pedir cambios (M5),"Criterio de aceptación: 1 toque + confirmación
-
-Ref: docs/planning/plan-maestro.md#o3",O3,app,App movil,High,To Do
-,5,Story,[O3-APP-02] Confirmación reforzada para acciones spend/write_external (deslizar para aprobar),"Criterio de aceptación: Prueba de usabilidad
-
-Ref: docs/planning/plan-maestro.md#o3",O3,app,App movil,Medium,To Do
-,5,Story,"[O3-UX-01] Patrón de aprobación: qué pasará, cuánto cuesta, qué se puede deshacer","Criterio de aceptación: Prototipo aprobado
-
-Ref: docs/planning/plan-maestro.md#o3",O3,ux,UX-UI,High,To Do
-,5,Task,[O3-DOC-01] ADR‑008 Policy Engine propio (sin OPA en MVP); ADR‑014 aprobación antes de gastar,"Criterio de aceptación: Aceptados
-
-Ref: docs/planning/plan-maestro.md#o3",O3,doc,Documentacion,High,To Do
+Ref: docs/planning/plan-maestro.md",O3,etapa-A,,High,To Do,,
 6,,Epic,O4 · Ejecución en vivo,"Objetivo: un plan aprobado se ejecuta fuera de HTTP y el usuario lo sigue en tiempo real.
 
 Gate de salida: 50 ejecuciones con FakeRuntime + conectores falsos, incluidos fallos inyectados → 0 estados inconsistentes.
 
-Ref: docs/planning/plan-maestro.md",O4,etapa-A,,High,To Do
-,6,Story,"[O4-BE-01] Cola Redis + worker (ADR‑005, preferencia arq) como servicio en Compose","Criterio de aceptación: Worker *healthy*
-
-Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,High,To Do
-,6,Story,"[O4-BE-02] runs y step_runs con idempotency key, reintentos, timeouts","Criterio de aceptación: Tests de fallo y reintento
-
-Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,Medium,To Do
-,6,Story,"[O4-BE-03] Ejecutor de DAG: resolución de {{steps.x.output}}, re‑evaluación de política por step","Criterio de aceptación: Tests
-
-Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,Medium,To Do
-,6,Story,"[O4-BE-04] Pausas: AWAITING_STEP_APPROVAL, WAITING_INPUT; reanudar","Criterio de aceptación: Tests
-
-Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,Medium,To Do
-,6,Story,[O4-BE-05] Cancelación cooperativa + reaper de runs huérfanos,"Criterio de aceptación: Test matando el worker
-
-Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,Medium,To Do
-,6,Story,[O4-BE-06] SSE GET /tasks/{id}/events con Last-Event-ID,"Criterio de aceptación: Reconexión sin perder eventos
-
-Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,Medium,To Do
-,6,Story,[O4-BE-07] artifacts (texto/JSON en BD; archivos en almacenamiento local por ahora),"Criterio de aceptación: Descargables
-
-Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,Medium,To Do
-,6,Story,[O4-APP-01] Vista de ejecución en vivo: línea de tiempo de pasos con progreso (M6),"Criterio de aceptación: Actualiza sin refrescar
-
-Ref: docs/planning/plan-maestro.md#o4",O4,app,App movil,High,To Do
-,6,Story,[O4-APP-02] Visor de artefactos + notificación in‑app al terminar,"Criterio de aceptación: —
-
-Ref: docs/planning/plan-maestro.md#o4",O4,app,App movil,Medium,To Do
-,6,Story,"[O4-UX-01] Patrón ""línea de tiempo viva"" y estados de error recuperables","Criterio de aceptación: Prototipo aprobado
-
-Ref: docs/planning/plan-maestro.md#o4",O4,ux,UX-UI,High,To Do
-,6,Task,"[O4-OPS-01] Medición: latencia de encolado, tiempo por step, RAM del worker","Criterio de aceptación: Fila O4 en entorno-local.md
-
-Ref: docs/planning/plan-maestro.md#o4",O4,ops,DevOps,High,To Do
+Ref: docs/planning/plan-maestro.md",O4,etapa-A,,High,To Do,,
 7,,Epic,O5 · Conectores reales,"Objetivo: el orquestador actúa sobre el mundo exterior de forma controlada.
 
 Gate de salida: la tarea demo ""Resume los leads de prueba y mándame un email"" se ejecuta de punta a punta con aprobación.
 
-Ref: docs/planning/plan-maestro.md",O5,etapa-A,,High,To Do
-,7,Story,"[O5-BE-01] Interfaz Connector común (auth, timeout, reintentos, telemetría, errores normalizados)","Criterio de aceptación: Documentada
-
-Ref: docs/planning/plan-maestro.md#o5",O5,be,Backend,High,To Do
-,7,Story,[O5-BE-02] provider_connections con secret_ref; secretos cifrados (clave maestra en env en dev; KMS/Vault en prod),"Criterio de aceptación: Ningún secreto en tablas de negocio
-
-Ref: docs/planning/plan-maestro.md#o5",O5,be,Backend,Medium,To Do
-,7,Story,[O5-BE-03] http.request con allowlist de dominios por workspace,"Criterio de aceptación: Test SSRF (IPs privadas bloqueadas)
-
-Ref: docs/planning/plan-maestro.md#o5",O5,be,Backend,Medium,To Do
-,7,Story,[O5-BE-04] email.send (proveedor transaccional en modo sandbox),"Criterio de aceptación: Envío real a cuenta de prueba
-
-Ref: docs/planning/plan-maestro.md#o5",O5,be,Backend,Medium,To Do
-,7,Story,[O5-BE-05] n8n.trigger_workflow contra n8n local en Docker,"Criterio de aceptación: Workflow de ejemplo ejecutado
-
-Ref: docs/planning/plan-maestro.md#o5",O5,be,Backend,Medium,To Do
-,7,Story,[O5-BE-06] Cliente MCP: exponer herramientas de un servidor MCP como capabilities (allowlist),"Criterio de aceptación: 1 servidor MCP de prueba
-
-Ref: docs/planning/plan-maestro.md#o5",O5,be,Backend,Medium,To Do
-,7,Story,"[O5-APP-01] Pantalla Conectores: estado, probar conexión, desconectar (M7)","Criterio de aceptación: —
-
-Ref: docs/planning/plan-maestro.md#o5",O5,app,App movil,High,To Do
-,7,Story,"[O5-UX-01] Patrón ""conectar servicio"" en 3 pasos","Criterio de aceptación: Prototipo aprobado
-
-Ref: docs/planning/plan-maestro.md#o5",O5,ux,UX-UI,High,To Do
-,7,Task,[O5-OPS-01] n8n en Compose (perfil connectors),"Criterio de aceptación: Arranca con docker compose --profile connectors up
-
-Ref: docs/planning/plan-maestro.md#o5",O5,ops,DevOps,High,To Do
-,7,Task,[O5-DOC-01] ADR‑017 licencia n8n (uso interno validado),"Criterio de aceptación: Aceptado
-
-Ref: docs/planning/plan-maestro.md#o5",O5,doc,Documentacion,High,To Do
+Ref: docs/planning/plan-maestro.md",O5,etapa-A,,High,To Do,,
 8,,Epic,"O6 · Consumo, presupuesto y observabilidad","Objetivo: cada ejecución tiene costo medido, límites y métricas; el usuario ve todo en lenguaje de negocio.
 
 Gate de salida: demo completa grabada; medición O6 comparada con F0; revisión de seguridad interna (checklist OWASP ASVS nivel 1).
 
-Ref: docs/planning/plan-maestro.md",O6,etapa-A,,High,To Do
-,8,Story,[O6-BE-01] usage_events desde AgentRuntime y conectores,"Criterio de aceptación: Costo por run
+Ref: docs/planning/plan-maestro.md",O6,etapa-A,,High,To Do,,
+9,1,Story,[HU-01] Entorno reproducible en cualquier equipo,"Como integrante del equipo quiero clonar el repo y levantar la infraestructura con un comando para empezar a trabajar sin configuración manual.
 
-Ref: docs/planning/plan-maestro.md#o6",O6,be,Backend,High,To Do
-,8,Story,[O6-BE-02] budgets por workspace/proyecto/run con umbrales 70/90/100 %,"Criterio de aceptación: Pausa automática al 100 %
+Criterios de aceptación:
+1. Dado un clon limpio, cuando ejecuto `docker compose up -d`, entonces PostgreSQL y Redis quedan *healthy*.
+2. Dado el repositorio, cuando busco secretos, entonces solo existe `.env.example` con valores ficticios.
+3. Dado un cambio de fase, cuando ejecuto `scripts/medir-entorno.sh`, entonces obtengo una medición comparable con la línea base.
 
-Ref: docs/planning/plan-maestro.md#o6",O6,be,Backend,Medium,To Do
-,8,Story,"[O6-BE-03] GET /usage/summary, GET /budgets","Criterio de aceptación: Contrato
+Tareas: F0-OPS-01, F0-OPS-03, F0-OPS-04, F0-OPS-06, F0-DOC-01
+Ref: docs/planning/historias-usuario.md#hu-01",F0,S0,,Highest,Done,AICC S0,3
+10,9,Sub-task,"[F0-OPS-01] Monorepo, .gitignore, .env.example, .gitattributes, README","Criterio de aceptación: Clonar no expone secretos
 
-Ref: docs/planning/plan-maestro.md#o6",O6,be,Backend,Medium,To Do
-,8,Story,[O6-BE-04] Comparación estimado vs. real por run,"Criterio de aceptación: Reporte
+Ref: docs/planning/plan-maestro.md",F0,ops,DevOps,Medium,Done,AICC S0,
+11,9,Sub-task,[F0-OPS-03] docker-compose.yml: PostgreSQL 16 + Redis 7 en 127.0.0.1 con healthchecks,"Criterio de aceptación: Ambos *healthy*
 
-Ref: docs/planning/plan-maestro.md#o6",O6,be,Backend,Medium,To Do
-,8,Task,[O6-OPS-01] Métricas Prometheus (/metrics) + Grafana local opcional (perfil observability),"Criterio de aceptación: Dashboard básico
+Ref: docs/planning/plan-maestro.md",F0,ops,DevOps,Medium,Done,AICC S0,
+12,9,Sub-task,[F0-OPS-04] Medición base del entorno (línea 0) con scripts/medir-entorno.sh,"Criterio de aceptación: Fila ""F0‑base"" en entorno-local.md
 
-Ref: docs/planning/plan-maestro.md#o6",O6,ops,DevOps,High,To Do
-,8,Story,"[O6-APP-01] Home / Dashboard: tareas activas, aprobaciones pendientes, gasto del mes (M8)","Criterio de aceptación: Todo de un vistazo
+Ref: docs/planning/plan-maestro.md",F0,ops,DevOps,Medium,Done,AICC S0,
+13,9,Sub-task,[F0-OPS-06] Decidir ubicación del repo (fuera de OneDrive o exclusiones) y cambiar Flutter a stable,"Criterio de aceptación: Documentado en entorno-local.md
 
-Ref: docs/planning/plan-maestro.md#o6",O6,app,App movil,High,To Do
-,8,Story,[O6-APP-02] Pantalla Consumo con barra de presupuesto,"Criterio de aceptación: —
+Ref: docs/planning/plan-maestro.md",F0,ops,DevOps,Medium,Done,AICC S0,
+14,9,Sub-task,"[F0-DOC-01] ADR‑001..006 aceptados (004: uv/Python 3.12, 005: cola, 006: auth propia)","Criterio de aceptación: Revisados
 
-Ref: docs/planning/plan-maestro.md#o6",O6,app,App movil,Medium,To Do
-,8,Story,[O6-UX-01] Revisión completa de usabilidad con 3–5 personas,"Criterio de aceptación: Hallazgos corregidos
+Ref: docs/planning/plan-maestro.md",F0,doc,Documentacion,Medium,Done,AICC S0,
+15,1,Story,[HU-02] API observable,"Como operador quiero saber si la API y sus dependencias están vivas y rastrear cada petición para diagnosticar problemas rápido.
 
-Ref: docs/planning/plan-maestro.md#o6",O6,ux,UX-UI,High,To Do
-,8,Task,[O6-DOC-01] ADR‑015 medición estimado/real; manual de usuario v1,"Criterio de aceptación: Publicado
+Criterios de aceptación:
+1. Dado que la API corre, cuando llamo `GET /health`, entonces recibo 200 con versión y entorno.
+2. Dado que Redis o PostgreSQL no responden, cuando llamo `GET /health/ready`, entonces recibo 503 indicando cuál falla, sin exponer hosts ni credenciales.
+3. Dada cualquier petición, cuando recibo la respuesta, entonces trae `X-Request-ID` y el log JSON tiene el mismo id.
+4. Dado que falta `DATABASE_URL`, cuando arranca la API, entonces falla con un mensaje que nombra la variable.
 
-Ref: docs/planning/plan-maestro.md#o6",O6,doc,Documentacion,High,To Do
+Tareas: F0-BE-01, F0-BE-02, F0-BE-04, F0-BE-05
+Ref: docs/planning/historias-usuario.md#hu-02",F0,S0,,Highest,Done,AICC S0,5
+16,15,Sub-task,"[F0-BE-01] Proyecto backend/ con uv, Python 3.12, FastAPI, /health","Criterio de aceptación: 200 + /docs
+
+Ref: docs/planning/plan-maestro.md",F0,be,Backend,Medium,Done,AICC S0,
+17,15,Sub-task,[F0-BE-02] core/config.py (pydantic‑settings) con falla explícita,"Criterio de aceptación: Test: sin DATABASE_URL → error claro
+
+Ref: docs/planning/plan-maestro.md",F0,be,Backend,Medium,Done,AICC S0,
+18,15,Sub-task,[F0-BE-04] /health/ready comprueba BD y Redis,"Criterio de aceptación: Test con servicios arriba/abajo
+
+Ref: docs/planning/plan-maestro.md",F0,be,Backend,Medium,Done,AICC S0,
+19,15,Sub-task,[F0-BE-05] Logging estructurado JSON con request_id,"Criterio de aceptación: Cada respuesta lleva X-Request-ID
+
+Ref: docs/planning/plan-maestro.md",F0,be,Backend,Medium,Done,AICC S0,
+20,1,Story,[HU-03] Esquema versionado y contrato publicado,"Como desarrollador quiero migraciones controladas y un contrato OpenAPI versionado para que la app y la API no se desincronicen.
+
+Criterios de aceptación:
+1. Dada una base vacía, cuando ejecuto `alembic upgrade head`, entonces queda en la última revisión.
+2. Dado un cambio en la API, cuando olvido regenerar `shared/contracts/openapi.json`, entonces una prueba falla.
+
+Tareas: F0-BE-03, F0-BE-06
+Ref: docs/planning/historias-usuario.md#hu-03",F0,S0,,High,Done,AICC S0,3
+21,20,Sub-task,[F0-BE-03] SQLAlchemy 2 async (asyncpg) + Alembic; migración inicial vacía,"Criterio de aceptación: alembic upgrade head OK
+
+Ref: docs/planning/plan-maestro.md",F0,be,Backend,Medium,Done,AICC S0,
+22,20,Sub-task,[F0-BE-06] Exportar OpenAPI a shared/contracts/openapi.json,"Criterio de aceptación: Script + verificación en CI
+
+Ref: docs/planning/plan-maestro.md",F0,be,Backend,Medium,Done,AICC S0,
+23,1,Story,[HU-04] Ver si la app está conectada,"Como usuario quiero abrir la app y ver de inmediato si AICC está listo para saber si puedo trabajar.
+
+Criterios de aceptación:
+1. Dada la API sana, cuando abro la app, entonces veo ""AICC está listo"" con el estado de cada dependencia.
+2. Dada una dependencia caída, cuando reviso, entonces veo ""Funcionando a medias"" y cuál falla.
+3. Dada la API apagada, cuando abro la app, entonces veo un mensaje humano y un botón para reintentar, sin que la app se congele.
+4. Dado el tema oscuro del sistema, cuando abro la app, entonces todos los estados se leen con contraste suficiente.
+
+Tareas: F0-APP-01, F0-APP-02, F0-APP-03, F0-UX-01, F0-UX-02
+Ref: docs/planning/historias-usuario.md#hu-04",F0,S0,,High,Done,AICC S0,5
+24,23,Sub-task,"[F0-APP-01] Flutter stable, apps/mobile con com.treetech.aicc","Criterio de aceptación: Corre en emulador Android
+
+Ref: docs/planning/plan-maestro.md",F0,app,App movil,Medium,Done,AICC S0,
+25,23,Sub-task,"[F0-APP-02] Esqueleto lib/ (app, core, features) + AICC_API_BASE_URL","Criterio de aceptación: Ver incremento M0
+
+Ref: docs/planning/plan-maestro.md",F0,app,App movil,Medium,Done,AICC S0,
+26,23,Sub-task,[F0-APP-03] Pantalla de estado de conexión (M0),"Criterio de aceptación: OK / timeout / caída sin bloquear
+
+Ref: docs/planning/plan-maestro.md",F0,app,App movil,Medium,Done,AICC S0,
+27,23,Sub-task,"[F0-UX-01] Principios UX, arquitectura de información y mapa de pantallas","Criterio de aceptación: Documento aprobado
+
+Ref: docs/planning/plan-maestro.md",F0,ux,UX-UI,Medium,Done,AICC S0,
+28,23,Sub-task,"[F0-UX-02] Tokens de diseño (color, tipografía, espaciado, estados) + tema claro/oscuro","Criterio de aceptación: app/theme/ refleja tokens
+
+Ref: docs/planning/plan-maestro.md",F0,ux,UX-UI,Medium,Done,AICC S0,
+29,1,Story,[HU-05] Calidad automática en cada cambio,"Como desarrollador quiero que cada PR ejecute lint, pruebas y escaneo de secretos para que nada roto o inseguro llegue a `main`.
+
+Criterios de aceptación:
+1. Dado un PR, cuando se abre o actualiza, entonces corren los jobs de backend (ruff, pytest con PostgreSQL y Redis, contrato) y mobile (format, analyze, test).
+2. Dado un secreto en el diff, cuando corre la CI, entonces el job de secretos falla.
+3. Dado `main`, cuando alguien intenta empujar sin PR o con CI roja, entonces GitHub lo impide (o, si el plan no lo permite, queda documentada la alternativa).
+
+Tareas: F0-OPS-02, F0-OPS-05
+Ref: docs/planning/historias-usuario.md#hu-05",F0,S1,,Highest,To Do,AICC S1,5
+30,29,Sub-task,[F0-OPS-02] Publicar en GitHub (privado) + protección de main,"Criterio de aceptación: PR obligatorio para main
+
+Ref: docs/planning/plan-maestro.md",F0,ops,DevOps,Medium,To Do,AICC S1,
+31,29,Sub-task,"[F0-OPS-05] CI GitHub Actions: backend (ruff, pytest con servicios) y mobile (analyze, test)","Criterio de aceptación: CI verde
+
+Ref: docs/planning/plan-maestro.md",F0,ops,DevOps,Medium,To Do,AICC S1,
+32,1,Story,[HU-06] Crear cuenta e iniciar sesión,"Como usuario quiero registrarme e iniciar sesión con email y contraseña para acceder a mi información de forma segura.
+
+Criterios de aceptación:
+1. Dado un email nuevo, cuando me registro con una contraseña válida, entonces se crea mi cuenta y la contraseña se guarda solo como hash Argon2id.
+2. Dadas credenciales válidas, cuando inicio sesión, entonces recibo un access token de 15 min y un refresh token.
+3. Dado un refresh token válido, cuando lo uso, entonces recibo un par nuevo y el anterior queda revocado.
+4. Dado un refresh token ya usado, cuando alguien lo reutiliza, entonces se revoca toda la familia de tokens.
+5. Dadas credenciales inválidas, cuando intento entrar, entonces recibo el mismo error genérico exista o no el email.
+
+Tareas: F0-SEC-01
+Ref: docs/planning/historias-usuario.md#hu-06",F0,S1,,Highest,To Do,AICC S1,8
+33,32,Sub-task,"[F0-SEC-01] Auth propia: users, hash Argon2, access JWT 15 min + refresh rotatorio","Criterio de aceptación: Tests de expiración/rotación/reuso
+
+Ref: docs/planning/plan-maestro.md",F0,sec,Seguridad,High,To Do,AICC S1,
+34,1,Story,[HU-07] API protegida contra abuso,"Como responsable de la plataforma quiero límites de tamaño, frecuencia y origen para que la API resista abusos básicos.
+
+Criterios de aceptación:
+1. Dado un cuerpo mayor al límite, cuando lo envío, entonces recibo 413.
+2. Dados demasiados intentos de login desde el mismo origen, cuando supero el límite, entonces recibo 429 con `Retry-After`.
+3. Dado un origen no permitido, cuando un navegador llama la API, entonces CORS lo bloquea.
+
+Tareas: F0-SEC-02
+Ref: docs/planning/historias-usuario.md#hu-07",F0,S1,,High,To Do,AICC S1,3
+35,34,Sub-task,"[F0-SEC-02] CORS restringido, límite de body, rate limit básico","Criterio de aceptación: Tests
+
+Ref: docs/planning/plan-maestro.md",F0,sec,Seguridad,High,To Do,AICC S1,
+36,1,Story,[HU-08] Iniciar sesión desde el móvil,"Como usuario quiero iniciar sesión en la app y que recuerde mi sesión de forma segura para no escribir mi contraseña cada vez.
+
+Criterios de aceptación:
+1. Dado que no tengo sesión, cuando abro la app, entonces veo la pantalla de inicio de sesión con opción de registrarme.
+2. Dadas credenciales correctas, cuando entro, entonces llego a la pantalla principal y los tokens quedan en almacenamiento seguro del sistema.
+3. Dado un access token vencido, cuando la app llama la API, entonces lo renueva sola sin que yo lo note.
+4. Dado que cierro sesión, cuando vuelvo a abrir la app, entonces me pide iniciar sesión.
+
+Tareas: F0-APP-04
+Ref: docs/planning/historias-usuario.md#hu-08",F0,S1,,Highest,To Do,AICC S1,8
+37,36,Sub-task,[F0-APP-04] Login + flutter_secure_storage + Riverpod + GoRouter (M1),"Criterio de aceptación: Login → Home
+
+Ref: docs/planning/plan-maestro.md",F0,app,App movil,Medium,To Do,AICC S1,
+38,2,Story,[HU-09] Mi espacio de trabajo listo al registrarme,"Como usuario nuevo quiero tener un espacio de trabajo con un proyecto inicial para empezar sin configurar nada.
+
+Criterios de aceptación:
+1. Dado que me registro, cuando entro por primera vez, entonces tengo un workspace personal, un proyecto ""General"" y un ambiente `development`.
+2. Dado el esquema, cuando aplico y revierto la migración, entonces ambas operaciones funcionan.
+
+Tareas: F1-BE-01, F1-BE-02
+Ref: docs/planning/historias-usuario.md#hu-09",F1,S2,,Highest,To Do,AICC S2,5
+39,38,Sub-task,"[F1-BE-01] Modelos workspaces, memberships(role), projects, environments + migraciones","Criterio de aceptación: Migración reversible
+
+Ref: docs/planning/plan-maestro.md",F1,be,Backend,Medium,To Do,AICC S2,
+40,38,Sub-task,"[F1-BE-02] Al registrarse se crea workspace personal + proyecto ""General"" + env development","Criterio de aceptación: Test
+
+Ref: docs/planning/plan-maestro.md",F1,be,Backend,Medium,To Do,AICC S2,
+41,2,Story,[HU-10] Nadie ve los datos de otro workspace,"Como dueño de un negocio quiero la garantía de que ningún otro usuario puede ver o tocar mis datos para confiar en la plataforma.
+
+Criterios de aceptación:
+1. Dado un workspace ajeno, cuando envío su id en `X-Workspace-Id`, entonces recibo 404 (no 403, para no revelar que existe).
+2. Dados dos usuarios con datos, cuando corre la suite de aislamiento, entonces ninguno puede listar, leer, modificar ni borrar recursos del otro.
+3. Dada la CI, cuando cualquier PR toca el backend, entonces la suite de aislamiento corre siempre.
+
+Tareas: F1-SEC-01, F1-SEC-03, F1-DOC-01
+Ref: docs/planning/historias-usuario.md#hu-10",F1,S2,,Highest,To Do,AICC S2,8
+42,41,Sub-task,[F1-SEC-01] Dependencia current_workspace que resuelve por membresía (header X-Workspace-Id validado),"Criterio de aceptación: Test: ID ajeno → 404
+
+Ref: docs/planning/plan-maestro.md",F1,sec,Seguridad,High,To Do,AICC S2,
+43,41,Sub-task,[F1-SEC-03] Suite de pruebas de aislamiento multi‑tenant (fixture con 2 usuarios/2 workspaces),"Criterio de aceptación: Se ejecuta en CI siempre
+
+Ref: docs/planning/plan-maestro.md",F1,sec,Seguridad,High,To Do,AICC S2,
+44,41,Sub-task,[F1-DOC-01] ADR‑010 Workspace lógico ≠ infraestructura,"Criterio de aceptación: Aceptado
+
+Ref: docs/planning/plan-maestro.md",F1,doc,Documentacion,Medium,To Do,AICC S2,
+45,2,Story,[HU-11] Roles y permisos por miembro,"Como administrador quiero asignar roles (owner, admin, operator, viewer) para controlar qué puede hacer cada persona.
+
+Criterios de aceptación:
+1. Dado un viewer, cuando intenta una acción de escritura, entonces recibe 403.
+2. Dada la matriz de permisos documentada, cuando corren las pruebas, entonces cada rol y acción coincide con la matriz.
+
+Tareas: F1-SEC-02
+Ref: docs/planning/historias-usuario.md#hu-11",F1,S2,,High,To Do,AICC S2,5
+46,45,Sub-task,"[F1-SEC-02] Roles owner, admin, operator, viewer con matriz de permisos en código","Criterio de aceptación: Tabla de permisos documentada + tests
+
+Ref: docs/planning/plan-maestro.md",F1,sec,Seguridad,High,To Do,AICC S2,
+47,2,Story,"[HU-12] Gestionar workspaces, proyectos, ambientes y miembros","Como administrador quiero crear y organizar proyectos, ambientes y miembros para separar cada iniciativa de negocio.
+
+Criterios de aceptación:
+1. Dado mi workspace, cuando creo un proyecto, entonces nace con ambiente `development`.
+2. Dado un email, cuando invito a alguien, entonces queda una invitación pendiente con rol asignado (sin envío de email todavía).
+3. Dado el contrato OpenAPI, cuando reviso, entonces todos los endpoints CRUD están documentados.
+
+Tareas: F1-BE-04
+Ref: docs/planning/historias-usuario.md#hu-12",F1,S3,,High,To Do,AICC S3,8
+48,47,Sub-task,"[F1-BE-04] CRUD: workspaces, projects, environments, members (invitar por email: solo registro, sin envío aún)","Criterio de aceptación: OpenAPI actualizado
+
+Ref: docs/planning/plan-maestro.md",F1,be,Backend,Medium,To Do,AICC S3,
+49,2,Story,[HU-13] Registro de actividad,"Como administrador quiero ver quién hizo qué y cuándo para tener trazabilidad completa.
+
+Criterios de aceptación:
+1. Dada cualquier acción de escritura, cuando termina, entonces existe un registro de auditoría con actor, acción, recurso y resultado.
+2. Dado el registro, cuando lo reviso, entonces no contiene contraseñas, tokens ni secretos.
+3. Dada la app, cuando abro Actividad, entonces veo la lista paginada en lenguaje claro.
+
+Tareas: F1-BE-03, F1-APP-02
+Ref: docs/planning/historias-usuario.md#hu-13",F1,S3,,High,To Do,AICC S3,5
+50,49,Sub-task,[F1-BE-03] audit_logs + helper audit() usado en cada comando,"Criterio de aceptación: Cada endpoint de escritura audita
+
+Ref: docs/planning/plan-maestro.md",F1,be,Backend,Medium,To Do,AICC S3,
+51,49,Sub-task,[F1-APP-02] Pantalla Actividad (lista de audit log),"Criterio de aceptación: Paginada
+
+Ref: docs/planning/plan-maestro.md",F1,app,App movil,Medium,To Do,AICC S3,
+52,2,Story,[HU-14] Saber y cambiar el contexto en un toque,"Como operador quiero ver siempre en qué workspace, proyecto y ambiente estoy y cambiarlo en un toque para no equivocarme de lugar.
+
+Criterios de aceptación:
+1. Dada cualquier pantalla, cuando la miro, entonces veo el chip de contexto arriba.
+2. Dado el ambiente `production`, cuando lo selecciono, entonces el chip se distingue en rojo.
+3. Dado el chip, cuando lo toco, entonces un panel inferior me deja cambiar de contexto.
+
+Tareas: F1-APP-01, F1-UX-01
+Ref: docs/planning/historias-usuario.md#hu-14",F1,S3,,High,To Do,AICC S3,5
+53,52,Sub-task,[F1-APP-01] Selector de workspace / proyecto / ambiente siempre visible (M2),"Criterio de aceptación: Cambio de contexto en 1 toque
+
+Ref: docs/planning/plan-maestro.md",F1,app,App movil,Medium,To Do,AICC S3,
+54,52,Sub-task,"[F1-UX-01] Patrón ""contexto actual"" (chip superior) y ""cambiar contexto"" (bottom sheet)","Criterio de aceptación: Prototipo aprobado
+
+Ref: docs/planning/plan-maestro.md",F1,ux,UX-UI,Medium,To Do,AICC S3,
+55,3,Story,[HU-15] Pedir algo con mis palabras,"Como usuario quiero escribir lo que necesito en lenguaje natural para crear una tarea sin formularios complicados.
+
+Criterios de aceptación:
+1. Dado el Command Center, cuando escribo y envío, entonces se crea una tarea en Borrador en menos de 3 toques.
+2. Dada una tarea creada, cuando la abro, entonces veo su detalle y puedo cancelarla.
+
+Tareas: O1-BE-01, O1-BE-04, O1-APP-01, O1-UX-01
+Ref: docs/planning/historias-usuario.md#hu-15",O1,S4,,Highest,To Do,AICC S4,8
+56,55,Sub-task,"[O1-BE-01] Modelo tasks (title, description, status, project_id, environment_id, created_by, version)","Criterio de aceptación: Migración
+
+Ref: docs/planning/plan-maestro.md",O1,be,Backend,Medium,To Do,AICC S4,
+57,55,Sub-task,"[O1-BE-04] Endpoints POST/GET /tasks, GET /tasks/{id}, POST /tasks/{id}/cancel","Criterio de aceptación: Contrato OpenAPI
+
+Ref: docs/planning/plan-maestro.md",O1,be,Backend,Medium,To Do,AICC S4,
+58,55,Sub-task,"[O1-APP-01] Command Center v1: campo ""¿Qué necesitas?"" que crea Task en DRAFT (M3)","Criterio de aceptación: Crear en < 3 toques
+
+Ref: docs/planning/plan-maestro.md",O1,app,App movil,Medium,To Do,AICC S4,
+59,55,Sub-task,"[O1-UX-01] Diseño del Command Center y de la ""tarjeta de tarea"" (componente central)","Criterio de aceptación: Prototipo interactivo aprobado
+
+Ref: docs/planning/plan-maestro.md",O1,ux,UX-UI,Medium,To Do,AICC S4,
+60,3,Story,[HU-16] Estados claros y confiables,"Como operador quiero que cada tarea tenga un estado preciso y su historial para confiar en lo que veo.
+
+Criterios de aceptación:
+1. Dada una transición no permitida, cuando se intenta, entonces se rechaza con error.
+2. Dada cualquier transición, cuando ocurre, entonces se registran evento y auditoría en la misma transacción.
+3. Dadas dos modificaciones simultáneas, cuando la segunda llega, entonces recibe 409.
+4. Dado cualquier estado, cuando se muestra al usuario, entonces usa el texto del diccionario de estados.
+
+Tareas: O1-BE-02, O1-BE-03, O1-BE-05, O1-UX-02
+Ref: docs/planning/historias-usuario.md#hu-16",O1,S4,,Highest,To Do,AICC S4,8
+61,60,Sub-task,[O1-BE-02] domain/tasks/state_machine.py con tabla de transiciones explícita,"Criterio de aceptación: Test por cada transición válida e inválida
+
+Ref: docs/planning/plan-maestro.md",O1,be,Backend,Medium,To Do,AICC S4,
+62,60,Sub-task,[O1-BE-03] Tabla events append‑only; cada transición escribe event + audit en la misma transacción,"Criterio de aceptación: Test transaccional
+
+Ref: docs/planning/plan-maestro.md",O1,be,Backend,Medium,To Do,AICC S4,
+63,60,Sub-task,[O1-BE-05] Bloqueo optimista (version) → 409 en conflicto,"Criterio de aceptación: Test de concurrencia
+
+Ref: docs/planning/plan-maestro.md",O1,be,Backend,Medium,To Do,AICC S4,
+64,60,Sub-task,"[O1-UX-02] Diccionario de estados en lenguaje de negocio (""Borrador"", ""Esperando tu aprobación""…)","Criterio de aceptación: Documento de copy
+
+Ref: docs/planning/plan-maestro.md",O1,ux,UX-UI,Medium,To Do,AICC S4,
+65,3,Story,[HU-17] Ver y filtrar mis tareas,"Como operador quiero ver mis tareas filtradas por estado para saber qué necesita atención.
+
+Criterios de aceptación:
+1. Dada la lista, cuando filtro por estado, entonces solo veo esas tareas.
+2. Dado cada estado, cuando se muestra, entonces lleva color, icono y texto.
+
+Tareas: O1-APP-02
+Ref: docs/planning/historias-usuario.md#hu-17",O1,S4,,High,To Do,AICC S4,3
+66,65,Sub-task,[O1-APP-02] Lista de tareas con filtro por estado y tarjeta de estado,"Criterio de aceptación: Estados con color + icono + texto
+
+Ref: docs/planning/plan-maestro.md",O1,app,App movil,Medium,To Do,AICC S4,
+67,4,Story,[HU-18] Catálogo de capacidades,"Como equipo quiero un catálogo declarativo de lo que AICC sabe hacer, con su esquema y riesgo, para que el planner solo use acciones conocidas.
+
+Criterios de aceptación:
+1. Dado `GET /capabilities`, cuando lo llamo, entonces veo cada capacidad con esquema de entrada y nivel de riesgo.
+2. Dada una capacidad nueva, cuando se registra sin esquema, entonces el arranque falla.
+
+Tareas: O2-BE-01
+Ref: docs/planning/historias-usuario.md#hu-18",O2,S5,,Highest,To Do,AICC S5,5
+68,67,Sub-task,"[O2-BE-01] Catálogo de capabilities en código (registro + JSON Schema + risk_level) con 3 iniciales: llm.generate, http.get_allowlisted, notify.in_app","Criterio de aceptación: GET /capabilities
+
+Ref: docs/planning/plan-maestro.md",O2,be,Backend,Medium,To Do,AICC S5,
+69,4,Story,[HU-19] Motor de IA intercambiable y probable,"Como equipo quiero una interfaz única para proveedores de IA y un motor falso determinista para probar sin red ni costo.
+
+Criterios de aceptación:
+1. Dada la suite de pruebas, cuando corre, entonces no hace llamadas de red a proveedores.
+2. Dado el proveedor real, cuando se usa, entonces la clave solo existe en el backend.
+
+Tareas: O2-BE-02, O2-BE-03
+Ref: docs/planning/historias-usuario.md#hu-19",O2,S5,,Highest,To Do,AICC S5,5
+70,69,Sub-task,[O2-BE-02] AgentRuntime + FakeRuntime determinista para pruebas,"Criterio de aceptación: Tests sin red
+
+Ref: docs/planning/plan-maestro.md",O2,be,Backend,Medium,To Do,AICC S5,
+71,69,Sub-task,[O2-BE-03] Primer proveedor LLM real detrás de AgentRuntime (clave solo en backend),"Criterio de aceptación: Smoke test manual
+
+Ref: docs/planning/plan-maestro.md",O2,be,Backend,Medium,To Do,AICC S5,
+72,4,Story,[HU-20] Recibir un plan estructurado,"Como usuario quiero que AICC convierta mi pedido en un plan de pasos para entender qué se hará antes de hacerlo.
+
+Criterios de aceptación:
+1. Dada una tarea en Borrador, cuando pido plan, entonces recibo un plan versionado con pasos, supuestos y dependencias.
+2. Dado un plan, cuando se guarda, entonces nada se ejecuta.
+
+Tareas: O2-BE-04, O2-BE-06, O2-DOC-01
+Ref: docs/planning/historias-usuario.md#hu-20",O2,S5,,Highest,To Do,AICC S5,8
+73,72,Sub-task,[O2-BE-04] Planner: prompt versionado + salida estructurada (Pydantic),"Criterio de aceptación: Plan válido con FakeRuntime
+
+Ref: docs/planning/plan-maestro.md",O2,be,Backend,Medium,To Do,AICC S5,
+74,72,Sub-task,"[O2-BE-06] plans y plan_steps versionados; POST /tasks/{id}/plan, GET /plans/{id}","Criterio de aceptación: Contrato
+
+Ref: docs/planning/plan-maestro.md",O2,be,Backend,Medium,To Do,AICC S5,
+75,72,Sub-task,[O2-DOC-01] ADR‑007 contrato del plan; ADR‑012 el LLM solo propone,"Criterio de aceptación: Aceptados
+
+Ref: docs/planning/plan-maestro.md",O2,doc,Documentacion,Medium,To Do,AICC S5,
+76,4,Story,[HU-21] Planes siempre válidos y seguros,"Como administrador quiero que ningún plan inválido o manipulado llegue a mostrarse para que la IA no pueda saltarse las reglas.
+
+Criterios de aceptación:
+1. Dado un plan con una capacidad inexistente, un ciclo o entradas inválidas, cuando se valida, entonces se rechaza con razón legible.
+2. Dado un texto con instrucciones maliciosas, cuando se planifica, entonces no altera reglas, riesgos ni costos (casos documentados).
+3. Dadas 20 descripciones de prueba, cuando se planifican, entonces el 100 % son válidas o se rechazan con razón.
+
+Tareas: O2-BE-05, O2-SEC-01
+Ref: docs/planning/historias-usuario.md#hu-21",O2,S6,,Highest,To Do,AICC S6,8
+77,76,Sub-task,"[O2-BE-05] Validador determinista del plan (capability existe, schema, DAG acíclico, límites)","Criterio de aceptación: Tests de planes maliciosos/rotos
+
+Ref: docs/planning/plan-maestro.md",O2,be,Backend,Medium,To Do,AICC S6,
+78,76,Sub-task,[O2-SEC-01] Defensa ante *prompt injection*: el texto del usuario nunca se interpola en instrucciones del sistema sin delimitar; salida siempre validada,"Criterio de aceptación: Casos de prueba documentados
+
+Ref: docs/planning/plan-maestro.md",O2,sec,Seguridad,High,To Do,AICC S6,
+79,4,Story,[HU-22] Ver el plan y su costo antes de decidir,"Como usuario quiero ver los pasos en lenguaje natural y el costo estimado para decidir con información.
+
+Criterios de aceptación:
+1. Dado un plan, cuando lo abro, entonces veo cada paso en lenguaje claro con su detalle técnico plegado.
+2. Dado un plan, cuando lo reviso, entonces veo costo estimado, moneda, fecha de la tarifa y supuestos.
+
+Tareas: O2-BE-07, O2-APP-01, O2-UX-01
+Ref: docs/planning/historias-usuario.md#hu-22",O2,S6,,High,To Do,AICC S6,8
+80,79,Sub-task,[O2-BE-07] Estimador de costo por step (tokens estimados × tarifa fechada),"Criterio de aceptación: Costo visible en plan
+
+Ref: docs/planning/plan-maestro.md",O2,be,Backend,Medium,To Do,AICC S6,
+81,79,Sub-task,"[O2-APP-01] Vista ""Propuesta de plan"": pasos en lenguaje natural, costo estimado, supuestos (M4)","Criterio de aceptación: Entendible sin conocimientos técnicos
+
+Ref: docs/planning/plan-maestro.md",O2,app,App movil,Medium,To Do,AICC S6,
+82,79,Sub-task,"[O2-UX-01] Patrón ""plan como lista de pasos"" con detalle técnico plegable","Criterio de aceptación: Prototipo aprobado
+
+Ref: docs/planning/plan-maestro.md",O2,ux,UX-UI,Medium,To Do,AICC S6,
+83,5,Story,[HU-23] Reglas que deciden qué requiere aprobación,"Como administrador quiero reglas deterministas que permitan, nieguen o pidan aprobación para controlar el riesgo sin depender de la IA.
+
+Criterios de aceptación:
+1. Dado un paso, cuando se evalúa, entonces recibe allow, deny o require_approval con la regla aplicada y una razón.
+2. Dada una regla de workspace, cuando intenta permitir acciones destructivas, entonces se rechaza.
+
+Tareas: O3-BE-01, O3-BE-02, O3-DOC-01
+Ref: docs/planning/historias-usuario.md#hu-23",O3,S7,,Highest,To Do,AICC S7,8
+84,83,Sub-task,[O3-BE-01] Policy Engine (allow/deny/require_approval + reason + policy_id),"Criterio de aceptación: Tabla de decisiones probada
+
+Ref: docs/planning/plan-maestro.md",O3,be,Backend,Medium,To Do,AICC S7,
+85,83,Sub-task,"[O3-BE-02] Tabla policies por workspace (sobrescribe valores por defecto, nunca relaja destructive)","Criterio de aceptación: Tests
+
+Ref: docs/planning/plan-maestro.md",O3,be,Backend,Medium,To Do,AICC S7,
+86,83,Sub-task,[O3-DOC-01] ADR‑008 Policy Engine propio (sin OPA en MVP); ADR‑014 aprobación antes de gastar,"Criterio de aceptación: Aceptados
+
+Ref: docs/planning/plan-maestro.md",O3,doc,Documentacion,Medium,To Do,AICC S7,
+87,5,Story,"[HU-24] Aprobar, rechazar o pedir cambios","Como responsable quiero aprobar, rechazar o pedir cambios a un plan para que nada sensible ocurra sin mi decisión.
+
+Criterios de aceptación:
+1. Dado un plan con pasos de envío o gasto, cuando no hay aprobación registrada, entonces no puede pasar a Aprobada.
+2. Dado ""pedir cambios"", cuando lo uso, entonces se genera la versión 2 conservando la 1.
+3. Dado un viewer, cuando intenta aprobar, entonces recibe 403.
+
+Tareas: O3-BE-03, O3-BE-04, O3-SEC-01
+Ref: docs/planning/historias-usuario.md#hu-24",O3,S7,,Highest,To Do,AICC S7,8
+88,87,Sub-task,[O3-BE-03] approvals + endpoints approve / reject / request‑changes,"Criterio de aceptación: Auditado
+
+Ref: docs/planning/plan-maestro.md",O3,be,Backend,Medium,To Do,AICC S7,
+89,87,Sub-task,[O3-BE-04] request-changes genera Plan v2 conservando historial,"Criterio de aceptación: Diff entre versiones
+
+Ref: docs/planning/plan-maestro.md",O3,be,Backend,Medium,To Do,AICC S7,
+90,87,Sub-task,[O3-SEC-01] Solo owner/admin/operator aprueban; nadie aprueba su propio plan si la política exige 2 personas (opcional por workspace),"Criterio de aceptación: Tests
+
+Ref: docs/planning/plan-maestro.md",O3,sec,Seguridad,High,To Do,AICC S7,
+91,5,Story,[HU-25] Bandeja de decisiones en el móvil,"Como usuario quiero una bandeja con todo lo que espera mi decisión para resolverlo en segundos.
+
+Criterios de aceptación:
+1. Dadas decisiones pendientes, cuando miro la navegación, entonces la pestaña Aprobar muestra el número.
+2. Dada una aprobación, cuando la abro, entonces responde qué pasará, cuánto cuesta y si se puede deshacer.
+3. Dada una acción de gasto o envío externo, cuando apruebo, entonces debo deslizar para confirmar.
+
+Tareas: O3-APP-01, O3-APP-02, O3-UX-01
+Ref: docs/planning/historias-usuario.md#hu-25",O3,S7,,High,To Do,AICC S7,5
+92,91,Sub-task,[O3-APP-01] Bandeja de Aprobaciones con badge y acciones aprobar / rechazar / pedir cambios (M5),"Criterio de aceptación: 1 toque + confirmación
+
+Ref: docs/planning/plan-maestro.md",O3,app,App movil,Medium,To Do,AICC S7,
+93,91,Sub-task,[O3-APP-02] Confirmación reforzada para acciones spend/write_external (deslizar para aprobar),"Criterio de aceptación: Prueba de usabilidad
+
+Ref: docs/planning/plan-maestro.md",O3,app,App movil,Medium,To Do,AICC S7,
+94,91,Sub-task,"[O3-UX-01] Patrón de aprobación: qué pasará, cuánto cuesta, qué se puede deshacer","Criterio de aceptación: Prototipo aprobado
+
+Ref: docs/planning/plan-maestro.md",O3,ux,UX-UI,Medium,To Do,AICC S7,
+95,6,Story,[HU-26] Ejecución fuera de la app,"Como usuario quiero que mis tareas aprobadas sigan ejecutándose aunque cierre la app.
+
+Criterios de aceptación:
+1. Dada una tarea aprobada, cuando se encola, entonces el worker la ejecuta sin que la app esté abierta.
+2. Dado un paso que falla por error transitorio, cuando es idempotente, entonces se reintenta con espera creciente.
+3. Dado el gate, cuando se mide, entonces queda registrada la latencia de encolado y la RAM del worker.
+
+Tareas: O4-BE-01, O4-BE-02, O4-OPS-01
+Ref: docs/planning/historias-usuario.md#hu-26",O4,S8,,Highest,To Do,AICC S8,8
+96,95,Sub-task,"[O4-BE-01] Cola Redis + worker (ADR‑005, preferencia arq) como servicio en Compose","Criterio de aceptación: Worker *healthy*
+
+Ref: docs/planning/plan-maestro.md",O4,be,Backend,Medium,To Do,AICC S8,
+97,95,Sub-task,"[O4-BE-02] runs y step_runs con idempotency key, reintentos, timeouts","Criterio de aceptación: Tests de fallo y reintento
+
+Ref: docs/planning/plan-maestro.md",O4,be,Backend,Medium,To Do,AICC S8,
+98,95,Sub-task,"[O4-OPS-01] Medición: latencia de encolado, tiempo por step, RAM del worker","Criterio de aceptación: Fila O4 en entorno-local.md
+
+Ref: docs/planning/plan-maestro.md",O4,ops,DevOps,Medium,To Do,AICC S8,
+99,6,Story,[HU-27] Ejecución paso a paso con controles,"Como operador quiero que cada paso se revalide antes de ejecutarse y que se pause si necesita algo de mí.
+
+Criterios de aceptación:
+1. Dado un paso que depende de otro, cuando se ejecuta, entonces recibe la salida del anterior.
+2. Dado un paso sensible, cuando llega su turno, entonces la ejecución se pausa hasta mi aprobación.
+3. Dada una regla que cambió, cuando se reevalúa el paso, entonces se aplica la regla vigente.
+
+Tareas: O4-BE-03, O4-BE-04
+Ref: docs/planning/historias-usuario.md#hu-27",O4,S8,,Highest,To Do,AICC S8,8
+100,99,Sub-task,"[O4-BE-03] Ejecutor de DAG: resolución de {{steps.x.output}}, re‑evaluación de política por step","Criterio de aceptación: Tests
+
+Ref: docs/planning/plan-maestro.md",O4,be,Backend,Medium,To Do,AICC S8,
+101,99,Sub-task,"[O4-BE-04] Pausas: AWAITING_STEP_APPROVAL, WAITING_INPUT; reanudar","Criterio de aceptación: Tests
+
+Ref: docs/planning/plan-maestro.md",O4,be,Backend,Medium,To Do,AICC S8,
+102,6,Story,[HU-28] Cancelar y recuperarse de fallos,"Como operador quiero cancelar una ejecución y que el sistema se recupere si el worker se cae.
+
+Criterios de aceptación:
+1. Dada una ejecución en marcha, cuando la cancelo, entonces se detiene al terminar el paso actual.
+2. Dado un worker que muere, cuando pasa el tiempo límite, entonces la ejecución huérfana se marca y se puede reintentar.
+3. Dadas 50 ejecuciones con fallos inyectados, cuando terminan, entonces no hay estados inconsistentes.
+
+Tareas: O4-BE-05
+Ref: docs/planning/historias-usuario.md#hu-28",O4,S9,,High,To Do,AICC S9,5
+103,102,Sub-task,[O4-BE-05] Cancelación cooperativa + reaper de runs huérfanos,"Criterio de aceptación: Test matando el worker
+
+Ref: docs/planning/plan-maestro.md",O4,be,Backend,Medium,To Do,AICC S9,
+104,6,Story,[HU-29] Seguir la ejecución en vivo,"Como usuario quiero ver cada paso avanzar en tiempo real para saber qué está pasando sin refrescar.
+
+Criterios de aceptación:
+1. Dada una ejecución, cuando la abro, entonces la línea de tiempo se actualiza sola.
+2. Dada una pérdida de conexión, cuando vuelve, entonces la app recupera los eventos perdidos.
+3. Dado un paso fallido, cuando ocurre, entonces se expande con opciones de reintentar o cancelar.
+
+Tareas: O4-BE-06, O4-APP-01, O4-UX-01
+Ref: docs/planning/historias-usuario.md#hu-29",O4,S9,,High,To Do,AICC S9,8
+105,104,Sub-task,[O4-BE-06] SSE GET /tasks/{id}/events con Last-Event-ID,"Criterio de aceptación: Reconexión sin perder eventos
+
+Ref: docs/planning/plan-maestro.md",O4,be,Backend,Medium,To Do,AICC S9,
+106,104,Sub-task,[O4-APP-01] Vista de ejecución en vivo: línea de tiempo de pasos con progreso (M6),"Criterio de aceptación: Actualiza sin refrescar
+
+Ref: docs/planning/plan-maestro.md",O4,app,App movil,Medium,To Do,AICC S9,
+107,104,Sub-task,"[O4-UX-01] Patrón ""línea de tiempo viva"" y estados de error recuperables","Criterio de aceptación: Prototipo aprobado
+
+Ref: docs/planning/plan-maestro.md",O4,ux,UX-UI,Medium,To Do,AICC S9,
+108,6,Story,[HU-30] Ver y descargar resultados,"Como usuario quiero ver los resultados de una tarea y recibir aviso al terminar.
+
+Criterios de aceptación:
+1. Dada una tarea terminada, cuando la abro, entonces veo sus artefactos legibles y descargables.
+2. Dada una tarea que termina, cuando estoy en la app, entonces recibo una notificación interna.
+
+Tareas: O4-BE-07, O4-APP-02
+Ref: docs/planning/historias-usuario.md#hu-30",O4,S9,,Medium,To Do,AICC S9,3
+109,108,Sub-task,[O4-BE-07] artifacts (texto/JSON en BD; archivos en almacenamiento local por ahora),"Criterio de aceptación: Descargables
+
+Ref: docs/planning/plan-maestro.md",O4,be,Backend,Medium,To Do,AICC S9,
+110,108,Sub-task,[O4-APP-02] Visor de artefactos + notificación in‑app al terminar,"Criterio de aceptación: —
+
+Ref: docs/planning/plan-maestro.md",O4,app,App movil,Medium,To Do,AICC S9,
+111,7,Story,[HU-31] Conectar servicios de forma segura,"Como administrador quiero conectar servicios externos sin que las credenciales queden expuestas.
+
+Criterios de aceptación:
+1. Dada una credencial, cuando la guardo, entonces queda cifrada y las tablas de negocio solo tienen una referencia.
+2. Dado cualquier conector, cuando falla, entonces devuelve un error normalizado con reintentos y timeout propios.
+
+Tareas: O5-BE-01, O5-BE-02
+Ref: docs/planning/historias-usuario.md#hu-31",O5,S10,,Highest,To Do,AICC S10,8
+112,111,Sub-task,"[O5-BE-01] Interfaz Connector común (auth, timeout, reintentos, telemetría, errores normalizados)","Criterio de aceptación: Documentada
+
+Ref: docs/planning/plan-maestro.md",O5,be,Backend,Medium,To Do,AICC S10,
+113,111,Sub-task,[O5-BE-02] provider_connections con secret_ref; secretos cifrados (clave maestra en env en dev; KMS/Vault en prod),"Criterio de aceptación: Ningún secreto en tablas de negocio
+
+Ref: docs/planning/plan-maestro.md",O5,be,Backend,Medium,To Do,AICC S10,
+114,7,Story,[HU-32] Llamar APIs web permitidas,"Como operador quiero que una tarea consulte APIs web autorizadas y nada más.
+
+Criterios de aceptación:
+1. Dado un dominio fuera de la allowlist, cuando una tarea lo llama, entonces se bloquea.
+2. Dada una IP privada o de metadatos, cuando se intenta, entonces se bloquea (prueba SSRF).
+
+Tareas: O5-BE-03
+Ref: docs/planning/historias-usuario.md#hu-32",O5,S10,,High,To Do,AICC S10,5
+115,114,Sub-task,[O5-BE-03] http.request con allowlist de dominios por workspace,"Criterio de aceptación: Test SSRF (IPs privadas bloqueadas)
+
+Ref: docs/planning/plan-maestro.md",O5,be,Backend,Medium,To Do,AICC S10,
+116,7,Story,[HU-33] Enviar emails desde una tarea,"Como usuario quiero que una tarea pueda enviarme o enviar emails con mi aprobación.
+
+Criterios de aceptación:
+1. Dado un paso de email, cuando se planifica, entonces requiere aprobación.
+2. Dado el modo sandbox, cuando se envía, entonces llega a la cuenta de prueba.
+
+Tareas: O5-BE-04
+Ref: docs/planning/historias-usuario.md#hu-33",O5,S10,,High,To Do,AICC S10,5
+117,116,Sub-task,[O5-BE-04] email.send (proveedor transaccional en modo sandbox),"Criterio de aceptación: Envío real a cuenta de prueba
+
+Ref: docs/planning/plan-maestro.md",O5,be,Backend,Medium,To Do,AICC S10,
+118,7,Story,[HU-34] Disparar workflows de n8n,"Como operador quiero que una tarea dispare workflows de n8n para reutilizar automatizaciones existentes.
+
+Criterios de aceptación:
+1. Dado `docker compose --profile connectors up`, cuando arranca, entonces n8n queda disponible solo en local.
+2. Dado un workflow de ejemplo, cuando la tarea lo dispara, entonces se ejecuta y su resultado vuelve como artefacto.
+3. Dada la licencia de n8n, cuando se revisa, entonces queda documentado el uso permitido (ADR‑017).
+
+Tareas: O5-BE-05, O5-OPS-01, O5-DOC-01
+Ref: docs/planning/historias-usuario.md#hu-34",O5,S11,,High,To Do,AICC S11,5
+119,118,Sub-task,[O5-BE-05] n8n.trigger_workflow contra n8n local en Docker,"Criterio de aceptación: Workflow de ejemplo ejecutado
+
+Ref: docs/planning/plan-maestro.md",O5,be,Backend,Medium,To Do,AICC S11,
+120,118,Sub-task,[O5-OPS-01] n8n en Compose (perfil connectors),"Criterio de aceptación: Arranca con docker compose --profile connectors up
+
+Ref: docs/planning/plan-maestro.md",O5,ops,DevOps,Medium,To Do,AICC S11,
+121,118,Sub-task,[O5-DOC-01] ADR‑017 licencia n8n (uso interno validado),"Criterio de aceptación: Aceptado
+
+Ref: docs/planning/plan-maestro.md",O5,doc,Documentacion,Medium,To Do,AICC S11,
+122,7,Story,[HU-35] Usar herramientas MCP,"Como equipo quiero exponer herramientas de servidores MCP como capacidades permitidas para ampliar AICC sin código nuevo.
+
+Criterios de aceptación:
+1. Dado un servidor MCP de prueba, cuando se registra, entonces solo sus herramientas en allowlist aparecen como capacidades.
+2. Dada una herramienta MCP, cuando se usa, entonces pasa por el mismo motor de políticas.
+
+Tareas: O5-BE-06
+Ref: docs/planning/historias-usuario.md#hu-35",O5,S11,,Medium,To Do,AICC S11,8
+123,122,Sub-task,[O5-BE-06] Cliente MCP: exponer herramientas de un servidor MCP como capabilities (allowlist),"Criterio de aceptación: 1 servidor MCP de prueba
+
+Ref: docs/planning/plan-maestro.md",O5,be,Backend,Medium,To Do,AICC S11,
+124,7,Story,[HU-36] Administrar conexiones desde el móvil,"Como administrador quiero ver, probar y desconectar servicios desde la app.
+
+Criterios de aceptación:
+1. Dado un servicio, cuando lo conecto, entonces el flujo toma 3 pasos y explica qué permisos pide.
+2. Dada una conexión, cuando la pruebo, entonces veo si funciona.
+
+Tareas: O5-APP-01, O5-UX-01
+Ref: docs/planning/historias-usuario.md#hu-36",O5,S11,,Medium,To Do,AICC S11,5
+125,124,Sub-task,"[O5-APP-01] Pantalla Conectores: estado, probar conexión, desconectar (M7)","Criterio de aceptación: —
+
+Ref: docs/planning/plan-maestro.md",O5,app,App movil,Medium,To Do,AICC S11,
+126,124,Sub-task,"[O5-UX-01] Patrón ""conectar servicio"" en 3 pasos","Criterio de aceptación: Prototipo aprobado
+
+Ref: docs/planning/plan-maestro.md",O5,ux,UX-UI,Medium,To Do,AICC S11,
+127,8,Story,[HU-37] Saber cuánto cuesta cada ejecución,"Como usuario quiero saber cuánto costó realmente cada ejecución frente a lo estimado.
+
+Criterios de aceptación:
+1. Dada cualquier llamada con costo, cuando termina, entonces queda un evento de consumo.
+2. Dada una ejecución terminada, cuando la reviso, entonces veo estimado frente a real.
+
+Tareas: O6-BE-01, O6-BE-04
+Ref: docs/planning/historias-usuario.md#hu-37",O6,S12,,High,To Do,AICC S12,5
+128,127,Sub-task,[O6-BE-01] usage_events desde AgentRuntime y conectores,"Criterio de aceptación: Costo por run
+
+Ref: docs/planning/plan-maestro.md",O6,be,Backend,Medium,To Do,AICC S12,
+129,127,Sub-task,[O6-BE-04] Comparación estimado vs. real por run,"Criterio de aceptación: Reporte
+
+Ref: docs/planning/plan-maestro.md",O6,be,Backend,Medium,To Do,AICC S12,
+130,8,Story,[HU-38] Presupuestos que me protegen,"Como administrador quiero presupuestos con alertas y pausa automática para no llevarme sorpresas.
+
+Criterios de aceptación:
+1. Dado el 70 % del presupuesto, cuando se alcanza, entonces recibo alerta; al 90 % se pide confirmación; al 100 % se pausa.
+2. Dada la app, cuando abro Consumo, entonces veo la barra de presupuesto con colores por umbral.
+
+Tareas: O6-BE-02, O6-BE-03, O6-APP-02
+Ref: docs/planning/historias-usuario.md#hu-38",O6,S12,,Highest,To Do,AICC S12,8
+131,130,Sub-task,[O6-BE-02] budgets por workspace/proyecto/run con umbrales 70/90/100 %,"Criterio de aceptación: Pausa automática al 100 %
+
+Ref: docs/planning/plan-maestro.md",O6,be,Backend,Medium,To Do,AICC S12,
+132,130,Sub-task,"[O6-BE-03] GET /usage/summary, GET /budgets","Criterio de aceptación: Contrato
+
+Ref: docs/planning/plan-maestro.md",O6,be,Backend,Medium,To Do,AICC S12,
+133,130,Sub-task,[O6-APP-02] Pantalla Consumo con barra de presupuesto,"Criterio de aceptación: —
+
+Ref: docs/planning/plan-maestro.md",O6,app,App movil,Medium,To Do,AICC S12,
+134,8,Story,[HU-39] Métricas técnicas del sistema,"Como equipo quiero métricas técnicas para detectar degradaciones antes que los usuarios.
+
+Criterios de aceptación:
+1. Dado `/metrics`, cuando Prometheus lo consulta, entonces obtiene latencias, errores y colas.
+2. Dado el perfil `observability`, cuando lo levanto, entonces Grafana muestra un panel básico.
+
+Tareas: O6-OPS-01
+Ref: docs/planning/historias-usuario.md#hu-39",O6,S12,,Medium,To Do,AICC S12,3
+135,134,Sub-task,[O6-OPS-01] Métricas Prometheus (/metrics) + Grafana local opcional (perfil observability),"Criterio de aceptación: Dashboard básico
+
+Ref: docs/planning/plan-maestro.md",O6,ops,DevOps,Medium,To Do,AICC S12,
+136,8,Story,[HU-40] Todo de un vistazo,"Como usuario quiero abrir la app y ver qué está activo, qué espera mi decisión y cuánto he gastado.
+
+Criterios de aceptación:
+1. Dado el Inicio, cuando lo abro, entonces veo tareas activas, aprobaciones pendientes y gasto del mes.
+
+Tareas: O6-APP-01
+Ref: docs/planning/historias-usuario.md#hu-40",O6,S13,,High,To Do,AICC S13,5
+137,136,Sub-task,"[O6-APP-01] Home / Dashboard: tareas activas, aprobaciones pendientes, gasto del mes (M8)","Criterio de aceptación: Todo de un vistazo
+
+Ref: docs/planning/plan-maestro.md",O6,app,App movil,Medium,To Do,AICC S13,
+138,8,Story,[HU-41] Producto validado con usuarios reales,"Como equipo quiero validar el orquestador con personas reales y documentarlo para cerrar el MVP con confianza.
+
+Criterios de aceptación:
+1. Dadas 3–5 sesiones de usabilidad, cuando terminan, entonces los hallazgos críticos quedan corregidos.
+2. Dado el MVP, cuando se entrega, entonces existen el manual de usuario v1 y el ADR‑015.
+
+Tareas: O6-UX-01, O6-DOC-01
+Ref: docs/planning/historias-usuario.md#hu-41",O6,S13,,High,To Do,AICC S13,5
+139,138,Sub-task,[O6-UX-01] Revisión completa de usabilidad con 3–5 personas,"Criterio de aceptación: Hallazgos corregidos
+
+Ref: docs/planning/plan-maestro.md",O6,ux,UX-UI,Medium,To Do,AICC S13,
+140,138,Sub-task,[O6-DOC-01] ADR‑015 medición estimado/real; manual de usuario v1,"Criterio de aceptación: Publicado
+
+Ref: docs/planning/plan-maestro.md",O6,doc,Documentacion,Medium,To Do,AICC S13,

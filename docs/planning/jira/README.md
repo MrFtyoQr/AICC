@@ -5,51 +5,50 @@
 | Elemento | Valor |
 |---|---|
 | Proyecto | **AI Command Center**, clave `AICC`, plantilla *Scrum* |
-| Epics | Uno por fase: F0, F1, O1–O6 (Etapa B se crea al cerrar H2) |
-| Tipos | `Story` para BE/APP/UX/SEC · `Task` para OPS/DOC · `Bug` · `Spike` (investigación con límite de tiempo) |
-| Componentes | Backend · App movil · UX-UI · DevOps · Seguridad · Documentacion |
-| Etiquetas | fase (`F0`, `O2`…) + frente (`be`, `app`, `ux`, `ops`, `sec`, `doc`) |
-| Sprints | 2 semanas; un sprint no mezcla fases salvo cierre/arranque |
+| Jerarquía | **Epic** (fase F0…O6) → **Story** (historia de usuario HU‑NN) → **Sub-task** (tarea técnica del plan, ej. `O2-BE-05`) |
+| Componentes | Backend · App movil · UX-UI · DevOps · Seguridad · Documentacion (en las subtareas) |
+| Etiquetas | fase (`F0`, `O2`…) + sprint (`S1`…) en historias · fase + frente (`be`, `app`…) en subtareas |
+| Sprints | `AICC S0` … `AICC S13`, de 2 semanas (ver [sprints.md](../sprints.md)) |
+| Estimación | Story points en las historias (Fibonacci) |
 | Flujo | To Do → In Progress → In Review (PR abierto) → Done (merge + DoD) |
 
-El código de cada ticket (`[O2-BE-05]`) va al inicio del Summary y enlaza con el plan maestro.
+Fuentes: [plan-maestro.md](../plan-maestro.md) (epics y tareas) y [historias-usuario.md](../historias-usuario.md) (historias, criterios, sprint, puntos).
 
-## Importar el backlog
-
-El archivo [`backlog.csv`](backlog.csv) se **genera** desde el plan maestro; no se edita a mano:
+## Generar el backlog
 
 ```bash
 python -I scripts/generar-backlog-jira.py
 ```
 
-Pasos en Jira Cloud:
+El script **falla** si una tarea del plan no está en ninguna historia, está en dos, o una historia cita una
+tarea inexistente. Resultado actual: **8 epics, 41 historias (244 pts), 91 subtareas**.
 
-1. Crear el proyecto `AICC` (Scrum) y los 6 componentes de la tabla.
-2. Configuración del sistema → **Sistema externo → CSV** (o en el proyecto: ⋯ → *Importar issues*).
-3. Subir `backlog.csv`, codificación **UTF‑8**, proyecto `AICC`.
+## Importar por CSV (mientras el conector no esté autorizado)
+
+1. Crear el proyecto `AICC` (Scrum, *company-managed* recomendado) y los 6 componentes.
+2. Crear los sprints `AICC S0` … `AICC S13` en el backlog (el importador asigna por nombre).
+3. ⚙ → **Sistema → Importación externa → CSV**. Subir `backlog.csv` en **UTF‑8**.
 4. Mapear columnas:
 
 | Columna CSV | Campo Jira |
 |---|---|
 | Issue ID | Issue Id |
-| Parent ID | Parent Id (crea la relación Epic → issue) |
+| Parent ID | Parent Id (Epic → Story → Sub-task) |
 | Issue Type | Issue Type |
-| Summary | Summary |
-| Description | Description |
+| Summary / Description | Summary / Description |
 | Labels (×2) | Labels |
 | Component | Component/s |
 | Priority | Priority |
-| Status | Status (mapear `To Do` / `Done`) |
+| Status | Status (`To Do`, `Done`) |
+| Sprint | Sprint |
+| Story Points | Story Points (en *team-managed*: "Story point estimate") |
 
-5. Validar con el asistente y ejecutar. Resultado esperado: **8 epics y 91 issues** (3 ya en Done).
+5. Validar y ejecutar. Deben quedar 140 issues; S0 con 4 historias y 16 subtareas en *Done*.
 
-## Conectar Jira con Claude
+Con el conector de Atlassian autorizado (ver [conexiones.md](../conexiones.md)) este paso lo hace Claude directamente.
 
-Para que Claude cree y actualice tickets directamente, autoriza el conector de Atlassian ejecutando
-`/mcp` en una terminal `claude` interactiva. Con eso se puede sincronizar el backlog sin importar CSV.
+## Convenciones Git ↔ Jira
 
-## Convenciones de Git ↔ Jira
-
-- Rama: `AICC-<n>-descripcion-corta`
-- Commit: `feat(tasks): máquina de estados AICC-<n>`
-- PR: título con la clave; la descripción enlaza el ticket y marca la DoD.
+- Rama: `AICC-<n>-descripcion-corta` (mientras no haya claves Jira: `HU-NN-descripcion`).
+- Commit: `feat(auth): login con refresh rotatorio AICC-<n>`.
+- PR: título con la clave; la descripción enlaza la historia y marca su DoD.

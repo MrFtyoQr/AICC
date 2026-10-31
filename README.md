@@ -47,6 +47,9 @@ Medición comparativa del entorno: `scripts/medir-entorno.sh <etiqueta>` y `cd b
 |---|---|
 | [Plan maestro](docs/planning/plan-maestro.md) | **Documento rector**: fases, frentes, tareas, gates |
 | [Roadmap](docs/planning/roadmap.md) | Vista de una pantalla |
+| [Historias de usuario](docs/planning/historias-usuario.md) | 41 HU con criterios, puntos y tareas |
+| [Sprints](docs/planning/sprints.md) | Calendario S0–S13, sprint actual y velocidad |
+| [Conexiones pendientes](docs/planning/conexiones.md) | Lo que solo tú puedes autorizar y cuándo se necesita |
 | [F0 · guía de ejecución](docs/planning/fase-0-fundamentos.md) | Orden exacto y decisiones de la fase actual |
 | [Núcleo de orquestación](docs/architecture/orquestacion.md) | Modelo de dominio, estados, plan, políticas, worker, SSE |
 | [App móvil incremental](docs/planning/app-movil-incremental.md) | Incrementos M0–M8 |
