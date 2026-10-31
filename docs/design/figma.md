@@ -11,9 +11,13 @@ Mermaid de este repo cuando cambia la arquitectura, para que Figma y el código 
 | Ciclo de vida de una tarea | [AICC - Ciclo de vida de una tarea](https://www.figma.com/board/NWzvNxu4btMJWoaVJTxCKu) | [orquestacion.md §3](../architecture/orquestacion.md) |
 | Flujo UX "pedir y aprobar" | [AICC - Flujo UX pedir y aprobar](https://www.figma.com/board/Zj8p93tqmKJmPEhVbEHn6A) | [principios-ux.md §3](../ux/principios-ux.md) |
 | Roadmap de sprints | [AICC - Roadmap de sprints Etapa A](https://www.figma.com/board/RG7J9hLReprlflqXm6LRiE) | [sprints.md](../planning/sprints.md) |
+| Los 3 caminos (Conectar, BYOC, Administrado) | [AICC - Los 3 caminos](https://www.figma.com/board/BFKDHkxOWHG04OCguE8X9H) | [modelo-operacion.md §3](../architecture/modelo-operacion.md) |
+| Receta estándar (pasos administrables) | [AICC - Receta estándar](https://www.figma.com/board/nbt8z29egWprfJiKZrslDE) | [modelo-operacion.md §4](../architecture/modelo-operacion.md) |
+| Camino Conectar (OpenClaw, n8n, Hermes, a medida) | [AICC - Camino Conectar](https://www.figma.com/board/NDb60yjgBfmfNaiN6iCjjP) | [modelo-operacion.md §3A](../architecture/modelo-operacion.md) |
+| AICC como intermediario entre cliente y nubes | [AICC - Intermediario y nubes](https://www.figma.com/board/HdWIVgaLZbrGTfnnAguGCG) | [ADR-019](../decisions/ADR-019-nube-estandar.md) |
 
 > La primera vez que abras cada enlace, Figma te pide **reclamarlo** ("claim") para guardarlo en tus borradores.
-> Hazlo con los cuatro; después muévelos a un proyecto `AICC` dentro del equipo.
+> Hazlo con los ocho; después muévelos a un proyecto `AICC` dentro del equipo.
 
 ## Pantallas (Figma Design)
 

@@ -556,16 +556,17 @@ Ref: docs/planning/historias-usuario.md#hu-33",O5,S10,,High,To Do,AICC S10,5
 117,116,Sub-task,[O5-BE-04] email.send (proveedor transaccional en modo sandbox),"Criterio de aceptación: Envío real a cuenta de prueba
 
 Ref: docs/planning/plan-maestro.md",O5,be,Backend,Medium,To Do,AICC S10,
-118,7,Story,[HU-34] Disparar workflows de n8n,"Como operador quiero que una tarea dispare workflows de n8n para reutilizar automatizaciones existentes.
+118,7,Story,[HU-34] Orquestar mi propio stack (n8n primero),"Como operador quiero que una tarea dispare los workflows o agentes que ya tengo (n8n, OpenClaw, Hermes o a medida) para orquestarlos desde la app sin migrarlos.
 
 Criterios de aceptación:
 1. Dado `docker compose --profile connectors up`, cuando arranca, entonces n8n queda disponible solo en local.
 2. Dado un workflow de ejemplo, cuando la tarea lo dispara, entonces se ejecuta y su resultado vuelve como artefacto.
-3. Dada la licencia de n8n, cuando se revisa, entonces queda documentado el uso permitido (ADR‑017).
+3. Dado el contrato de runtime externo, cuando se documenta, entonces el spike V-A2 indica qué cubren OpenClaw y Hermes y qué falta.
+4. Dada la licencia de n8n, cuando se revisa, entonces queda documentado el uso permitido (ADR‑017).
 
 Tareas: O5-BE-05, O5-OPS-01, O5-DOC-01
 Ref: docs/planning/historias-usuario.md#hu-34",O5,S11,,High,To Do,AICC S11,5
-119,118,Sub-task,[O5-BE-05] n8n.trigger_workflow contra n8n local en Docker,"Criterio de aceptación: Workflow de ejemplo ejecutado
+119,118,Sub-task,"[O5-BE-05] Contrato de runtime externo (health, list_actions, trigger, status/callback, result) + adaptador n8n contra n8n local en Docker (ADR-011)","Criterio de aceptación: Workflow de ejemplo ejecutado; spike V-A2 decide OpenClaw/Hermes
 
 Ref: docs/planning/plan-maestro.md",O5,be,Backend,Medium,To Do,AICC S11,
 120,118,Sub-task,[O5-OPS-01] n8n en Compose (perfil connectors),"Criterio de aceptación: Arranca con docker compose --profile connectors up
