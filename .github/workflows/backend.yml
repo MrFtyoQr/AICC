@@ -39,6 +39,7 @@ jobs:
       APP_ENV: test
       DATABASE_URL: postgresql+asyncpg://aicc:ci_only_password@127.0.0.1:5432/aicc
       REDIS_URL: redis://127.0.0.1:6379/0
+      JWT_SECRET: ci_only_secret_not_used_anywhere_else_0123456789
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6

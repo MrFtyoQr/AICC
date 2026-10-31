@@ -9,6 +9,10 @@ concurrency:
   group: repo-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  pull-requests: read  # gitleaks lista los commits del PR
+
 jobs:
   secrets:
     name: secretos (gitleaks)

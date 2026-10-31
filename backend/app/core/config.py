@@ -19,6 +19,12 @@ class Settings(BaseSettings):
     cors_origins: list[str] = []
     dependency_timeout_s: float = 2.0
 
+    # Autenticación (ADR-006). El secreto firma los access tokens: mínimo 32 caracteres aleatorios.
+    jwt_secret: str = Field(min_length=32)
+    jwt_issuer: str = "aicc-api"
+    access_token_ttl_s: int = 15 * 60
+    refresh_token_ttl_days: int = 30
+
     model_config = SettingsConfigDict(
         env_file=REPO_ROOT / ".env",
         env_file_encoding="utf-8",

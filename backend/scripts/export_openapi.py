@@ -19,7 +19,13 @@ TARGET = REPO_ROOT / "shared" / "contracts" / "openapi.json"
 
 def render() -> str:
     # Valores ficticios: el contrato no depende de la configuración real.
-    settings = Settings(_env_file=None, app_env="test", database_url="unused", redis_url="unused")
+    settings = Settings(
+        _env_file=None,
+        app_env="test",
+        database_url="unused",
+        redis_url="unused",
+        jwt_secret="unused-unused-unused-unused-unused",
+    )
     spec = create_app(settings).openapi()
     return json.dumps(spec, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
 

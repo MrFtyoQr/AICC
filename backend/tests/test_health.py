@@ -49,8 +49,8 @@ def test_ready_does_not_leak_connection_details(offline_client):
 
 
 @pytest.mark.integration
-def test_ready_ok_with_compose_services(live_client):
-    response = live_client.get("/health/ready")
+def test_ready_ok_with_compose_services(client):
+    response = client.get("/health/ready")
 
     assert response.status_code == 200
     assert response.json() == {
