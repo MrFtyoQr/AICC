@@ -316,6 +316,9 @@
               }
             },
             "description": "Validation Error"
+          },
+          "429": {
+            "description": "Demasiados intentos"
           }
         },
         "summary": "Iniciar sesión",
@@ -394,6 +397,9 @@
               }
             },
             "description": "Validation Error"
+          },
+          "429": {
+            "description": "Demasiados intentos"
           }
         },
         "summary": "Rotar el refresh token y obtener un access token nuevo",
@@ -438,6 +444,9 @@
               }
             },
             "description": "Validation Error"
+          },
+          "429": {
+            "description": "Demasiados intentos"
           }
         },
         "summary": "Crear cuenta",

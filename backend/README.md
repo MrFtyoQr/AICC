@@ -17,6 +17,22 @@ uv run uvicorn app.main:create_app --factory --reload --host 127.0.0.1 --port 80
 - `http://127.0.0.1:8000/health/ready`: BD y Redis responden (200) o no (503, con el detalle por dependencia).
 - `http://127.0.0.1:8000/docs`: documentación interactiva, solo en `development` y `test`.
 
+## Autenticación (ADR-006)
+
+| Endpoint | Qué hace | Límite por IP |
+|---|---|---|
+| `POST /api/v1/auth/register` | Crea cuenta (email + contraseña de 12–128 caracteres) | 5/min |
+| `POST /api/v1/auth/login` | Devuelve `access_token` (JWT, 15 min) + `refresh_token` (opaco, 30 días) | 10/min |
+| `POST /api/v1/auth/refresh` | Rota el refresh token; reutilizar uno ya rotado revoca toda la sesión | 30/min |
+| `POST /api/v1/auth/logout` | Revoca la sesión del refresh token | — |
+| `GET /api/v1/me` | Usuario autenticado (`Authorization: Bearer <access_token>`) | — |
+
+- Contraseñas con Argon2id; refresh tokens guardados como SHA‑256, nunca en claro.
+- Login responde igual (401) si el email no existe o la contraseña es incorrecta, y hace el mismo trabajo en ambos casos.
+- `JWT_SECRET` (≥ 32 caracteres) es obligatorio; sin él la API no arranca.
+- Protección: cuerpos > 1 MiB → 413; exceso de intentos → 429 con `Retry-After`; CORS solo para `CORS_ORIGINS`.
+  Si Redis cae, el limitador deja pasar (y lo registra) para no bloquear el login de todos.
+
 ## Verificación
 
 ```bash

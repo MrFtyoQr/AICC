@@ -1,9 +1,10 @@
 import uuid
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, EmailStr, Field
 
 from app.api.deps import CurrentUser, SessionDep, SettingsDep
+from app.api.rate_limit import rate_limit
 from app.application.auth import (
     AuthService,
     EmailAlreadyRegistered,
@@ -64,7 +65,11 @@ _INVALID_REFRESH = HTTPException(
     response_model=UserResponse,
     status_code=status.HTTP_201_CREATED,
     summary="Crear cuenta",
-    responses={409: {"description": "El email ya está registrado"}},
+    responses={
+        409: {"description": "El email ya está registrado"},
+        429: {"description": "Demasiados intentos"},
+    },
+    dependencies=[Depends(rate_limit("register", "rate_limit_register"))],
 )
 async def register(body: RegisterRequest, session: SessionDep, settings: SettingsDep):
     try:
@@ -80,7 +85,11 @@ async def register(body: RegisterRequest, session: SessionDep, settings: Setting
     "/auth/login",
     response_model=TokenResponse,
     summary="Iniciar sesión",
-    responses={401: {"description": "Credenciales inválidas"}},
+    responses={
+        401: {"description": "Credenciales inválidas"},
+        429: {"description": "Demasiados intentos"},
+    },
+    dependencies=[Depends(rate_limit("login", "rate_limit_login"))],
 )
 async def login(body: LoginRequest, session: SessionDep, settings: SettingsDep):
     try:
@@ -94,7 +103,11 @@ async def login(body: LoginRequest, session: SessionDep, settings: SettingsDep):
     "/auth/refresh",
     response_model=TokenResponse,
     summary="Rotar el refresh token y obtener un access token nuevo",
-    responses={401: {"description": "Refresh token inválido, vencido o reutilizado"}},
+    responses={
+        401: {"description": "Refresh token inválido, vencido o reutilizado"},
+        429: {"description": "Demasiados intentos"},
+    },
+    dependencies=[Depends(rate_limit("refresh", "rate_limit_refresh"))],
 )
 async def refresh(body: RefreshRequest, session: SessionDep, settings: SettingsDep):
     try:

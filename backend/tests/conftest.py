@@ -5,6 +5,7 @@ from typing import Any
 
 import asyncpg
 import pytest
+import redis
 from alembic import command
 from alembic.config import Config
 from fastapi.testclient import TestClient
@@ -109,8 +110,19 @@ def db(migrated_db: str) -> Callable[[Callable[[AsyncSession], Coroutine]], Any]
     return query
 
 
+def clear_rate_limits(settings: Settings) -> None:
+    r = redis.Redis.from_url(settings.redis_url)
+    try:
+        keys = list(r.scan_iter("rl:*"))
+        if keys:
+            r.delete(*keys)
+    finally:
+        r.close()
+
+
 @pytest.fixture
 def client(test_settings: Settings, db) -> Iterator[TestClient]:
     """API conectada a la base aislada y al Redis de docker compose (o de CI)."""
+    clear_rate_limits(test_settings)
     with TestClient(create_app(test_settings)) as c:
         yield c

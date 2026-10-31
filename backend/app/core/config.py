@@ -25,6 +25,13 @@ class Settings(BaseSettings):
     access_token_ttl_s: int = 15 * 60
     refresh_token_ttl_days: int = 30
 
+    # Protección básica (HU-07).
+    max_body_bytes: int = 1_048_576
+    rate_limit_window_s: int = 60
+    rate_limit_login: int = 10
+    rate_limit_register: int = 5
+    rate_limit_refresh: int = 30
+
     model_config = SettingsConfigDict(
         env_file=REPO_ROOT / ".env",
         env_file_encoding="utf-8",
