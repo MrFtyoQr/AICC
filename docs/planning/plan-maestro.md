@@ -77,9 +77,9 @@ soluciones son "programas" que corren sobre él.
 | F0-BE-06 | BE | Exportar OpenAPI a `shared/contracts/openapi.json` | Script + verificación en CI ✅ (hecho) |
 | F0-APP-01 | APP | Flutter stable, `apps/mobile` con `com.treetech.aicc` | Corre en emulador Android ✅ (hecho) |
 | F0-APP-02 | APP | Esqueleto `lib/` (app, core, features) + `AICC_API_BASE_URL` | Ver incremento M0 ✅ (hecho) |
-| F0-APP-03 | APP | Pantalla de estado de conexión (M0) | OK / timeout / caída sin bloquear |
+| F0-APP-03 | APP | Pantalla de estado de conexión (M0) | OK / timeout / caída sin bloquear ✅ (hecho) |
 | F0-UX-01 | UX | Principios UX, arquitectura de información y mapa de pantallas | Documento aprobado ✅ (hecho) |
-| F0-UX-02 | UX | Tokens de diseño (color, tipografía, espaciado, estados) + tema claro/oscuro | `app/theme/` refleja tokens |
+| F0-UX-02 | UX | Tokens de diseño (color, tipografía, espaciado, estados) + tema claro/oscuro | `app/theme/` refleja tokens ✅ (hecho) |
 | F0-SEC-01 | SEC | Auth propia: `users`, hash Argon2, access JWT 15 min + refresh rotatorio | Tests de expiración/rotación/reuso |
 | F0-SEC-02 | SEC | CORS restringido, límite de body, rate limit básico | Tests |
 | F0-APP-04 | APP | Login + `flutter_secure_storage` + Riverpod + GoRouter (M1) | Login → Home |

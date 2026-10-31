@@ -45,13 +45,13 @@ Ref: docs/planning/plan-maestro.md#f0",F0,app,App movil,High,Done
 Ref: docs/planning/plan-maestro.md#f0",F0,app,App movil,Medium,Done
 ,1,Story,[F0-APP-03] Pantalla de estado de conexión (M0),"Criterio de aceptación: OK / timeout / caída sin bloquear
 
-Ref: docs/planning/plan-maestro.md#f0",F0,app,App movil,Medium,To Do
+Ref: docs/planning/plan-maestro.md#f0",F0,app,App movil,Medium,Done
 ,1,Story,"[F0-UX-01] Principios UX, arquitectura de información y mapa de pantallas","Criterio de aceptación: Documento aprobado
 
 Ref: docs/planning/plan-maestro.md#f0",F0,ux,UX-UI,High,Done
 ,1,Story,"[F0-UX-02] Tokens de diseño (color, tipografía, espaciado, estados) + tema claro/oscuro","Criterio de aceptación: app/theme/ refleja tokens
 
-Ref: docs/planning/plan-maestro.md#f0",F0,ux,UX-UI,Medium,To Do
+Ref: docs/planning/plan-maestro.md#f0",F0,ux,UX-UI,Medium,Done
 ,1,Story,"[F0-SEC-01] Auth propia: users, hash Argon2, access JWT 15 min + refresh rotatorio","Criterio de aceptación: Tests de expiración/rotación/reuso
 
 Ref: docs/planning/plan-maestro.md#f0",F0,sec,Seguridad,High,To Do

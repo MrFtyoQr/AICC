@@ -32,8 +32,8 @@ Este documento fija **el orden exacto** y las decisiones previas.
 10. ✅ **F0-BE-04** `/health/ready` (BD + Redis).
 11. ✅ **F0-BE-05** Logging JSON + `X-Request-ID`.
 12. ✅ **F0-BE-06** Exportar OpenAPI.
-13. **F0-UX-01 / F0-UX-02** Principios, mapa de pantallas, tokens de diseño.
-14. **F0-APP-01 → F0-APP-03** Flutter, esqueleto, pantalla de estado de conexión (M0).
+13. ✅ **F0-UX-01 / F0-UX-02** Principios, mapa de pantallas, tokens de diseño.
+14. ✅ **F0-APP-01 → F0-APP-03** Flutter, esqueleto, pantalla de estado de conexión (M0).
 
 → **Checkpoint 0A:** DoD sección 15 verificada; tag `v0.1.0`; medición `F0-0A`.
 
@@ -50,13 +50,13 @@ Este documento fija **el orden exacto** y las decisiones previas.
 
 | Punto | Cómo se comprueba |
 |---|---|
-| Se clona y arranca en otra máquina | Clon limpio en carpeta temporal + pasos del README |
-| Flutter corre en Android | `flutter run` en emulador |
-| FastAPI `/health` + OpenAPI local | `curl` + `/docs` |
+| Se clona y arranca en otra máquina | Clon limpio en carpeta temporal + pasos del README ✅ |
+| Flutter corre en Android | `flutter run` en emulador ✅ (Medium_Phone, API 37) |
+| FastAPI `/health` + OpenAPI local | `curl` + `/docs` ✅ |
 | PostgreSQL y Redis *healthy* | `docker compose ps` ✅ |
-| Configuración desde entorno, sin secretos versionados | Test + `gitleaks` |
-| Flutter llama a la API con URL configurable | `--dart-define=AICC_API_BASE_URL` |
-| Pruebas y analizadores pasan | CI |
+| Configuración desde entorno, sin secretos versionados | Test ✅ · `gitleaks` en CI (0B) |
+| Flutter llama a la API con URL configurable | `--dart-define=AICC_API_BASE_URL` ✅ |
+| Pruebas y analizadores pasan | Local ✅ (12 backend + 9 Flutter) · CI en 0B |
 | README y `.env.example` sin credenciales reales | Revisión ✅ |
 
 ## Fuera de alcance de F0

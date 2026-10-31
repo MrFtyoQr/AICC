@@ -11,9 +11,9 @@ comparar contra un VPS o una nube (Etapa B, S2).
 | Sistema | Windows 11 Home 10.0.26300 |
 | Docker | Docker Desktop 29.4.3 (motor Linux, WSL2) |
 | Recursos de la VM Docker | 32 CPU lógicas · 7,36 GiB RAM |
-| Python sistema | 3.15.2 (el backend usará 3.12 vía `uv`) |
-| Flutter | 3.50.0‑0.3.pre, canal `main` → cambiar a `stable` |
-| Ubicación del repo | Carpeta sincronizada con OneDrive (ver riesgo §5) |
+| Python backend | 3.12.14 vía `uv` (sistema: 3.15.2) |
+| Flutter | 3.47.9 stable (cambiado desde `main` el 2026‑10‑31) |
+| Ubicación del repo | `C:\dev\ai-command-center` (fuera de OneDrive desde el 2026‑10‑31) |
 
 ## 2. Arranque
 
@@ -64,6 +64,9 @@ Métricas que se agregan conforme existan los componentes:
 | Etiqueta | Fecha | Arranque (ms) | RAM reposo PG / Redis | pgbench TPS (lat.) | Redis SET / RPOP (rps) | Notas |
 |---|---|---|---|---|---|---|
 | [F0-base](resultados/F0-base.md) | 2026‑10‑31 | 7 055 | 18,9 MiB / 4,3 MiB | 2 682 (2,98 ms) | 76 628 / 72 359 | Solo infraestructura; sin API |
+| [F0-0A](resultados/F0-0A.md) | 2026‑10‑31 | 8 745 | 21,2 MiB / 4,8 MiB | 2 192 (3,65 ms) | ver archivo | API activa + emulador Android en paralelo. `/health` p50 3,3 ms (secuencial), `/health/ready` p50 9,8 ms |
+
+Lectura de F0-0A: con la API y el emulador encendidos, PostgreSQL baja de ~2 700 a ~2 200 TPS (la máquina comparte CPU con el emulador). La API sola responde en ~1 ms; ver notas del archivo.
 
 Lectura de la línea base: la infraestructura consume ~23 MiB en reposo y arranca en ~7 s; el margen
 de la VM (7,36 GiB) sobra para API + worker + n8n. Redis supera 70 000 operaciones de cola por segundo:
@@ -73,7 +76,7 @@ la cola no será el cuello de botella en la Etapa A.
 
 | Riesgo | Efecto | Acción |
 |---|---|---|
-| Repo dentro de OneDrive | Sincroniza `.venv`, `build/`, `.dart_tool/` (miles de archivos), bloqueos de archivo | Mover el repo a `C:\dev\ai-command-center` **o** marcar esas carpetas como "solo en este equipo". Decidir antes de F0-BE-01 |
+| Repo dentro de OneDrive | Resuelto: el repo vive en `C:\dev\ai-command-center`; la copia de OneDrive queda como respaldo y ya no se usa | — |
 | Flutter en canal `main` | Builds inestables | `flutter channel stable && flutter upgrade` |
 | Python 3.15 del sistema | Dependencias sin wheels | `uv python install 3.12` + `.python-version` |
 | Sin macOS | No hay validación iOS | Android primero; runner macOS en CI más adelante |
