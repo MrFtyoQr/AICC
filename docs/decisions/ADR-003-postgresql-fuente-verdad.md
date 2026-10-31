@@ -1,6 +1,6 @@
 # ADR-003: PostgreSQL como fuente de verdad
 
-**Estado:** Propuesto · **Fecha:** 2026-10-31
+**Estado:** Aceptado · **Fecha:** 2026-10-31
 
 ## Contexto
 Usuarios, tareas, cotizaciones y auditoría necesitan consistencia transaccional y trazabilidad.

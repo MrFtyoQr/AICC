@@ -1,6 +1,6 @@
 # ADR-001: Backend como monolito modular con workers separados
 
-**Estado:** Propuesto · **Fecha:** 2026-10-31
+**Estado:** Aceptado · **Fecha:** 2026-10-31
 
 ## Contexto
 El dominio (agentes, cotización, provisionamiento) y la carga real aún no están validados.
