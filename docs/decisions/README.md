@@ -21,3 +21,4 @@ Formato: contexto → decisión → consecuencias. Estados: *Propuesto*, *Acepta
 | 015 | Medición de costo estimado y real por proveedor y workspace | Pendiente | O6 |
 | 016 | Canal de mensajería intercambiable; WhatsApp no depende solo de conexión no oficial | Pendiente | S4 |
 | 017 | Uso comercial de n8n validado contra su licencia | Pendiente | O5 |
+| [018](ADR-018-contenedores.md) | El contenedor es la unidad de despliegue del backend | Aceptado | F0 |

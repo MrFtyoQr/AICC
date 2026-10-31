@@ -1,0 +1,13 @@
+# Todo lo que no es necesario para construir la imagen de producción.
+.venv/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+tests/
+scripts/
+README.md
+.env
+.env.*
+Dockerfile
+.dockerignore

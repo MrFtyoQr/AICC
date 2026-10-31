@@ -7,18 +7,18 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import create_async_engine
 
 from app.core.config import get_settings
+from app.infrastructure import models  # noqa: F401 - registra las tablas en Base.metadata
 from app.infrastructure.database import Base
 
 config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name, disable_existing_loggers=False)
 
-# Los modelos se registran en Base.metadata al importarse; cada módulo de dominio que
-# defina tablas debe importarse aquí (a partir de 0B: app.infrastructure.models).
 target_metadata = Base.metadata
 
-# La URL sale siempre del entorno (ADR-004/§9 de la guía): nunca se escribe en alembic.ini.
-DATABASE_URL = get_settings().database_url
+# La URL sale del entorno (§9 de la guía), nunca de alembic.ini. Las pruebas la inyectan
+# por código con config.set_main_option("sqlalchemy.url", ...) para usar una base aislada.
+DATABASE_URL = config.get_main_option("sqlalchemy.url") or get_settings().database_url
 
 
 def run_migrations_offline() -> None:

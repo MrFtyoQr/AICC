@@ -136,9 +136,9 @@ Ref: docs/planning/historias-usuario.md#hu-05",F0,S1,,Highest,To Do,AICC S1,5
 30,29,Sub-task,[F0-OPS-02] Publicar en GitHub (privado) + protección de main,"Criterio de aceptación: PR obligatorio para main
 
 Ref: docs/planning/plan-maestro.md",F0,ops,DevOps,Medium,To Do,AICC S1,
-31,29,Sub-task,"[F0-OPS-05] CI GitHub Actions: backend (ruff, pytest con servicios) y mobile (analyze, test)","Criterio de aceptación: CI verde
+31,29,Sub-task,"[F0-OPS-05] CI GitHub Actions: backend (ruff, pytest con servicios, imagen Docker) y mobile (analyze, test)","Criterio de aceptación: CI verde
 
-Ref: docs/planning/plan-maestro.md",F0,ops,DevOps,Medium,To Do,AICC S1,
+Ref: docs/planning/plan-maestro.md",F0,ops,DevOps,Medium,Done,AICC S1,
 32,1,Story,[HU-06] Crear cuenta e iniciar sesión,"Como usuario quiero registrarme e iniciar sesión con email y contraseña para acceder a mi información de forma segura.
 
 Criterios de aceptación:
@@ -149,10 +149,10 @@ Criterios de aceptación:
 5. Dadas credenciales inválidas, cuando intento entrar, entonces recibo el mismo error genérico exista o no el email.
 
 Tareas: F0-SEC-01
-Ref: docs/planning/historias-usuario.md#hu-06",F0,S1,,Highest,To Do,AICC S1,8
+Ref: docs/planning/historias-usuario.md#hu-06",F0,S1,,Highest,Done,AICC S1,8
 33,32,Sub-task,"[F0-SEC-01] Auth propia: users, hash Argon2, access JWT 15 min + refresh rotatorio","Criterio de aceptación: Tests de expiración/rotación/reuso
 
-Ref: docs/planning/plan-maestro.md",F0,sec,Seguridad,High,To Do,AICC S1,
+Ref: docs/planning/plan-maestro.md",F0,sec,Seguridad,High,Done,AICC S1,
 34,1,Story,[HU-07] API protegida contra abuso,"Como responsable de la plataforma quiero límites de tamaño, frecuencia y origen para que la API resista abusos básicos.
 
 Criterios de aceptación:
@@ -161,10 +161,10 @@ Criterios de aceptación:
 3. Dado un origen no permitido, cuando un navegador llama la API, entonces CORS lo bloquea.
 
 Tareas: F0-SEC-02
-Ref: docs/planning/historias-usuario.md#hu-07",F0,S1,,High,To Do,AICC S1,3
+Ref: docs/planning/historias-usuario.md#hu-07",F0,S1,,High,Done,AICC S1,3
 35,34,Sub-task,"[F0-SEC-02] CORS restringido, límite de body, rate limit básico","Criterio de aceptación: Tests
 
-Ref: docs/planning/plan-maestro.md",F0,sec,Seguridad,High,To Do,AICC S1,
+Ref: docs/planning/plan-maestro.md",F0,sec,Seguridad,High,Done,AICC S1,
 36,1,Story,[HU-08] Iniciar sesión desde el móvil,"Como usuario quiero iniciar sesión en la app y que recuerde mi sesión de forma segura para no escribir mi contraseña cada vez.
 
 Criterios de aceptación:
@@ -174,10 +174,10 @@ Criterios de aceptación:
 4. Dado que cierro sesión, cuando vuelvo a abrir la app, entonces me pide iniciar sesión.
 
 Tareas: F0-APP-04
-Ref: docs/planning/historias-usuario.md#hu-08",F0,S1,,Highest,To Do,AICC S1,8
+Ref: docs/planning/historias-usuario.md#hu-08",F0,S1,,Highest,Done,AICC S1,8
 37,36,Sub-task,[F0-APP-04] Login + flutter_secure_storage + Riverpod + GoRouter (M1),"Criterio de aceptación: Login → Home
 
-Ref: docs/planning/plan-maestro.md",F0,app,App movil,Medium,To Do,AICC S1,
+Ref: docs/planning/plan-maestro.md",F0,app,App movil,Medium,Done,AICC S1,
 38,2,Story,[HU-09] Mi espacio de trabajo listo al registrarme,"Como usuario nuevo quiero tener un espacio de trabajo con un proyecto inicial para empezar sin configurar nada.
 
 Criterios de aceptación:

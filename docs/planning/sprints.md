@@ -41,12 +41,13 @@ Notas:
 
 **Objetivo:** cerrar F0. Todo PR pasa por CI, y un usuario puede registrarse, iniciar sesión en el móvil y mantener la sesión de forma segura.
 
-| HU | Tareas | Orden |
+| HU | Tareas | Estado |
 |---|---|---|
-| HU‑05 Calidad automática | F0-OPS-05 (CI), F0-OPS-02 (protección de `main`) | 1 |
-| HU‑06 Cuenta e inicio de sesión | F0-SEC-01 | 2 |
-| HU‑07 API protegida | F0-SEC-02 | 3 |
-| HU‑08 Sesión en el móvil | F0-APP-04 | 4 |
+| HU‑05 Calidad automática | F0-OPS-05 (CI) ✅, F0-OPS-02 (protección de `main`) ⏳ decisión pendiente | En curso |
+| HU‑06 Cuenta e inicio de sesión | F0-SEC-01 | ✅ Hecho (31 pruebas de auth) |
+| HU‑07 API protegida | F0-SEC-02 | ✅ Hecho |
+| HU‑08 Sesión en el móvil | F0-APP-04 | ✅ Hecho, verificado en emulador contra la API en Docker |
+| Extra | Imagen Docker de producción + perfil `app` + CI de imagen (ADR‑018) | ✅ Hecho |
 
 **Riesgos del sprint:** protección de ramas no disponible en repos privados del plan gratuito de GitHub (alternativa: regla de trabajo + CI obligatoria por convención); licencias del SDK de Android pendientes de aceptar.
 

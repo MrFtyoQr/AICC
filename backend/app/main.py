@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 from app.api import health, v1
 from app.core.config import Settings, get_settings
 from app.core.logging import configure_logging
-from app.core.middleware import RequestIdMiddleware
+from app.core.middleware import BodySizeLimitMiddleware, RequestIdMiddleware
 from app.infrastructure.database import create_engine
 from app.infrastructure.redis import create_redis
 
@@ -44,6 +44,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             allow_methods=["GET", "POST", "PATCH", "DELETE"],
             allow_headers=["Authorization", "Content-Type", "X-Request-ID", "X-Workspace-Id"],
         )
+    app.add_middleware(BodySizeLimitMiddleware, max_bytes=settings.max_body_bytes)
+    # Añadido al final = capa más externa: también registra las respuestas 413.
     app.add_middleware(RequestIdMiddleware)
     app.include_router(health.router)
     app.include_router(v1.router)

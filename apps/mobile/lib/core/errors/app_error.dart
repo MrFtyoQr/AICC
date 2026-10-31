@@ -12,9 +12,24 @@ sealed class AppError implements Exception {
     DioExceptionType.sendTimeout ||
     DioExceptionType.receiveTimeout => const TimeoutError(),
     DioExceptionType.connectionError => const NetworkError(),
-    DioExceptionType.badResponse => ServerError(error.response?.statusCode),
+    DioExceptionType.badResponse => AppError.fromStatus(
+      error.response?.statusCode,
+      detail: _detail(error.response?.data),
+    ),
     _ => const UnexpectedError(),
   };
+
+  factory AppError.fromStatus(int? status, {String? detail}) =>
+      switch (status) {
+        401 => UnauthorizedError(detail),
+        409 => ConflictError(detail),
+        422 => const ValidationError(),
+        429 => const RateLimitedError(),
+        _ => ServerError(status),
+      };
+
+  static String? _detail(Object? data) =>
+      data is Map && data['detail'] is String ? data['detail'] as String : null;
 }
 
 final class NetworkError extends AppError {
@@ -33,6 +48,40 @@ final class TimeoutError extends AppError {
   @override
   String get message =>
       'La solicitud superó el tiempo de espera. Inténtalo de nuevo en un momento.';
+}
+
+final class UnauthorizedError extends AppError {
+  const UnauthorizedError([this.detail]);
+  final String? detail;
+  @override
+  String get title => 'No pudimos verificar tu identidad';
+  @override
+  String get message => detail ?? 'Inicia sesión de nuevo.';
+}
+
+final class ConflictError extends AppError {
+  const ConflictError([this.detail]);
+  final String? detail;
+  @override
+  String get title => 'Ya existe';
+  @override
+  String get message => detail ?? 'Ese recurso ya existe.';
+}
+
+final class ValidationError extends AppError {
+  const ValidationError();
+  @override
+  String get title => 'Revisa los datos';
+  @override
+  String get message => 'Algún campo no tiene el formato esperado.';
+}
+
+final class RateLimitedError extends AppError {
+  const RateLimitedError();
+  @override
+  String get title => 'Demasiados intentos';
+  @override
+  String get message => 'Espera un minuto antes de volver a intentarlo.';
 }
 
 final class ServerError extends AppError {
