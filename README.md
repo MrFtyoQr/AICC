@@ -3,7 +3,7 @@
 Plataforma para descubrir una necesidad de negocio, diseñar una solución de IA, aprobarla, ejecutarla y
 medir sus resultados desde una app móvil que funciona como centro de mando.
 
-> **Estado:** F0 · Fundamentos. Infraestructura local (PostgreSQL + Redis) funcionando y medida; backend y app por iniciar.
+> **Estado:** F0 · bloque 0A. PostgreSQL + Redis en Docker, API FastAPI con `/health` y `/health/ready`, app Flutter M0 (estado de conexión).
 
 ## Arquitectura resumida
 
@@ -19,14 +19,27 @@ Flutter (Android / iOS)  ──HTTPS/JSON/SSE──▶  FastAPI (monolito modula
 
 ## Arranque local
 
-Requisitos: Git, Docker Desktop. (Python 3.12 vía `uv` y Flutter stable entran en F0‑BE‑01 / F0‑APP‑01).
+Requisitos: Git, Docker Desktop, [uv](https://docs.astral.sh/uv/) y Flutter **stable** con Android SDK.
 
 ```bash
-cp .env.example .env            # cambia POSTGRES_PASSWORD
+# 1. Infraestructura
+cp .env.example .env            # cambia POSTGRES_PASSWORD (y la misma en DATABASE_URL)
 docker compose up -d
 docker compose ps               # postgres y redis: healthy
-scripts/medir-entorno.sh mi-prueba   # opcional: medición comparativa
+
+# 2. API
+cd backend
+uv sync
+uv run alembic upgrade head
+uv run uvicorn app.main:create_app --factory --reload --host 127.0.0.1 --port 8000
+
+# 3. App (otra terminal, con el emulador Android abierto)
+cd apps/mobile
+flutter run --dart-define=AICC_API_BASE_URL=http://10.0.2.2:8000
 ```
+
+Detalles en [backend/README.md](backend/README.md) y [apps/mobile/README.md](apps/mobile/README.md).
+Medición comparativa del entorno: `scripts/medir-entorno.sh <etiqueta>` y `cd backend && uv run python scripts/bench_api.py`.
 
 ## Documentación
 

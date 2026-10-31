@@ -68,23 +68,23 @@ soluciones son "programas" que corren sobre él.
 | F0-OPS-02 | OPS | Publicar en GitHub (privado) + protección de `main` | PR obligatorio para `main` |
 | F0-OPS-03 | OPS | `docker-compose.yml`: PostgreSQL 16 + Redis 7 en `127.0.0.1` con healthchecks | Ambos *healthy* ✅ (hecho) |
 | F0-OPS-04 | OPS | Medición base del entorno (línea 0) con `scripts/medir-entorno.sh` | Fila "F0‑base" en entorno-local.md ✅ (hecho) |
-| F0-OPS-06 | OPS | Decidir ubicación del repo (fuera de OneDrive o exclusiones) y cambiar Flutter a stable | Documentado en entorno-local.md |
-| F0-BE-01 | BE | Proyecto `backend/` con `uv`, Python 3.12, FastAPI, `/health` | 200 + `/docs` |
-| F0-BE-02 | BE | `core/config.py` (pydantic‑settings) con falla explícita | Test: sin `DATABASE_URL` → error claro |
-| F0-BE-03 | BE | SQLAlchemy 2 async + Alembic; migración inicial vacía | `alembic upgrade head` OK |
-| F0-BE-04 | BE | `/health/ready` comprueba BD y Redis | Test con servicios arriba/abajo |
-| F0-BE-05 | BE | Logging estructurado JSON con `request_id` | Cada respuesta lleva `X-Request-ID` |
-| F0-BE-06 | BE | Exportar OpenAPI a `shared/contracts/openapi.json` | Script + verificación en CI |
-| F0-APP-01 | APP | Flutter stable, `apps/mobile` con `com.treetech.aicc` | Corre en emulador Android |
-| F0-APP-02 | APP | Esqueleto `lib/` (app, core, features) + `AICC_API_BASE_URL` | Ver incremento M0 |
+| F0-OPS-06 | OPS | Decidir ubicación del repo (fuera de OneDrive o exclusiones) y cambiar Flutter a stable | Documentado en entorno-local.md ✅ (hecho) |
+| F0-BE-01 | BE | Proyecto `backend/` con `uv`, Python 3.12, FastAPI, `/health` | 200 + `/docs` ✅ (hecho) |
+| F0-BE-02 | BE | `core/config.py` (pydantic‑settings) con falla explícita | Test: sin `DATABASE_URL` → error claro ✅ (hecho) |
+| F0-BE-03 | BE | SQLAlchemy 2 async (asyncpg) + Alembic; migración inicial vacía | `alembic upgrade head` OK ✅ (hecho) |
+| F0-BE-04 | BE | `/health/ready` comprueba BD y Redis | Test con servicios arriba/abajo ✅ (hecho) |
+| F0-BE-05 | BE | Logging estructurado JSON con `request_id` | Cada respuesta lleva `X-Request-ID` ✅ (hecho) |
+| F0-BE-06 | BE | Exportar OpenAPI a `shared/contracts/openapi.json` | Script + verificación en CI ✅ (hecho) |
+| F0-APP-01 | APP | Flutter stable, `apps/mobile` con `com.treetech.aicc` | Corre en emulador Android ✅ (hecho) |
+| F0-APP-02 | APP | Esqueleto `lib/` (app, core, features) + `AICC_API_BASE_URL` | Ver incremento M0 ✅ (hecho) |
 | F0-APP-03 | APP | Pantalla de estado de conexión (M0) | OK / timeout / caída sin bloquear |
-| F0-UX-01 | UX | Principios UX, arquitectura de información y mapa de pantallas | Documento aprobado |
+| F0-UX-01 | UX | Principios UX, arquitectura de información y mapa de pantallas | Documento aprobado ✅ (hecho) |
 | F0-UX-02 | UX | Tokens de diseño (color, tipografía, espaciado, estados) + tema claro/oscuro | `app/theme/` refleja tokens |
 | F0-SEC-01 | SEC | Auth propia: `users`, hash Argon2, access JWT 15 min + refresh rotatorio | Tests de expiración/rotación/reuso |
 | F0-SEC-02 | SEC | CORS restringido, límite de body, rate limit básico | Tests |
 | F0-APP-04 | APP | Login + `flutter_secure_storage` + Riverpod + GoRouter (M1) | Login → Home |
 | F0-OPS-05 | OPS | CI GitHub Actions: backend (ruff, pytest con servicios) y mobile (analyze, test) | CI verde |
-| F0-DOC-01 | DOC | ADR‑001..006 aceptados (004: uv/Python 3.12, 005: cola, 006: auth propia) | Revisados |
+| F0-DOC-01 | DOC | ADR‑001..006 aceptados (004: uv/Python 3.12, 005: cola, 006: auth propia) | Revisados ✅ (hecho) |
 
 **Gate F0 (H1):** DoD de la sección 15 de la guía + CI verde + login desde Android + medición F0 registrada. Tag `v0.1.0`.
 
