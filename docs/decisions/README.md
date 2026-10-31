@@ -22,4 +22,4 @@ Formato: contexto → decisión → consecuencias. Estados: *Propuesto*, *Acepta
 | 016 | Canal de mensajería intercambiable; WhatsApp no depende solo de conexión no oficial | Pendiente | S4 |
 | 017 | Uso comercial de n8n validado contra su licencia | Pendiente | O5 |
 | [018](ADR-018-contenedores.md) | El contenedor es la unidad de despliegue del backend | Aceptado | F0 |
-| [019](ADR-019-nube-estandar.md) | Nube estándar AWS; BYOC en AWS → GCP → Azure; Cloudflare para bots ligeros | Propuesto | S2 (Etapa B) |
+| [019](ADR-019-nube-estandar.md) | Nube estándar AWS; BYOC en AWS → GCP → Azure; Cloudflare para bots ligeros | Aceptado | S2 (Etapa B) |

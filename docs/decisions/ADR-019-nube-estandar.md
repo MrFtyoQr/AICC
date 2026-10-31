@@ -1,6 +1,6 @@
 # ADR-019: Nube estándar de AICC y nubes soportadas para BYOC
 
-**Estado:** Propuesto (pendiente de confirmación del dueño del producto) · **Fecha:** 2026-10-31
+**Estado:** Aceptado (confirmado por el dueño del producto) · **Fecha:** 2026-10-31
 
 ## Contexto
 AICC estandariza pasos para montar y operar soluciones. Eso solo funciona con pocos destinos bien probados.
@@ -19,7 +19,7 @@ soportan las demás para BYOC. Candidatas: AWS, Google Cloud y Azure. Cloudflare
 
 Las tres tienen región en México; los servicios disponibles por región se verifican en el spike V-B1.
 
-## Decisión propuesta
+## Decisión
 1. **AWS es la nube estándar** del camino Administrado y del plano de control de AICC.
 2. Orden de soporte para BYOC: **AWS → Google Cloud → Azure**. Cada nube nueva entra solo cuando su adaptador pasa la
    misma batería de pruebas de recetas que AWS.
