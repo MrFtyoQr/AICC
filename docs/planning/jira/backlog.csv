@@ -1,0 +1,314 @@
+Issue ID,Parent ID,Issue Type,Summary,Description,Labels,Labels,Component,Priority,Status
+1,,Epic,F0 · Fundamentos,"Objetivo: repositorio reproducible y circuito mínimo funcionando. Detalle ampliado en [fase-0-fundamentos.md](fase-0-fundamentos.md).
+
+Gate de salida: DoD de la sección 15 de la guía + CI verde + login desde Android + medición F0 registrada. Tag `v0.1.0`.
+
+Ref: docs/planning/plan-maestro.md",F0,etapa-A,,High,To Do
+,1,Task,"[F0-OPS-01] Monorepo, .gitignore, .env.example, .gitattributes, README","Criterio de aceptación: Clonar no expone secretos
+
+Ref: docs/planning/plan-maestro.md#f0",F0,ops,DevOps,High,Done
+,1,Task,[F0-OPS-02] Publicar en GitHub (privado) + protección de main,"Criterio de aceptación: PR obligatorio para main
+
+Ref: docs/planning/plan-maestro.md#f0",F0,ops,DevOps,Medium,To Do
+,1,Task,[F0-OPS-03] docker-compose.yml: PostgreSQL 16 + Redis 7 en 127.0.0.1 con healthchecks,"Criterio de aceptación: Ambos *healthy*
+
+Ref: docs/planning/plan-maestro.md#f0",F0,ops,DevOps,Medium,Done
+,1,Task,[F0-OPS-04] Medición base del entorno (línea 0) con scripts/medir-entorno.sh,"Criterio de aceptación: Fila ""F0‑base"" en entorno-local.md
+
+Ref: docs/planning/plan-maestro.md#f0",F0,ops,DevOps,Medium,Done
+,1,Task,[F0-OPS-06] Decidir ubicación del repo (fuera de OneDrive o exclusiones) y cambiar Flutter a stable,"Criterio de aceptación: Documentado en entorno-local.md
+
+Ref: docs/planning/plan-maestro.md#f0",F0,ops,DevOps,Medium,To Do
+,1,Story,"[F0-BE-01] Proyecto backend/ con uv, Python 3.12, FastAPI, /health","Criterio de aceptación: 200 + /docs
+
+Ref: docs/planning/plan-maestro.md#f0",F0,be,Backend,High,To Do
+,1,Story,[F0-BE-02] core/config.py (pydantic‑settings) con falla explícita,"Criterio de aceptación: Test: sin DATABASE_URL → error claro
+
+Ref: docs/planning/plan-maestro.md#f0",F0,be,Backend,Medium,To Do
+,1,Story,[F0-BE-03] SQLAlchemy 2 async + Alembic; migración inicial vacía,"Criterio de aceptación: alembic upgrade head OK
+
+Ref: docs/planning/plan-maestro.md#f0",F0,be,Backend,Medium,To Do
+,1,Story,[F0-BE-04] /health/ready comprueba BD y Redis,"Criterio de aceptación: Test con servicios arriba/abajo
+
+Ref: docs/planning/plan-maestro.md#f0",F0,be,Backend,Medium,To Do
+,1,Story,[F0-BE-05] Logging estructurado JSON con request_id,"Criterio de aceptación: Cada respuesta lleva X-Request-ID
+
+Ref: docs/planning/plan-maestro.md#f0",F0,be,Backend,Medium,To Do
+,1,Story,[F0-BE-06] Exportar OpenAPI a shared/contracts/openapi.json,"Criterio de aceptación: Script + verificación en CI
+
+Ref: docs/planning/plan-maestro.md#f0",F0,be,Backend,Medium,To Do
+,1,Story,"[F0-APP-01] Flutter stable, apps/mobile con com.treetech.aicc","Criterio de aceptación: Corre en emulador Android
+
+Ref: docs/planning/plan-maestro.md#f0",F0,app,App movil,High,To Do
+,1,Story,"[F0-APP-02] Esqueleto lib/ (app, core, features) + AICC_API_BASE_URL","Criterio de aceptación: Ver incremento M0
+
+Ref: docs/planning/plan-maestro.md#f0",F0,app,App movil,Medium,To Do
+,1,Story,[F0-APP-03] Pantalla de estado de conexión (M0),"Criterio de aceptación: OK / timeout / caída sin bloquear
+
+Ref: docs/planning/plan-maestro.md#f0",F0,app,App movil,Medium,To Do
+,1,Story,"[F0-UX-01] Principios UX, arquitectura de información y mapa de pantallas","Criterio de aceptación: Documento aprobado
+
+Ref: docs/planning/plan-maestro.md#f0",F0,ux,UX-UI,High,To Do
+,1,Story,"[F0-UX-02] Tokens de diseño (color, tipografía, espaciado, estados) + tema claro/oscuro","Criterio de aceptación: app/theme/ refleja tokens
+
+Ref: docs/planning/plan-maestro.md#f0",F0,ux,UX-UI,Medium,To Do
+,1,Story,"[F0-SEC-01] Auth propia: users, hash Argon2, access JWT 15 min + refresh rotatorio","Criterio de aceptación: Tests de expiración/rotación/reuso
+
+Ref: docs/planning/plan-maestro.md#f0",F0,sec,Seguridad,High,To Do
+,1,Story,"[F0-SEC-02] CORS restringido, límite de body, rate limit básico","Criterio de aceptación: Tests
+
+Ref: docs/planning/plan-maestro.md#f0",F0,sec,Seguridad,High,To Do
+,1,Story,[F0-APP-04] Login + flutter_secure_storage + Riverpod + GoRouter (M1),"Criterio de aceptación: Login → Home
+
+Ref: docs/planning/plan-maestro.md#f0",F0,app,App movil,Medium,To Do
+,1,Task,"[F0-OPS-05] CI GitHub Actions: backend (ruff, pytest con servicios) y mobile (analyze, test)","Criterio de aceptación: CI verde
+
+Ref: docs/planning/plan-maestro.md#f0",F0,ops,DevOps,Medium,To Do
+,1,Task,"[F0-DOC-01] ADR‑001..006 aceptados (004: uv/Python 3.12, 005: cola, 006: auth propia)","Criterio de aceptación: Revisados
+
+Ref: docs/planning/plan-maestro.md#f0",F0,doc,Documentacion,High,To Do
+2,,Epic,F1 · Identidad y Workspace,"Objetivo: cada usuario trabaja dentro de un workspace aislado con roles, proyectos y ambientes.
+
+Gate de salida: suite de aislamiento 100 % verde; un usuario no puede leer, listar ni modificar nada de otro workspace.
+
+Ref: docs/planning/plan-maestro.md",F1,etapa-A,,High,To Do
+,2,Story,"[F1-BE-01] Modelos workspaces, memberships(role), projects, environments + migraciones","Criterio de aceptación: Migración reversible
+
+Ref: docs/planning/plan-maestro.md#f1",F1,be,Backend,High,To Do
+,2,Story,"[F1-BE-02] Al registrarse se crea workspace personal + proyecto ""General"" + env development","Criterio de aceptación: Test
+
+Ref: docs/planning/plan-maestro.md#f1",F1,be,Backend,Medium,To Do
+,2,Story,[F1-SEC-01] Dependencia current_workspace que resuelve por membresía (header X-Workspace-Id validado),"Criterio de aceptación: Test: ID ajeno → 404
+
+Ref: docs/planning/plan-maestro.md#f1",F1,sec,Seguridad,High,To Do
+,2,Story,"[F1-SEC-02] Roles owner, admin, operator, viewer con matriz de permisos en código","Criterio de aceptación: Tabla de permisos documentada + tests
+
+Ref: docs/planning/plan-maestro.md#f1",F1,sec,Seguridad,High,To Do
+,2,Story,[F1-SEC-03] Suite de pruebas de aislamiento multi‑tenant (fixture con 2 usuarios/2 workspaces),"Criterio de aceptación: Se ejecuta en CI siempre
+
+Ref: docs/planning/plan-maestro.md#f1",F1,sec,Seguridad,High,To Do
+,2,Story,[F1-BE-03] audit_logs + helper audit() usado en cada comando,"Criterio de aceptación: Cada endpoint de escritura audita
+
+Ref: docs/planning/plan-maestro.md#f1",F1,be,Backend,Medium,To Do
+,2,Story,"[F1-BE-04] CRUD: workspaces, projects, environments, members (invitar por email: solo registro, sin envío aún)","Criterio de aceptación: OpenAPI actualizado
+
+Ref: docs/planning/plan-maestro.md#f1",F1,be,Backend,Medium,To Do
+,2,Story,[F1-APP-01] Selector de workspace / proyecto / ambiente siempre visible (M2),"Criterio de aceptación: Cambio de contexto en 1 toque
+
+Ref: docs/planning/plan-maestro.md#f1",F1,app,App movil,High,To Do
+,2,Story,[F1-APP-02] Pantalla Actividad (lista de audit log),"Criterio de aceptación: Paginada
+
+Ref: docs/planning/plan-maestro.md#f1",F1,app,App movil,Medium,To Do
+,2,Story,"[F1-UX-01] Patrón ""contexto actual"" (chip superior) y ""cambiar contexto"" (bottom sheet)","Criterio de aceptación: Prototipo aprobado
+
+Ref: docs/planning/plan-maestro.md#f1",F1,ux,UX-UI,High,To Do
+,2,Task,[F1-DOC-01] ADR‑010 Workspace lógico ≠ infraestructura,"Criterio de aceptación: Aceptado
+
+Ref: docs/planning/plan-maestro.md#f1",F1,doc,Documentacion,High,To Do
+3,,Epic,O1 · Tareas (sin IA todavía),"Objetivo: el ciclo de vida de una Task existe, es estricto y se ve en la app. Aún no hay planner.
+
+Gate de salida: se crea, lista, cancela una tarea desde la app; ninguna transición ilegal es posible.
+
+Ref: docs/planning/plan-maestro.md",O1,etapa-A,,High,To Do
+,3,Story,"[O1-BE-01] Modelo tasks (title, description, status, project_id, environment_id, created_by, version)","Criterio de aceptación: Migración
+
+Ref: docs/planning/plan-maestro.md#o1",O1,be,Backend,High,To Do
+,3,Story,[O1-BE-02] domain/tasks/state_machine.py con tabla de transiciones explícita,"Criterio de aceptación: Test por cada transición válida e inválida
+
+Ref: docs/planning/plan-maestro.md#o1",O1,be,Backend,Medium,To Do
+,3,Story,[O1-BE-03] Tabla events append‑only; cada transición escribe event + audit en la misma transacción,"Criterio de aceptación: Test transaccional
+
+Ref: docs/planning/plan-maestro.md#o1",O1,be,Backend,Medium,To Do
+,3,Story,"[O1-BE-04] Endpoints POST/GET /tasks, GET /tasks/{id}, POST /tasks/{id}/cancel","Criterio de aceptación: Contrato OpenAPI
+
+Ref: docs/planning/plan-maestro.md#o1",O1,be,Backend,Medium,To Do
+,3,Story,[O1-BE-05] Bloqueo optimista (version) → 409 en conflicto,"Criterio de aceptación: Test de concurrencia
+
+Ref: docs/planning/plan-maestro.md#o1",O1,be,Backend,Medium,To Do
+,3,Story,"[O1-APP-01] Command Center v1: campo ""¿Qué necesitas?"" que crea Task en DRAFT (M3)","Criterio de aceptación: Crear en < 3 toques
+
+Ref: docs/planning/plan-maestro.md#o1",O1,app,App movil,High,To Do
+,3,Story,[O1-APP-02] Lista de tareas con filtro por estado y tarjeta de estado,"Criterio de aceptación: Estados con color + icono + texto
+
+Ref: docs/planning/plan-maestro.md#o1",O1,app,App movil,Medium,To Do
+,3,Story,"[O1-UX-01] Diseño del Command Center y de la ""tarjeta de tarea"" (componente central)","Criterio de aceptación: Prototipo interactivo aprobado
+
+Ref: docs/planning/plan-maestro.md#o1",O1,ux,UX-UI,High,To Do
+,3,Story,"[O1-UX-02] Diccionario de estados en lenguaje de negocio (""Borrador"", ""Esperando tu aprobación""…)","Criterio de aceptación: Documento de copy
+
+Ref: docs/planning/plan-maestro.md#o1",O1,ux,UX-UI,Medium,To Do
+4,,Epic,O2 · Planner y catálogo de capabilities,"Objetivo: una Task en DRAFT recibe un **plan estructurado y validado**; nada se ejecuta.
+
+Gate de salida: 20 descripciones de prueba → 100 % de planes válidos o rechazados con razón; ningún plan contiene una capability inexistente.
+
+Ref: docs/planning/plan-maestro.md",O2,etapa-A,,High,To Do
+,4,Story,"[O2-BE-01] Catálogo de capabilities en código (registro + JSON Schema + risk_level) con 3 iniciales: llm.generate, http.get_allowlisted, notify.in_app","Criterio de aceptación: GET /capabilities
+
+Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,High,To Do
+,4,Story,[O2-BE-02] AgentRuntime + FakeRuntime determinista para pruebas,"Criterio de aceptación: Tests sin red
+
+Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,Medium,To Do
+,4,Story,[O2-BE-03] Primer proveedor LLM real detrás de AgentRuntime (clave solo en backend),"Criterio de aceptación: Smoke test manual
+
+Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,Medium,To Do
+,4,Story,[O2-BE-04] Planner: prompt versionado + salida estructurada (Pydantic),"Criterio de aceptación: Plan válido con FakeRuntime
+
+Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,Medium,To Do
+,4,Story,"[O2-BE-05] Validador determinista del plan (capability existe, schema, DAG acíclico, límites)","Criterio de aceptación: Tests de planes maliciosos/rotos
+
+Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,Medium,To Do
+,4,Story,"[O2-BE-06] plans y plan_steps versionados; POST /tasks/{id}/plan, GET /plans/{id}","Criterio de aceptación: Contrato
+
+Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,Medium,To Do
+,4,Story,[O2-BE-07] Estimador de costo por step (tokens estimados × tarifa fechada),"Criterio de aceptación: Costo visible en plan
+
+Ref: docs/planning/plan-maestro.md#o2",O2,be,Backend,Medium,To Do
+,4,Story,[O2-SEC-01] Defensa ante *prompt injection*: el texto del usuario nunca se interpola en instrucciones del sistema sin delimitar; salida siempre validada,"Criterio de aceptación: Casos de prueba documentados
+
+Ref: docs/planning/plan-maestro.md#o2",O2,sec,Seguridad,High,To Do
+,4,Story,"[O2-APP-01] Vista ""Propuesta de plan"": pasos en lenguaje natural, costo estimado, supuestos (M4)","Criterio de aceptación: Entendible sin conocimientos técnicos
+
+Ref: docs/planning/plan-maestro.md#o2",O2,app,App movil,High,To Do
+,4,Story,"[O2-UX-01] Patrón ""plan como lista de pasos"" con detalle técnico plegable","Criterio de aceptación: Prototipo aprobado
+
+Ref: docs/planning/plan-maestro.md#o2",O2,ux,UX-UI,High,To Do
+,4,Task,[O2-DOC-01] ADR‑007 contrato del plan; ADR‑012 el LLM solo propone,"Criterio de aceptación: Aceptados
+
+Ref: docs/planning/plan-maestro.md#o2",O2,doc,Documentacion,High,To Do
+5,,Epic,O3 · Políticas y aprobaciones,"Objetivo: cada plan se evalúa con reglas deterministas y las acciones sensibles exigen aprobación humana.
+
+Gate de salida: ningún plan con step `write_external`/`spend` llega a APPROVED sin approval registrada.
+
+Ref: docs/planning/plan-maestro.md",O3,etapa-A,,High,To Do
+,5,Story,[O3-BE-01] Policy Engine (allow/deny/require_approval + reason + policy_id),"Criterio de aceptación: Tabla de decisiones probada
+
+Ref: docs/planning/plan-maestro.md#o3",O3,be,Backend,High,To Do
+,5,Story,"[O3-BE-02] Tabla policies por workspace (sobrescribe valores por defecto, nunca relaja destructive)","Criterio de aceptación: Tests
+
+Ref: docs/planning/plan-maestro.md#o3",O3,be,Backend,Medium,To Do
+,5,Story,[O3-BE-03] approvals + endpoints approve / reject / request‑changes,"Criterio de aceptación: Auditado
+
+Ref: docs/planning/plan-maestro.md#o3",O3,be,Backend,Medium,To Do
+,5,Story,[O3-BE-04] request-changes genera Plan v2 conservando historial,"Criterio de aceptación: Diff entre versiones
+
+Ref: docs/planning/plan-maestro.md#o3",O3,be,Backend,Medium,To Do
+,5,Story,[O3-SEC-01] Solo owner/admin/operator aprueban; nadie aprueba su propio plan si la política exige 2 personas (opcional por workspace),"Criterio de aceptación: Tests
+
+Ref: docs/planning/plan-maestro.md#o3",O3,sec,Seguridad,High,To Do
+,5,Story,[O3-APP-01] Bandeja de Aprobaciones con badge y acciones aprobar / rechazar / pedir cambios (M5),"Criterio de aceptación: 1 toque + confirmación
+
+Ref: docs/planning/plan-maestro.md#o3",O3,app,App movil,High,To Do
+,5,Story,[O3-APP-02] Confirmación reforzada para acciones spend/write_external (deslizar para aprobar),"Criterio de aceptación: Prueba de usabilidad
+
+Ref: docs/planning/plan-maestro.md#o3",O3,app,App movil,Medium,To Do
+,5,Story,"[O3-UX-01] Patrón de aprobación: qué pasará, cuánto cuesta, qué se puede deshacer","Criterio de aceptación: Prototipo aprobado
+
+Ref: docs/planning/plan-maestro.md#o3",O3,ux,UX-UI,High,To Do
+,5,Task,[O3-DOC-01] ADR‑008 Policy Engine propio (sin OPA en MVP); ADR‑014 aprobación antes de gastar,"Criterio de aceptación: Aceptados
+
+Ref: docs/planning/plan-maestro.md#o3",O3,doc,Documentacion,High,To Do
+6,,Epic,O4 · Ejecución en vivo,"Objetivo: un plan aprobado se ejecuta fuera de HTTP y el usuario lo sigue en tiempo real.
+
+Gate de salida: 50 ejecuciones con FakeRuntime + conectores falsos, incluidos fallos inyectados → 0 estados inconsistentes.
+
+Ref: docs/planning/plan-maestro.md",O4,etapa-A,,High,To Do
+,6,Story,"[O4-BE-01] Cola Redis + worker (ADR‑005, preferencia arq) como servicio en Compose","Criterio de aceptación: Worker *healthy*
+
+Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,High,To Do
+,6,Story,"[O4-BE-02] runs y step_runs con idempotency key, reintentos, timeouts","Criterio de aceptación: Tests de fallo y reintento
+
+Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,Medium,To Do
+,6,Story,"[O4-BE-03] Ejecutor de DAG: resolución de {{steps.x.output}}, re‑evaluación de política por step","Criterio de aceptación: Tests
+
+Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,Medium,To Do
+,6,Story,"[O4-BE-04] Pausas: AWAITING_STEP_APPROVAL, WAITING_INPUT; reanudar","Criterio de aceptación: Tests
+
+Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,Medium,To Do
+,6,Story,[O4-BE-05] Cancelación cooperativa + reaper de runs huérfanos,"Criterio de aceptación: Test matando el worker
+
+Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,Medium,To Do
+,6,Story,[O4-BE-06] SSE GET /tasks/{id}/events con Last-Event-ID,"Criterio de aceptación: Reconexión sin perder eventos
+
+Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,Medium,To Do
+,6,Story,[O4-BE-07] artifacts (texto/JSON en BD; archivos en almacenamiento local por ahora),"Criterio de aceptación: Descargables
+
+Ref: docs/planning/plan-maestro.md#o4",O4,be,Backend,Medium,To Do
+,6,Story,[O4-APP-01] Vista de ejecución en vivo: línea de tiempo de pasos con progreso (M6),"Criterio de aceptación: Actualiza sin refrescar
+
+Ref: docs/planning/plan-maestro.md#o4",O4,app,App movil,High,To Do
+,6,Story,[O4-APP-02] Visor de artefactos + notificación in‑app al terminar,"Criterio de aceptación: —
+
+Ref: docs/planning/plan-maestro.md#o4",O4,app,App movil,Medium,To Do
+,6,Story,"[O4-UX-01] Patrón ""línea de tiempo viva"" y estados de error recuperables","Criterio de aceptación: Prototipo aprobado
+
+Ref: docs/planning/plan-maestro.md#o4",O4,ux,UX-UI,High,To Do
+,6,Task,"[O4-OPS-01] Medición: latencia de encolado, tiempo por step, RAM del worker","Criterio de aceptación: Fila O4 en entorno-local.md
+
+Ref: docs/planning/plan-maestro.md#o4",O4,ops,DevOps,High,To Do
+7,,Epic,O5 · Conectores reales,"Objetivo: el orquestador actúa sobre el mundo exterior de forma controlada.
+
+Gate de salida: la tarea demo ""Resume los leads de prueba y mándame un email"" se ejecuta de punta a punta con aprobación.
+
+Ref: docs/planning/plan-maestro.md",O5,etapa-A,,High,To Do
+,7,Story,"[O5-BE-01] Interfaz Connector común (auth, timeout, reintentos, telemetría, errores normalizados)","Criterio de aceptación: Documentada
+
+Ref: docs/planning/plan-maestro.md#o5",O5,be,Backend,High,To Do
+,7,Story,[O5-BE-02] provider_connections con secret_ref; secretos cifrados (clave maestra en env en dev; KMS/Vault en prod),"Criterio de aceptación: Ningún secreto en tablas de negocio
+
+Ref: docs/planning/plan-maestro.md#o5",O5,be,Backend,Medium,To Do
+,7,Story,[O5-BE-03] http.request con allowlist de dominios por workspace,"Criterio de aceptación: Test SSRF (IPs privadas bloqueadas)
+
+Ref: docs/planning/plan-maestro.md#o5",O5,be,Backend,Medium,To Do
+,7,Story,[O5-BE-04] email.send (proveedor transaccional en modo sandbox),"Criterio de aceptación: Envío real a cuenta de prueba
+
+Ref: docs/planning/plan-maestro.md#o5",O5,be,Backend,Medium,To Do
+,7,Story,[O5-BE-05] n8n.trigger_workflow contra n8n local en Docker,"Criterio de aceptación: Workflow de ejemplo ejecutado
+
+Ref: docs/planning/plan-maestro.md#o5",O5,be,Backend,Medium,To Do
+,7,Story,[O5-BE-06] Cliente MCP: exponer herramientas de un servidor MCP como capabilities (allowlist),"Criterio de aceptación: 1 servidor MCP de prueba
+
+Ref: docs/planning/plan-maestro.md#o5",O5,be,Backend,Medium,To Do
+,7,Story,"[O5-APP-01] Pantalla Conectores: estado, probar conexión, desconectar (M7)","Criterio de aceptación: —
+
+Ref: docs/planning/plan-maestro.md#o5",O5,app,App movil,High,To Do
+,7,Story,"[O5-UX-01] Patrón ""conectar servicio"" en 3 pasos","Criterio de aceptación: Prototipo aprobado
+
+Ref: docs/planning/plan-maestro.md#o5",O5,ux,UX-UI,High,To Do
+,7,Task,[O5-OPS-01] n8n en Compose (perfil connectors),"Criterio de aceptación: Arranca con docker compose --profile connectors up
+
+Ref: docs/planning/plan-maestro.md#o5",O5,ops,DevOps,High,To Do
+,7,Task,[O5-DOC-01] ADR‑017 licencia n8n (uso interno validado),"Criterio de aceptación: Aceptado
+
+Ref: docs/planning/plan-maestro.md#o5",O5,doc,Documentacion,High,To Do
+8,,Epic,"O6 · Consumo, presupuesto y observabilidad","Objetivo: cada ejecución tiene costo medido, límites y métricas; el usuario ve todo en lenguaje de negocio.
+
+Gate de salida: demo completa grabada; medición O6 comparada con F0; revisión de seguridad interna (checklist OWASP ASVS nivel 1).
+
+Ref: docs/planning/plan-maestro.md",O6,etapa-A,,High,To Do
+,8,Story,[O6-BE-01] usage_events desde AgentRuntime y conectores,"Criterio de aceptación: Costo por run
+
+Ref: docs/planning/plan-maestro.md#o6",O6,be,Backend,High,To Do
+,8,Story,[O6-BE-02] budgets por workspace/proyecto/run con umbrales 70/90/100 %,"Criterio de aceptación: Pausa automática al 100 %
+
+Ref: docs/planning/plan-maestro.md#o6",O6,be,Backend,Medium,To Do
+,8,Story,"[O6-BE-03] GET /usage/summary, GET /budgets","Criterio de aceptación: Contrato
+
+Ref: docs/planning/plan-maestro.md#o6",O6,be,Backend,Medium,To Do
+,8,Story,[O6-BE-04] Comparación estimado vs. real por run,"Criterio de aceptación: Reporte
+
+Ref: docs/planning/plan-maestro.md#o6",O6,be,Backend,Medium,To Do
+,8,Task,[O6-OPS-01] Métricas Prometheus (/metrics) + Grafana local opcional (perfil observability),"Criterio de aceptación: Dashboard básico
+
+Ref: docs/planning/plan-maestro.md#o6",O6,ops,DevOps,High,To Do
+,8,Story,"[O6-APP-01] Home / Dashboard: tareas activas, aprobaciones pendientes, gasto del mes (M8)","Criterio de aceptación: Todo de un vistazo
+
+Ref: docs/planning/plan-maestro.md#o6",O6,app,App movil,High,To Do
+,8,Story,[O6-APP-02] Pantalla Consumo con barra de presupuesto,"Criterio de aceptación: —
+
+Ref: docs/planning/plan-maestro.md#o6",O6,app,App movil,Medium,To Do
+,8,Story,[O6-UX-01] Revisión completa de usabilidad con 3–5 personas,"Criterio de aceptación: Hallazgos corregidos
+
+Ref: docs/planning/plan-maestro.md#o6",O6,ux,UX-UI,High,To Do
+,8,Task,[O6-DOC-01] ADR‑015 medición estimado/real; manual de usuario v1,"Criterio de aceptación: Publicado
+
+Ref: docs/planning/plan-maestro.md#o6",O6,doc,Documentacion,High,To Do

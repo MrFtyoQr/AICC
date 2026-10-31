@@ -1,63 +1,64 @@
-# Fase 0 — Fundamentos: plan de ejecución
+# F0 · Fundamentos: guía de ejecución
 
-Objetivo: validar el circuito **Flutter → FastAPI → PostgreSQL/Redis → respuesta** con un repositorio
-que cualquiera pueda clonar y arrancar. Sin agentes reales todavía.
+Los códigos de tarea son los del [plan maestro](plan-maestro.md#f0--fundamentos) y del backlog de Jira.
+Este documento fija **el orden exacto** y las decisiones previas.
 
-Se divide en dos sub‑fases para poder cerrar la DoD de inicialización (sección 15) antes de abrir auth.
+## Decisiones previas (proponer → aceptar como ADR)
 
-## Entorno verificado (2026‑10‑31, Windows 11)
-
-| Herramienta | Detectado | Acción |
-|---|---|---|
-| Git / GitHub CLI | OK, cuenta `MrFtyoQr` | — |
-| Docker | 29.4.3 | Confirmar Docker Desktop corriendo |
-| Python | 3.15.2 (sistema) | Fijar **3.12** para el backend con `uv` (ya instalado) |
-| Flutter | 3.50.0‑0.3.pre, canal **main** | Cambiar a canal **stable** (`flutter channel stable && flutter upgrade`) |
-| macOS / Xcode | No disponible | iOS queda fuera de la validación de Fase 0 |
-
-## 0A — Bootstrap (DoD de la sección 15)
-
-| # | Tarea | Entregable | Verificación |
+| # | Pregunta | Propuesta | ADR |
 |---|---|---|---|
-| 0A.1 | Estructura monorepo, `.gitignore`, `.env.example`, README | Carpetas `apps/ backend/ shared/ infrastructure/ docs/` | `git status` limpio, sin secretos |
-| 0A.2 | Flutter `apps/mobile` (`--org com.treetech.aicc`, temporal) | Plantilla compilando | `flutter analyze`, `flutter test`, `flutter run` en emulador Android |
-| 0A.3 | Backend FastAPI con `uv` + Python 3.12 | `backend/pyproject.toml`, `uv.lock`, `app/main.py` con `/health` | `GET /health` → 200; `/docs` visible |
-| 0A.4 | `docker-compose.yml` con PostgreSQL 16 y Redis 7 (solo `127.0.0.1`) | Servicios con healthcheck y volúmenes | `docker compose ps` → ambos *healthy* |
-| 0A.5 | `core/config.py` con pydantic‑settings | Falla explícita si faltan `DATABASE_URL`/`REDIS_URL` | Test de configuración |
-| 0A.6 | `infrastructure/database` (SQLAlchemy) + Alembic inicializado | Engine/sesión + primera migración vacía | `alembic upgrade head` OK |
-| 0A.7 | `/health` ampliado con estado de BD y Redis (`/health/ready`) | Readiness real | Test con servicios arriba y abajo |
-| 0A.8 | Cliente HTTP central en Flutter (`core/network`, `dio`) con `AICC_API_BASE_URL` | Pantalla "Estado de conexión" | Muestra OK / timeout / API caída sin bloquear la UI |
-| 0A.9 | Exportar OpenAPI a `shared/contracts/openapi.json` | Contrato versionado | Script/regla de exportación |
-| 0A.10 | Lint y formato: `ruff` (Python), `flutter analyze` + `dart format` | Config en repo | Todos los analizadores en verde |
-| 0A.11 | ADR‑001/002/003 aceptados | `docs/decisions/` | Revisión |
+| D1 | Gestor de dependencias Python | **uv** con `uv.lock` | 004 |
+| D2 | Versión de Python | **3.12** (`.python-version`) | 004 |
+| D3 | Canal Flutter | **stable** | — |
+| D4 | Identificador de app | `com.treetech.aicc` (provisional) | — |
+| D5 | Autenticación | **Propia con JWT** (access 15 min + refresh rotatorio, Argon2) | 006 |
+| D6 | Acceso a BD | **SQLAlchemy 2 async + psycopg 3** | 003 |
+| D7 | Cola de trabajos | **arq** (asíncrona, sobre Redis); alternativa Dramatiq | 005 |
+| D8 | Ubicación del repo | Mover fuera de OneDrive (`C:\dev\ai-command-center`) | — |
 
-**Salida 0A:** los 8 puntos de la DoD (sección 15) se cumplen en una máquina limpia → tag `v0.1.0`.
+## Orden de ejecución
 
-## 0B — CI y autenticación base
+### Bloque 0A — Bootstrap (cierra la DoD de la guía, sección 15)
 
-| # | Tarea | Entregable | Verificación |
-|---|---|---|---|
-| 0B.1 | GitHub Actions: job backend (ruff + pytest con Postgres/Redis de servicio) | `.github/workflows/backend.yml` | CI verde en PR |
-| 0B.2 | GitHub Actions: job Flutter (analyze + test) | `.github/workflows/mobile.yml` | CI verde en PR |
-| 0B.3 | Modelo `users` + migración | Tabla y repositorio | Test con BD aislada |
-| 0B.4 | Auth: registro/login, access token corto + refresh token rotatorio | `POST /api/v1/auth/*`, `GET /api/v1/me` | Tests de expiración, refresh y token inválido |
-| 0B.5 | Flutter: login + `flutter_secure_storage` para la sesión, `riverpod` + `go_router` | Flujo login → pantalla de estado | Test de widget + prueba manual en emulador |
-| 0B.6 | Seguridad mínima: CORS restringido, límite de tamaño, rate limit básico, logs sin secretos | Middleware | Tests |
-| 0B.7 | Protección de rama `main` y plantilla de PR | Reglas en GitHub | PR requerido + CI obligatorio |
+1. ✅ **F0-OPS-01** Monorepo y documentación.
+2. **F0-OPS-02** Publicar en GitHub (privado) y proteger `main`.
+3. ✅ **F0-OPS-03** `docker-compose.yml` con PostgreSQL 16 + Redis 7 *healthy*.
+4. ✅ **F0-OPS-04** Medición base `F0-base`.
+5. **F0-OPS-06** Repo fuera de OneDrive + Flutter stable.
+6. **F0-DOC-01** ADR‑004/005/006 aceptados (decisiones D1–D7).
+7. **F0-BE-01** `backend/` con uv + FastAPI + `/health`.
+8. **F0-BE-02** Configuración con falla explícita.
+9. **F0-BE-03** SQLAlchemy async + Alembic.
+10. **F0-BE-04** `/health/ready` (BD + Redis).
+11. **F0-BE-05** Logging JSON + `X-Request-ID`.
+12. **F0-BE-06** Exportar OpenAPI.
+13. **F0-UX-01 / F0-UX-02** Principios, mapa de pantallas, tokens de diseño.
+14. **F0-APP-01 → F0-APP-03** Flutter, esqueleto, pantalla de estado de conexión (M0).
 
-**Salida Fase 0:** CI verde, login funcional desde Android, `GET /api/v1/me` autenticado → tag `v0.2.0`.
+→ **Checkpoint 0A:** DoD sección 15 verificada; tag `v0.1.0`; medición `F0-0A`.
 
-## Decisiones abiertas (resolver antes de empezar)
+### Bloque 0B — CI y autenticación
 
-| # | Pregunta | Propuesta por defecto |
-|---|---|---|
-| D1 | Gestor de dependencias Python | **uv** (un único mecanismo, con `uv.lock`) |
-| D2 | Versión de Python | **3.12** fijada vía `.python-version` |
-| D3 | Canal Flutter | **stable** |
-| D4 | Identificador de app | `com.treetech.aicc` (temporal, documentar antes de publicar) |
-| D5 | Auth: propia (JWT) o proveedor externo (Supabase Auth, Firebase Auth, Auth0, Clerk) | **Propia con JWT** para no atar el MVP a un proveedor; reevaluar en Fase 1 |
-| D6 | Driver PostgreSQL: síncrono o `asyncpg`/`psycopg` async | **SQLAlchemy 2 async + psycopg 3** (los adaptadores de la sección 29 son `async`) |
+15. **F0-OPS-05** GitHub Actions backend + mobile.
+16. **F0-SEC-01** Usuarios + auth JWT.
+17. **F0-SEC-02** CORS, límite de body, rate limit.
+18. **F0-APP-04** Login + almacenamiento seguro + Riverpod/GoRouter (M1).
 
-## Fuera de alcance de Fase 0
+→ **Gate F0 (H1):** CI verde, login desde Android, `GET /api/v1/me` autenticado; tag `v0.2.0`; medición `F0-gate`.
 
-Workspaces (Fase 1), planner/LLM (Fase 2), worker de cola (Fase 4), iOS (requiere macOS), despliegue a nube.
+## Verificación de la DoD (sección 15 de la guía)
+
+| Punto | Cómo se comprueba |
+|---|---|
+| Se clona y arranca en otra máquina | Clon limpio en carpeta temporal + pasos del README |
+| Flutter corre en Android | `flutter run` en emulador |
+| FastAPI `/health` + OpenAPI local | `curl` + `/docs` |
+| PostgreSQL y Redis *healthy* | `docker compose ps` ✅ |
+| Configuración desde entorno, sin secretos versionados | Test + `gitleaks` |
+| Flutter llama a la API con URL configurable | `--dart-define=AICC_API_BASE_URL` |
+| Pruebas y analizadores pasan | CI |
+| README y `.env.example` sin credenciales reales | Revisión ✅ |
+
+## Fuera de alcance de F0
+
+Workspaces (F1), planner/LLM (O2), worker (O4), iOS, despliegue en la nube.
