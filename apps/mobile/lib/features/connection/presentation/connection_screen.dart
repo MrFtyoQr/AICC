@@ -11,10 +11,14 @@ class ConnectionScreen extends StatefulWidget {
     super.key,
     required this.repository,
     required this.appEnvironment,
+    this.title = 'AICC · Estado',
+    this.actions = const [],
   });
 
   final HealthRepository repository;
   final String appEnvironment;
+  final String title;
+  final List<Widget> actions;
 
   @override
   State<ConnectionScreen> createState() => _ConnectionScreenState();
@@ -38,7 +42,7 @@ class _ConnectionScreenState extends State<ConnectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('AICC · Estado')),
+      appBar: AppBar(title: Text(widget.title), actions: widget.actions),
       body: SafeArea(
         child: FutureBuilder<ApiStatus>(
           future: _status,

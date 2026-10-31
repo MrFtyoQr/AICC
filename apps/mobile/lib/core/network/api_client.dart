@@ -5,7 +5,7 @@ import '../errors/app_error.dart';
 /// Único cliente HTTP de la app. Ningún widget llama a la red directamente.
 class ApiClient {
   ApiClient({required String baseUrl, Dio? dio})
-    : _dio =
+    : dio =
           dio ??
           Dio(
             BaseOptions(
@@ -16,23 +16,37 @@ class ApiClient {
             ),
           );
 
-  final Dio _dio;
+  /// Expuesto para registrar interceptores (sesión) en el arranque.
+  final Dio dio;
 
-  String get baseUrl => _dio.options.baseUrl;
+  String get baseUrl => dio.options.baseUrl;
 
   /// GET que devuelve el cuerpo JSON. [acceptedStatuses] permite tratar códigos como 503
   /// como respuesta válida cuando el cuerpo describe el problema (ej. `/health/ready`).
   Future<Map<String, dynamic>> getJson(
     String path, {
     Set<int> acceptedStatuses = const {200},
-  }) async {
+  }) => _send(
+    () => dio.get<Map<String, dynamic>>(
+      path,
+      options: Options(
+        validateStatus: (code) => acceptedStatuses.contains(code),
+      ),
+    ),
+  );
+
+  Future<Map<String, dynamic>> postJson(String path, Object body) =>
+      _send(() => dio.post<Map<String, dynamic>>(path, data: body));
+
+  /// POST sin cuerpo de respuesta (204).
+  Future<void> post(String path, Object body) =>
+      _send(() => dio.post<Map<String, dynamic>>(path, data: body));
+
+  Future<Map<String, dynamic>> _send(
+    Future<Response<Map<String, dynamic>>> Function() request,
+  ) async {
     try {
-      final response = await _dio.get<Map<String, dynamic>>(
-        path,
-        options: Options(
-          validateStatus: (code) => acceptedStatuses.contains(code),
-        ),
-      );
+      final response = await request();
       return response.data ?? const {};
     } on DioException catch (error) {
       throw AppError.fromDio(error);
