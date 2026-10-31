@@ -101,6 +101,53 @@
         "title": "Actor",
         "type": "object"
       },
+      "CapabilityResponse": {
+        "properties": {
+          "cost_model": {
+            "title": "Cost Model",
+            "type": "string"
+          },
+          "default_policy": {
+            "$ref": "#/components/schemas/DefaultPolicy"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "input_schema": {
+            "additionalProperties": true,
+            "title": "Input Schema",
+            "type": "object"
+          },
+          "risk_label": {
+            "title": "Risk Label",
+            "type": "string"
+          },
+          "risk_level": {
+            "$ref": "#/components/schemas/RiskLevel"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "title",
+          "risk_level",
+          "risk_label",
+          "default_policy",
+          "cost_model",
+          "input_schema"
+        ],
+        "title": "CapabilityResponse",
+        "type": "object"
+      },
       "Command": {
         "enum": [
           "plan",
@@ -119,6 +166,15 @@
           "cancel"
         ],
         "title": "Command",
+        "type": "string"
+      },
+      "DefaultPolicy": {
+        "enum": [
+          "allow",
+          "require_approval",
+          "deny"
+        ],
+        "title": "DefaultPolicy",
         "type": "string"
       },
       "DependencyStatus": {
@@ -469,6 +525,135 @@
         "title": "Permission",
         "type": "string"
       },
+      "PlanResponse": {
+        "properties": {
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Assumptions",
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "params": {
+            "additionalProperties": true,
+            "title": "Params",
+            "type": "object"
+          },
+          "prompt_version": {
+            "title": "Prompt Version",
+            "type": "string"
+          },
+          "recipe_key": {
+            "title": "Recipe Key",
+            "type": "string"
+          },
+          "recipe_title": {
+            "title": "Recipe Title",
+            "type": "string"
+          },
+          "recipe_version": {
+            "title": "Recipe Version",
+            "type": "string"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/PlanStepResponse"
+            },
+            "title": "Steps",
+            "type": "array"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "task_id",
+          "version",
+          "recipe_key",
+          "recipe_title",
+          "recipe_version",
+          "params",
+          "assumptions",
+          "steps",
+          "model",
+          "prompt_version",
+          "created_at"
+        ],
+        "title": "PlanResponse",
+        "type": "object"
+      },
+      "PlanStepResponse": {
+        "properties": {
+          "capability": {
+            "title": "Capability",
+            "type": "string"
+          },
+          "depends_on": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Depends On",
+            "type": "array"
+          },
+          "inputs": {
+            "additionalProperties": true,
+            "title": "Inputs",
+            "type": "object"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "position": {
+            "title": "Position",
+            "type": "integer"
+          },
+          "risk_label": {
+            "title": "Risk Label",
+            "type": "string"
+          },
+          "risk_level": {
+            "$ref": "#/components/schemas/RiskLevel"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "position",
+          "key",
+          "title",
+          "capability",
+          "risk_level",
+          "risk_label",
+          "depends_on",
+          "inputs"
+        ],
+        "title": "PlanStepResponse",
+        "type": "object"
+      },
       "ProjectCreate": {
         "properties": {
           "description": {
@@ -591,6 +776,71 @@
         "title": "Readiness",
         "type": "object"
       },
+      "RecipeResponse": {
+        "properties": {
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "params_schema": {
+            "additionalProperties": true,
+            "title": "Params Schema",
+            "type": "object"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeStepResponse"
+            },
+            "title": "Steps",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "version",
+          "title",
+          "description",
+          "params_schema",
+          "steps"
+        ],
+        "title": "RecipeResponse",
+        "type": "object"
+      },
+      "RecipeStepResponse": {
+        "properties": {
+          "capability": {
+            "title": "Capability",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "title",
+          "capability"
+        ],
+        "title": "RecipeStepResponse",
+        "type": "object"
+      },
       "Ref": {
         "properties": {
           "id": {
@@ -659,6 +909,17 @@
         "title": "RegisterRequest",
         "type": "object"
       },
+      "RiskLevel": {
+        "enum": [
+          "read",
+          "write_internal",
+          "write_external",
+          "spend",
+          "destructive"
+        ],
+        "title": "RiskLevel",
+        "type": "string"
+      },
       "Role": {
         "enum": [
           "owner",
@@ -719,6 +980,33 @@
           "text"
         ],
         "title": "TaskCreate",
+        "type": "object"
+      },
+      "TaskEdit": {
+        "properties": {
+          "text": {
+            "anyOf": [
+              {
+                "maxLength": 4000,
+                "minLength": 3,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "version": {
+            "minimum": 1.0,
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "version"
+        ],
+        "title": "TaskEdit",
         "type": "object"
       },
       "TaskPage": {
@@ -786,6 +1074,18 @@
             "title": "Status Label",
             "type": "string"
           },
+          "status_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Por qué está en este estado, si aplica",
+            "title": "Status Reason"
+          },
           "title": {
             "title": "Title",
             "type": "string"
@@ -807,6 +1107,7 @@
           "description",
           "status",
           "status_label",
+          "status_reason",
           "project",
           "environment",
           "version",
@@ -1276,6 +1577,36 @@
         ]
       }
     },
+    "/api/v1/capabilities": {
+      "get": {
+        "operationId": "list_capabilities_api_v1_capabilities_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CapabilityResponse"
+                  },
+                  "title": "Response List Capabilities Api V1 Capabilities Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Acciones que AICC sabe ejecutar, con su esquema y nivel de riesgo",
+        "tags": [
+          "catalog"
+        ]
+      }
+    },
     "/api/v1/me": {
       "get": {
         "operationId": "me_api_v1_me_get",
@@ -1647,6 +1978,76 @@
         "summary": "Cambiar el rol de un miembro",
         "tags": [
           "workspaces"
+        ]
+      }
+    },
+    "/api/v1/plans/{plan_id}": {
+      "get": {
+        "operationId": "get_plan_api_v1_plans__plan_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+            "in": "header",
+            "name": "X-Workspace-Id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+              "title": "X-Workspace-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "No existe o pertenece a otro workspace"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Detalle de un plan",
+        "tags": [
+          "tasks"
         ]
       }
     },
@@ -2265,6 +2666,36 @@
         ]
       }
     },
+    "/api/v1/recipes": {
+      "get": {
+        "operationId": "list_recipes_api_v1_recipes_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RecipeResponse"
+                  },
+                  "title": "Response List Recipes Api V1 Recipes Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Soluciones que AICC ofrece (recetas con pasos fijos)",
+        "tags": [
+          "catalog"
+        ]
+      }
+    },
     "/api/v1/tasks": {
       "get": {
         "operationId": "list_tasks_api_v1_tasks_get",
@@ -2595,7 +3026,7 @@
             "description": "No existe o pertenece a otro workspace"
           },
           "409": {
-            "description": "Estado que no permite cancelar o versión desactualizada"
+            "description": "El estado actual no lo permite o la versión está desactualizada"
           },
           "422": {
             "content": {
@@ -2614,6 +3045,92 @@
           }
         ],
         "summary": "Cancelar una tarea (desde cualquier estado no terminal)",
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/api/v1/tasks/{task_id}/edit": {
+      "post": {
+        "operationId": "edit_task_api_v1_tasks__task_id__edit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "task_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Task Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+            "in": "header",
+            "name": "X-Workspace-Id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+              "title": "X-Workspace-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskEdit"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "403": {
+            "description": "Tu rol no permite esta acción"
+          },
+          "404": {
+            "description": "No existe o pertenece a otro workspace"
+          },
+          "409": {
+            "description": "El estado actual no lo permite o la versión está desactualizada"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Volver a Borrador (tras un plan fallido o rechazado), opcionalmente con texto nuevo",
         "tags": [
           "tasks"
         ]
@@ -2688,6 +3205,160 @@
           }
         ],
         "summary": "Historial de la tarea (en O4 se sirve también por SSE)",
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/api/v1/tasks/{task_id}/plan": {
+      "get": {
+        "operationId": "latest_plan_api_v1_tasks__task_id__plan_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "task_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Task Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+            "in": "header",
+            "name": "X-Workspace-Id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+              "title": "X-Workspace-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "No existe o pertenece a otro workspace"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Último plan propuesto para la tarea",
+        "tags": [
+          "tasks"
+        ]
+      },
+      "post": {
+        "operationId": "plan_task_api_v1_tasks__task_id__plan_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "task_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Task Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+            "in": "header",
+            "name": "X-Workspace-Id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+              "title": "X-Workspace-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionedCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "403": {
+            "description": "Tu rol no permite esta acción"
+          },
+          "404": {
+            "description": "No existe o pertenece a otro workspace"
+          },
+          "409": {
+            "description": "El estado actual no lo permite o la versión está desactualizada"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Pedir un plan: la IA elige una receta del catálogo y AICC la valida. No ejecuta nada.",
         "tags": [
           "tasks"
         ]

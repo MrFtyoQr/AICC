@@ -10,12 +10,12 @@ Formato: contexto → decisión → consecuencias. Estados: *Propuesto*, *Acepta
 | [004](ADR-004-uv-python-312.md) | uv + Python 3.12 como único mecanismo de dependencias | Aceptado | F0 |
 | [005](ADR-005-cola-arq.md) | arq como cola de trabajos | Aceptado | F0 → O4 |
 | [006](ADR-006-auth-propia-jwt.md) | Autenticación propia con JWT (access corto + refresh rotatorio) | Aceptado | F0 |
-| 007 | Contrato estructurado del plan | Pendiente | O2 |
+| [007](ADR-007-contrato-plan.md) | El plan es una receta del catálogo instanciada | Aceptado | O2 |
 | 008 | Policy Engine propio en código (sin OPA en MVP) | Pendiente | O3 |
 | 009 | SSE para tiempo real (vs. WebSocket) | Pendiente | O4 |
 | [010](ADR-010-workspace-logico.md) | Workspace lógico separado de la infraestructura física | Aceptado | F1 |
 | [011](ADR-011-modalidades.md) | Tres caminos: Conectar, BYOC y Administrado (+ BYOK independiente) | Aceptado | F1 → S2 |
-| 012 | Motor determinista valida; el LLM solo propone y explica | Pendiente | O2 |
+| [012](ADR-012-llm-solo-propone.md) | Motor determinista valida; el LLM solo propone y explica | Aceptado | O2 |
 | 013 | Despliegue desde plantillas versionadas y adaptadores | Pendiente | S1–S2 |
 | 014 | Aprobación precede a cualquier gasto o acción externa | Pendiente | O3 |
 | 015 | Medición de costo estimado y real por proveedor y workspace | Pendiente | O6 |

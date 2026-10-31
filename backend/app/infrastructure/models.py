@@ -18,6 +18,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.permissions import Role
+from app.domain.catalog.capabilities import RiskLevel
 from app.domain.tasks.state_machine import TaskStatus
 from app.infrastructure.database import Base
 
@@ -196,6 +197,7 @@ class AuditLog(Base):
 # --- Orquestación (O1) --------------------------------------------------------
 
 TASK_STATUSES = tuple(status.value for status in TaskStatus)
+RISK_LEVELS = tuple(level.value for level in RiskLevel)
 
 
 class Task(TimestampMixin, Base):
@@ -220,6 +222,8 @@ class Task(TimestampMixin, Base):
     title: Mapped[str] = mapped_column(String(120), nullable=False)
     description: Mapped[str] = mapped_column(String(4000), nullable=False)
     status: Mapped[str] = mapped_column(String(32), nullable=False)
+    # Por qué está en su estado actual, en lenguaje claro (p. ej. por qué no se pudo planificar).
+    status_reason: Mapped[str | None] = mapped_column(String(300))
     created_by: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("users.id", ondelete="SET NULL")
     )
@@ -250,3 +254,62 @@ class Event(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
+
+
+class Plan(Base):
+    """Receta del catálogo instanciada para una tarea (ADR-007). Inmutable: cambio = versión."""
+
+    __tablename__ = "plans"
+    __table_args__ = (UniqueConstraint("task_id", "version"),)
+
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    workspace_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("workspaces.id", ondelete="CASCADE"), index=True, nullable=False
+    )
+    task_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("tasks.id", ondelete="CASCADE"), index=True, nullable=False
+    )
+    version: Mapped[int] = mapped_column(nullable=False)
+    recipe_key: Mapped[str] = mapped_column(String(64), nullable=False)
+    recipe_version: Mapped[str] = mapped_column(String(16), nullable=False)
+    params: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    assumptions: Mapped[list] = mapped_column(JSONB, nullable=False)
+    # Trazabilidad del motor: qué prompt y qué modelo lo propusieron, y cuántos tokens costó.
+    prompt_version: Mapped[str] = mapped_column(String(32), nullable=False)
+    model: Mapped[str] = mapped_column(String(64), nullable=False)
+    input_tokens: Mapped[int] = mapped_column(nullable=False)
+    output_tokens: Mapped[int] = mapped_column(nullable=False)
+    created_by: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+    steps: Mapped[list["PlanStep"]] = relationship(
+        lazy="selectin", order_by="PlanStep.position", cascade="all, delete-orphan"
+    )
+
+
+class PlanStep(Base):
+    __tablename__ = "plan_steps"
+    __table_args__ = (
+        UniqueConstraint("plan_id", "key"),
+        CheckConstraint(f"risk_level IN {RISK_LEVELS}", name="risk_level"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    workspace_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("workspaces.id", ondelete="CASCADE"), nullable=False
+    )
+    plan_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("plans.id", ondelete="CASCADE"), index=True, nullable=False
+    )
+    position: Mapped[int] = mapped_column(nullable=False)
+    key: Mapped[str] = mapped_column(String(64), nullable=False)
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    capability: Mapped[str] = mapped_column(String(64), nullable=False)
+    capability_version: Mapped[str] = mapped_column(String(16), nullable=False)
+    inputs: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    depends_on: Mapped[list] = mapped_column(JSONB, nullable=False)
+    risk_level: Mapped[str] = mapped_column(String(32), nullable=False)

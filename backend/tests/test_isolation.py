@@ -45,6 +45,9 @@ TASK_ROUTES = [
     ("GET", "/api/v1/tasks/{task}", None),
     ("GET", "/api/v1/tasks/{task}/events", None),
     ("POST", "/api/v1/tasks/{task}/cancel", {"version": 1}),
+    ("POST", "/api/v1/tasks/{task}/plan", {"version": 1}),
+    ("POST", "/api/v1/tasks/{task}/edit", {"version": 1}),
+    ("GET", "/api/v1/tasks/{task}/plan", None),
 ]
 
 PROJECT_ROUTES = [
@@ -152,5 +155,17 @@ def test_foreign_project_cannot_host_my_task(ana, eve):
     response = eve.request(
         "POST", "/api/v1/tasks", json={"text": "Intruso", "project_id": project["id"]}
     )
+
+    assert response.status_code == 404
+
+
+@pytest.mark.parametrize("via", ["own-workspace", "foreign-workspace"])
+def test_foreign_plan_is_404(ana, eve, via):
+    task = ana.request("POST", "/api/v1/tasks", json={"text": "Resume las ventas"}).json()
+    ana.request("POST", f"/api/v1/tasks/{task['id']}/plan", json={"version": 1})
+    plan = ana.request("GET", f"/api/v1/tasks/{task['id']}/plan").json()
+    workspace = eve.workspace_id if via == "own-workspace" else ana.workspace_id
+
+    response = eve.request("GET", f"/api/v1/plans/{plan['id']}", workspace_id=workspace)
 
     assert response.status_code == 404

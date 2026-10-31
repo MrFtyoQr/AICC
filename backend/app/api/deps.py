@@ -12,6 +12,7 @@ from app.application.workspaces import Scope, membership
 from app.core.config import Settings
 from app.core.permissions import Permission, can
 from app.core.security import InvalidTokenError, decode_access_token
+from app.infrastructure.ai.runtime import AgentRuntime
 from app.infrastructure.database import get_session
 from app.infrastructure.models import User, Workspace
 
@@ -25,6 +26,13 @@ def get_settings_dep(request: Request) -> Settings:
 
 
 SettingsDep = Annotated[Settings, Depends(get_settings_dep)]
+
+
+def get_runtime(request: Request) -> AgentRuntime:
+    return request.app.state.runtime
+
+
+RuntimeDep = Annotated[AgentRuntime, Depends(get_runtime)]
 
 
 async def get_current_user(
