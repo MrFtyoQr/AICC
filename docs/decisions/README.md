@@ -14,7 +14,7 @@ Formato: contexto → decisión → consecuencias. Estados: *Propuesto*, *Acepta
 | 008 | Policy Engine propio en código (sin OPA en MVP) | Pendiente | O3 |
 | 009 | SSE para tiempo real (vs. WebSocket) | Pendiente | O4 |
 | [010](ADR-010-workspace-logico.md) | Workspace lógico separado de la infraestructura física | Aceptado | F1 |
-| 011 | Modalidades AICC‑managed, BYOC e híbrida | Pendiente | S1 |
+| [011](ADR-011-modalidades.md) | Tres caminos: Conectar, BYOC y Administrado (+ BYOK independiente) | Aceptado | F1 → S2 |
 | 012 | Motor determinista valida; el LLM solo propone y explica | Pendiente | O2 |
 | 013 | Despliegue desde plantillas versionadas y adaptadores | Pendiente | S1–S2 |
 | 014 | Aprobación precede a cualquier gasto o acción externa | Pendiente | O3 |
@@ -22,3 +22,4 @@ Formato: contexto → decisión → consecuencias. Estados: *Propuesto*, *Acepta
 | 016 | Canal de mensajería intercambiable; WhatsApp no depende solo de conexión no oficial | Pendiente | S4 |
 | 017 | Uso comercial de n8n validado contra su licencia | Pendiente | O5 |
 | [018](ADR-018-contenedores.md) | El contenedor es la unidad de despliegue del backend | Aceptado | F0 |
+| [019](ADR-019-nube-estandar.md) | Nube estándar AWS; BYOC en AWS → GCP → Azure; Cloudflare para bots ligeros | Aceptado | S2 (Etapa B) |

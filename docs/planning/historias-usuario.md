@@ -533,9 +533,9 @@ y criterios numerados en formato *Dado / cuando / entonces*.
 1. Dado un paso de email, cuando se planifica, entonces requiere aprobación.
 2. Dado el modo sandbox, cuando se envía, entonces llega a la cuenta de prueba.
 
-### HU-34 · Disparar workflows de n8n
+### HU-34 · Orquestar mi propio stack (n8n primero)
 - **Rol:** Operador
-- **Historia:** Como operador quiero que una tarea dispare workflows de n8n para reutilizar automatizaciones existentes.
+- **Historia:** Como operador quiero que una tarea dispare los workflows o agentes que ya tengo (n8n, OpenClaw, Hermes o a medida) para orquestarlos desde la app sin migrarlos.
 - **Fase:** O5
 - **Sprint:** S11
 - **Puntos:** 5
@@ -546,6 +546,7 @@ y criterios numerados en formato *Dado / cuando / entonces*.
 **Criterios de aceptación**
 1. Dado `docker compose --profile connectors up`, cuando arranca, entonces n8n queda disponible solo en local.
 2. Dado un workflow de ejemplo, cuando la tarea lo dispara, entonces se ejecuta y su resultado vuelve como artefacto.
+4. Dado el contrato de runtime externo, cuando se documenta, entonces el spike V-A2 indica qué cubren OpenClaw y Hermes y qué falta.
 3. Dada la licencia de n8n, cuando se revisa, entonces queda documentado el uso permitido (ADR‑017).
 
 ### HU-35 · Usar herramientas MCP

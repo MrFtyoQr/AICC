@@ -542,6 +542,8 @@ La propuesta de valor se resume así: el usuario expresa el resultado que necesi
 
 ## 20. Modelo de servicio: tres modalidades de infraestructura
 
+> **Actualizado:** esta sección y la §22 quedan precisadas por [modelo-operacion.md](modelo-operacion.md) (ADR-011, ADR-019).
+
 No se debe imponer un proveedor único. AICC debe ofrecer tres modalidades, explicando quién es dueño de la cuenta, quién paga la infraestructura y quién tiene la responsabilidad operativa.
 
 | Modalidad | Propiedad y facturación | Ventajas | Cuándo ofrecerla |

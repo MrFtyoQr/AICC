@@ -76,9 +76,15 @@ Reglas:
 
 ## 4. Contrato del plan (lo que el LLM puede devolver)
 
+> **Regla (ADR-011, [modelo-operacion.md](modelo-operacion.md)):** AICC no inventa soluciones. Un plan es una
+> **receta del catálogo instanciada**: el LLM elige la receta (`recipe`) y rellena sus parámetros; los `steps` los
+> genera el backend a partir de la versión de la receta. Mientras no exista el catálogo (O2), el validador acepta solo
+> steps que formen parte de una receta registrada. El ejemplo de abajo muestra el plan **ya expandido**.
+
 ```json
 {
   "plan_version": 1,
+  "recipe": {"key": "lead_daily_summary", "version": "1.0.0"},
   "goal": "Resumir los 10 leads de hoy y enviarme un email",
   "assumptions": ["Los leads están en la tabla leads del proyecto"],
   "steps": [
@@ -106,6 +112,7 @@ Reglas:
 
 Validación determinista antes de mostrarlo al usuario:
 
+- `recipe` debe existir en el catálogo; los `steps` deben coincidir con los de esa versión de la receta.
 - `capability` debe existir en el catálogo y estar habilitada para el workspace.
 - `inputs` validados contra el JSON Schema de la capability.
 - Grafo `depends_on` acíclico; referencias `{{...}}` solo a steps previos o variables permitidas.

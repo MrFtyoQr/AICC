@@ -206,7 +206,7 @@ soluciones son "programas" que corren sobre él.
 | O5-BE-02 | BE | `provider_connections` con `secret_ref`; secretos cifrados (clave maestra en env en dev; KMS/Vault en prod) | Ningún secreto en tablas de negocio |
 | O5-BE-03 | BE | `http.request` con allowlist de dominios por workspace | Test SSRF (IPs privadas bloqueadas) |
 | O5-BE-04 | BE | `email.send` (proveedor transaccional en modo sandbox) | Envío real a cuenta de prueba |
-| O5-BE-05 | BE | `n8n.trigger_workflow` contra n8n local en Docker | Workflow de ejemplo ejecutado |
+| O5-BE-05 | BE | Contrato de runtime externo (`health`, `list_actions`, `trigger`, `status`/callback, `result`) + adaptador n8n contra n8n local en Docker (ADR-011) | Workflow de ejemplo ejecutado; spike V-A2 decide OpenClaw/Hermes |
 | O5-BE-06 | BE | Cliente MCP: exponer herramientas de un servidor MCP como capabilities (allowlist) | 1 servidor MCP de prueba |
 | O5-APP-01 | APP | Pantalla Conectores: estado, probar conexión, desconectar (M7) | — |
 | O5-UX-01 | UX | Patrón "conectar servicio" en 3 pasos | Prototipo aprobado |
@@ -239,12 +239,13 @@ soluciones son "programas" que corren sobre él.
 
 ## Etapa B · Soluciones (planificación de alto nivel)
 
-Se detallará al cerrar H2 con los aprendizajes reales. Resumen tomado de la guía (secciones 19–36):
+Se detallará al cerrar H2 con los aprendizajes reales. Resumen tomado de la guía (secciones 19–36), ajustado por el
+[modelo de operación](../architecture/modelo-operacion.md) (ADR-011, ADR-019). Antes de cada fase se corren sus spikes de validación (§6 de ese documento).
 
 | Fase | Entregable | Puerta |
 |---|---|---|
-| S1 Catálogo y Cotizador | Solution Templates versionadas, perfiles de carga, `quotes` + `quote_items`, comparador determinista | Costos y supuestos visibles antes de desplegar |
-| S2 Provisionamiento | `InfrastructureProvider` (Docker/VPS primero), `provisioning_jobs`, ciclo de vida, BYOC | Idempotente, health check, rollback |
+| S1 Catálogo y Cotizador | Recetas (Solution Templates) versionadas con fases estándar (modelo-operacion.md §4; Forja como primera receta), perfiles de carga, `quotes` + `quote_items`, comparador determinista | Costos y supuestos visibles antes de desplegar |
+| S2 Provisionamiento | `InfrastructureProvider` por nube: AWS primero (ADR-019), modos Administrado y BYOC con acceso delegado; `provisioning_jobs` con checkpoints | Idempotente, health check, rollback |
 | S3 Lead Capture Starter | Webhook → n8n → BD → dedupe → notificación | Pruebas end‑to‑end; vendible (H3) |
 | S4 Mensajería | Email en producción; WhatsApp: piloto controlado → Cloud API oficial | Consentimiento, escalamiento humano |
 | S5 Media Studio | Pipeline de video por etapas con cotización por trabajo | Costo por etapa y límite de regeneración |
