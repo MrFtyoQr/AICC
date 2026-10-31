@@ -30,7 +30,7 @@ Perfiles previstos (se añaden en su fase):
 | Perfil | Servicios | Fase |
 |---|---|---|
 | *(por defecto)* | postgres, redis | F0 |
-| `app` | api (FastAPI), worker | F0 / O4 |
+| `app` | migrate + api (imagen `aicc-api`); worker en O4 | F0 ✅ / O4 |
 | `connectors` | n8n | O5 |
 | `observability` | prometheus, grafana | O6 |
 

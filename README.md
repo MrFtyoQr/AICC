@@ -38,6 +38,8 @@ cd apps/mobile
 flutter run --dart-define=AICC_API_BASE_URL=http://10.0.2.2:8000
 ```
 
+**Todo en contenedores** (lo mismo que se despliega en la nube): `docker compose --profile app up -d --build`.
+
 Detalles en [backend/README.md](backend/README.md) y [apps/mobile/README.md](apps/mobile/README.md).
 Medición comparativa del entorno: `scripts/medir-entorno.sh <etiqueta>` y `cd backend && uv run python scripts/bench_api.py`.
 
@@ -55,6 +57,7 @@ Medición comparativa del entorno: `scripts/medir-entorno.sh <etiqueta>` y `cd b
 | [App móvil incremental](docs/planning/app-movil-incremental.md) | Incrementos M0–M8 |
 | [UX / UI](docs/ux/principios-ux.md) | Principios, navegación, flujos, componentes, copy |
 | [Entorno local](docs/environment/entorno-local.md) | Arranque, protocolo de medición y resultados |
+| [Contenedores y despliegue](docs/deployment/contenedores.md) | Por qué todo el backend va en Docker, imagen, Compose y nube |
 | [Jira](docs/planning/jira/README.md) | Estructura del proyecto e importación del backlog |
 | [ADRs](docs/decisions/README.md) | Decisiones de arquitectura |
 | [Guía de inicialización v1.1](docs/architecture/guia-inicializacion.md) | Documento fuente ([docx](docs/source/Guia_Inicializacion_AICC_v1.1.docx)) |

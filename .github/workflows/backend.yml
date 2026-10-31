@@ -58,3 +58,53 @@ jobs:
         run: uv run pytest -q
       - name: Contrato OpenAPI al día
         run: uv run python scripts/export_openapi.py --check
+
+  image:
+    name: imagen Docker
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: test
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: aicc
+          POSTGRES_USER: aicc
+          POSTGRES_PASSWORD: ci_only_password
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U aicc -d aicc"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Construir imagen
+        uses: docker/build-push-action@v6
+        with:
+          context: backend
+          load: true
+          tags: aicc-api:ci
+          build-args: APP_VERSION=${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Prueba de humo (migrar, arrancar, health, usuario no root)
+        env:
+          RUN: >-
+            docker run --rm --network host
+            -e APP_ENV=test
+            -e DATABASE_URL=postgresql+asyncpg://aicc:ci_only_password@127.0.0.1:5432/aicc
+            -e REDIS_URL=redis://127.0.0.1:6379/0
+            -e JWT_SECRET=ci_only_secret_not_used_anywhere_else_0123456789
+        run: |
+          $RUN aicc-api:ci migrate
+          $RUN -d --name api --read-only --tmpfs /tmp --cap-drop ALL aicc-api:ci
+          for i in $(seq 1 30); do curl -fs http://127.0.0.1:8000/health/ready && break; sleep 1; done
+          curl -fs http://127.0.0.1:8000/health/ready
+          test "$(docker exec api id -u)" = "10001"
+          docker logs api | tail -5

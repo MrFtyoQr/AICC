@@ -34,6 +34,47 @@ services:
       timeout: 3s
       retries: 10
 
+  # --- Perfil "app": la misma imagen que se despliega en la nube --------------------------
+  # docker compose --profile app up -d --build
+  # Dentro de la red de Compose los servicios se llaman por nombre (postgres, redis),
+  # por eso aquí DATABASE_URL/REDIS_URL no usan 127.0.0.1 como el .env de desarrollo nativo.
+  migrate:
+    profiles: ["app"]
+    build:
+      context: ./backend
+      args:
+        APP_VERSION: ${APP_VERSION:-0.1.0}
+    image: aicc-api:${APP_VERSION:-0.1.0}
+    command: ["migrate"]
+    environment: &api-env
+      APP_ENV: ${APP_ENV:-development}
+      DATABASE_URL: postgresql+asyncpg://aicc:${POSTGRES_PASSWORD}@postgres:5432/aicc
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET: ${JWT_SECRET:?Define JWT_SECRET en .env}
+      CORS_ORIGINS: ${CORS_ORIGINS:-[]}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    profiles: ["app"]
+    image: aicc-api:${APP_VERSION:-0.1.0}
+    container_name: aicc-api
+    restart: unless-stopped
+    environment: *api-env
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    read_only: true
+    tmpfs: ["/tmp"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+
 volumes:
   postgres_data:
   redis_data:
