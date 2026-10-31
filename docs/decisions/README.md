@@ -13,7 +13,7 @@ Formato: contexto → decisión → consecuencias. Estados: *Propuesto*, *Acepta
 | 007 | Contrato estructurado del plan | Pendiente | O2 |
 | 008 | Policy Engine propio en código (sin OPA en MVP) | Pendiente | O3 |
 | 009 | SSE para tiempo real (vs. WebSocket) | Pendiente | O4 |
-| 010 | Workspace lógico separado de la infraestructura física | Pendiente | F1 |
+| [010](ADR-010-workspace-logico.md) | Workspace lógico separado de la infraestructura física | Aceptado | F1 |
 | 011 | Modalidades AICC‑managed, BYOC e híbrida | Pendiente | S1 |
 | 012 | Motor determinista valida; el LLM solo propone y explica | Pendiente | O2 |
 | 013 | Despliegue desde plantillas versionadas y adaptadores | Pendiente | S1–S2 |

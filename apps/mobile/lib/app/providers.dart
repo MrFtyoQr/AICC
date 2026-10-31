@@ -7,6 +7,7 @@ import '../core/security/token_storage.dart';
 import '../features/authentication/application/session_controller.dart';
 import '../features/authentication/data/auth_repository.dart';
 import '../features/connection/data/health_repository.dart';
+import '../features/workspace/data/workspace_repository.dart';
 
 /// Dependencias de la app. `bootstrap.dart` y las pruebas sobrescriben config, almacenamiento
 /// y, si hace falta, el cliente HTTP.
@@ -50,3 +51,13 @@ final healthRepositoryProvider = Provider<HealthRepository>(
 final sessionProvider = NotifierProvider<SessionController, SessionState>(
   SessionController.new,
 );
+
+final workspaceRepositoryProvider = Provider<WorkspaceRepository>(
+  (ref) => WorkspaceRepository(ref.watch(apiClientProvider)),
+);
+
+/// Se recalcula al cambiar la sesión, para no mostrar el workspace de otro usuario.
+final currentWorkspaceProvider = FutureProvider<Workspace>((ref) {
+  ref.watch(sessionProvider);
+  return ref.watch(workspaceRepositoryProvider).current();
+});

@@ -36,6 +36,11 @@ class FakeBackend {
     };
   }
 
+  String? _authenticated(RequestOptions o) {
+    final header = o.headers['Authorization'] as String?;
+    return validAccess[header?.replaceFirst('Bearer ', '')];
+  }
+
   Future<ResponseBody> handle(RequestOptions o) async {
     final body = switch (o.data) {
       final Map<String, dynamic> m => m,
@@ -82,17 +87,24 @@ class FakeBackend {
         validRefresh.remove(body['refresh_token']);
         return ResponseBody.fromString('', 204);
       case '/api/v1/me':
-        final token = (o.headers['Authorization'] as String?)?.replaceFirst(
-          'Bearer ',
-          '',
-        );
-        final email = validAccess[token];
+        final email = _authenticated(o);
         if (email == null) return jsonBody(401, {'detail': 'No autenticado'});
         final u = users[email]!;
         return jsonBody(200, {
           'id': u.id,
           'email': email,
           'display_name': u.name,
+        });
+      case '/api/v1/workspaces/current':
+        final email = _authenticated(o);
+        if (email == null) return jsonBody(401, {'detail': 'No autenticado'});
+        final u = users[email]!;
+        return jsonBody(200, {
+          'id': 'w-${u.id}',
+          'name': 'Espacio de ${u.name ?? email.split('@').first}',
+          'is_personal': true,
+          'role': 'owner',
+          'permissions': ['project.write', 'workspace.read'],
         });
     }
     return jsonBody(404, {'detail': 'not found'});

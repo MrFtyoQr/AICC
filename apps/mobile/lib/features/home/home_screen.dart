@@ -4,8 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/providers.dart';
 import '../authentication/application/session_controller.dart';
 import '../connection/presentation/connection_screen.dart';
+import '../workspace/presentation/workspace_chip.dart';
 
-/// M1: inicio provisional con saludo y estado de conexión.
+/// M1: inicio provisional con saludo, workspace actual y estado de conexión.
 /// En M2/M3 se convierte en la navegación inferior (Inicio · Comando · Aprobar · Más).
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -19,6 +20,7 @@ class HomeScreen extends ConsumerWidget {
       repository: ref.watch(healthRepositoryProvider),
       appEnvironment: ref.watch(appConfigProvider).environment,
       title: 'Hola, $name',
+      header: const WorkspaceChip(),
       actions: [
         IconButton(
           tooltip: 'Cerrar sesión',

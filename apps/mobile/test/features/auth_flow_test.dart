@@ -71,6 +71,7 @@ void main() {
     await _fillAndSubmitLogin(tester, _password);
 
     expect(find.text('Hola, Ana'), findsOneWidget);
+    expect(find.text('Espacio de Ana · Dueño'), findsOneWidget);
     expect(find.text('AICC está listo'), findsOneWidget);
     expect(await storage.read(), isNotNull);
   });
