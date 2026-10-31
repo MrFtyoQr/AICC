@@ -72,7 +72,12 @@ Reglas:
 1. Las transiciones se implementan en **un único módulo de dominio** (`domain/tasks/state_machine.py`) con una tabla explícita; cualquier transición no listada lanza error.
 2. Cada transición escribe un `event` y un `audit_log` en la **misma transacción**.
 3. El cliente nunca fija estados: solo invoca comandos (`plan`, `approve`, `cancel`…).
-4. Concurrencia: columna `version` (bloqueo optimista) en `tasks`, `plans` y `runs`.
+4. Concurrencia: columna `version` (bloqueo optimista) en `tasks`, `plans` y `runs`. Cada comando envía la
+   `version` que leyó; si no coincide, o si otra petición confirma antes, responde **409**.
+5. La tabla vive en `backend/app/domain/tasks/state_machine.py`; `test_state_machine.py` la compara con este
+   diagrama y prueba **todas** las combinaciones estado × comando (válidas e inválidas). El texto de cada estado
+   (`LABELS`) se compara con el diccionario de `principios-ux.md` §6. `events` es append-only (un trigger impide
+   `UPDATE`).
 
 ## 4. Contrato del plan (lo que el LLM puede devolver)
 
@@ -195,9 +200,9 @@ class AgentRuntime(Protocol):
 | GET | `/api/v1/plans/{id}` | O2 |
 | POST | `/api/v1/plans/{id}/approve` · `/reject` · `/request-changes` | O3 |
 | GET | `/api/v1/approvals?status=pending` | O3 |
-| POST | `/api/v1/tasks/{id}/cancel` | O4 |
+| POST | `/api/v1/tasks/{id}/cancel` (envía `version`) | O1 |
 | GET | `/api/v1/runs/{id}` · `/api/v1/runs/{id}/steps` | O4 |
-| GET | `/api/v1/tasks/{id}/events` (SSE) | O4 |
+| GET | `/api/v1/tasks/{id}/events` (JSON en O1; SSE en O4) | O1 / O4 |
 | GET | `/api/v1/capabilities` | O2 |
 | GET | `/api/v1/usage/summary` · `/api/v1/budgets` | O6 |
 

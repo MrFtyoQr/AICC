@@ -30,7 +30,7 @@ referencia hasta pasarlas a Figma.
 | M0 | Estado de conexión | Pendiente (capturas en el PR #1) |
 | M1 | Login, registro, inicio provisional | Pendiente (capturas en el PR #2) |
 | M2 | Chip de contexto, selector, actividad | En código (S3); capturas del emulador en el PR de S3. Pasar a Figma cuando el asiento lo permita |
-| M3 | Command Center, tarjeta de tarea, lista | Diseñar en S3, antes del código de S4 |
+| M3 | Command Center, tarjeta de tarea, lista | En código (S4); capturas del emulador en el PR de S4. Pasar a Figma cuando el asiento lo permita |
 
 Limitación actual: tu asiento en el plan Starter es de tipo **View**, así que crear y editar archivos de diseño
 puede estar restringido (FigJam sí funciona). Si hace falta editar pantallas desde aquí, habrá que cambiar el

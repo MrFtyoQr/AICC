@@ -68,12 +68,98 @@ class FakeBackend {
     return validAccess[header?.replaceFirst('Bearer ', '')];
   }
 
+  /// Tareas creadas (más reciente primero) y su historial, como en la API real.
+  final tasks = <Map<String, dynamic>>[];
+  final taskEvents = <String, List<Map<String, dynamic>>>{};
+
+  static const _labels = {'DRAFT': 'Borrador', 'CANCELLED': 'Cancelada'};
+
+  ResponseBody? _handleTasks(RequestOptions o, Map<String, dynamic> body) {
+    if (!o.path.startsWith('/api/v1/tasks')) return null;
+    final email = _authenticated(o);
+    if (email == null) return jsonBody(401, {'detail': 'No autenticado'});
+    final now = DateTime.now().toUtc().toIso8601String();
+    final segments = o.path.split('/').skip(4).toList(); // tras /api/v1/tasks
+    if (segments.isEmpty && o.method == 'POST') {
+      final id = 't-${tasks.length}';
+      final project = personalProjects.firstWhere(
+        (p) => p['id'] == body['project_id'],
+        orElse: () => personalProjects.first,
+      );
+      final task = {
+        'id': id,
+        'title': (body['text'] as String).split('\n').first,
+        'description': body['text'],
+        'status': 'DRAFT',
+        'status_label': 'Borrador',
+        'project': {'id': project['id'], 'name': project['name']},
+        'environment': (project['environments'] as List).first,
+        'version': 1,
+        'allowed_commands': ['plan', 'cancel'],
+        'created_at': now,
+        'updated_at': now,
+      };
+      tasks.insert(0, task);
+      taskEvents[id] = [
+        {
+          'id': 1,
+          'type': 'task.created',
+          'summary': 'Se creó la tarea',
+          'payload': {},
+          'created_at': now,
+        },
+      ];
+      return jsonBody(201, task);
+    }
+    if (segments.isEmpty) {
+      final statuses = switch (o.queryParameters['status']) {
+        final List<dynamic> list => list.cast<String>(),
+        final String one => [one],
+        _ => const <String>[],
+      };
+      return jsonBody(200, {
+        'items': [
+          for (final t in tasks)
+            if (statuses.isEmpty || statuses.contains(t['status'])) t,
+        ],
+        'next_cursor': null,
+      });
+    }
+    final task = tasks.where((t) => t['id'] == segments.first).firstOrNull;
+    if (task == null) return jsonBody(404, {'detail': 'Tarea no encontrada'});
+    if (segments.length == 1) return jsonBody(200, task);
+    if (segments[1] == 'events') return jsonBody(200, taskEvents[task['id']]!);
+    if (segments[1] == 'cancel') {
+      if (body['version'] != task['version']) {
+        return jsonBody(409, {
+          'detail': 'La tarea cambió mientras tanto; recárgala',
+        });
+      }
+      final from = task['status'] as String;
+      task
+        ..['status'] = 'CANCELLED'
+        ..['status_label'] = 'Cancelada'
+        ..['version'] = (task['version'] as int) + 1
+        ..['allowed_commands'] = <String>[];
+      taskEvents[task['id']]!.add({
+        'id': 2,
+        'type': 'task.state_changed',
+        'summary': '${_labels[from]} → Cancelada',
+        'payload': {},
+        'created_at': now,
+      });
+      return jsonBody(200, task);
+    }
+    return jsonBody(404, {'detail': 'not found'});
+  }
+
   Future<ResponseBody> handle(RequestOptions o) async {
     final body = switch (o.data) {
       final Map<String, dynamic> m => m,
       final String s when s.isNotEmpty => jsonDecode(s) as Map<String, dynamic>,
       _ => const <String, dynamic>{},
     };
+    if (_handleTasks(o, body) case final response?) return response;
     switch (o.path) {
       case '/health':
         return healthyApi(o);

@@ -6,7 +6,10 @@ import '../../features/activity/presentation/activity_screen.dart';
 import '../../features/authentication/application/session_controller.dart';
 import '../../features/authentication/presentation/login_screen.dart';
 import '../../features/authentication/presentation/register_screen.dart';
+import '../../features/connection/presentation/connection_screen.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/tasks/presentation/task_detail_screen.dart';
+import '../../features/tasks/presentation/tasks_screen.dart';
 import '../providers.dart';
 
 abstract final class Routes {
@@ -15,6 +18,9 @@ abstract final class Routes {
   static const register = '/register';
   static const home = '/';
   static const activity = '/activity';
+  static const status = '/status';
+  static const tasks = '/tasks';
+  static String task(String id) => '/tasks/$id';
 }
 
 /// Avisa a GoRouter cada vez que cambia la sesión para reevaluar las guardas.
@@ -46,6 +52,21 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: Routes.register, builder: (_, _) => const RegisterScreen()),
       GoRoute(path: Routes.home, builder: (_, _) => const HomeScreen()),
       GoRoute(path: Routes.activity, builder: (_, _) => const ActivityScreen()),
+      GoRoute(
+        path: Routes.status,
+        builder: (_, _) => Consumer(
+          builder: (context, ref, _) => ConnectionScreen(
+            repository: ref.watch(healthRepositoryProvider),
+            appEnvironment: ref.watch(appConfigProvider).environment,
+          ),
+        ),
+      ),
+      GoRoute(path: Routes.tasks, builder: (_, _) => const TasksScreen()),
+      GoRoute(
+        path: '/tasks/:id',
+        builder: (_, state) =>
+            TaskDetailScreen(taskId: state.pathParameters['id']!),
+      ),
     ],
   );
 });
