@@ -58,6 +58,9 @@ Medición comparativa del entorno: `scripts/medir-entorno.sh <etiqueta>` y `cd b
 | [UX / UI](docs/ux/principios-ux.md) | Principios, navegación, flujos, componentes, copy |
 | [Entorno local](docs/environment/entorno-local.md) | Arranque, protocolo de medición y resultados |
 | [Contenedores y despliegue](docs/deployment/contenedores.md) | Por qué todo el backend va en Docker, imagen, Compose y nube |
+| [Figma](docs/design/figma.md) | Diagramas (arquitectura, estados, flujo UX, sprints) y pantallas |
+| [Protección de main](docs/planning/proteccion-main.md) | Qué es, configuración recomendada y cuidados de repo público |
+| [Seguridad](SECURITY.md) | Cómo reportar vulnerabilidades |
 | [Jira](docs/planning/jira/README.md) | Estructura del proyecto e importación del backlog |
 | [ADRs](docs/decisions/README.md) | Decisiones de arquitectura |
 | [Guía de inicialización v1.1](docs/architecture/guia-inicializacion.md) | Documento fuente ([docx](docs/source/Guia_Inicializacion_AICC_v1.1.docx)) |
