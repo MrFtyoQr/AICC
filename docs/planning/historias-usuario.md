@@ -200,7 +200,7 @@ y criterios numerados en formato *Dado / cuando / entonces*.
 - **Sprint:** S3
 - **Puntos:** 8
 - **Prioridad:** High
-- **Estado:** To Do
+- **Estado:** Done
 - **Tareas:** F1-BE-04
 
 **Criterios de aceptación**
@@ -215,7 +215,7 @@ y criterios numerados en formato *Dado / cuando / entonces*.
 - **Sprint:** S3
 - **Puntos:** 5
 - **Prioridad:** High
-- **Estado:** To Do
+- **Estado:** Done
 - **Tareas:** F1-BE-03, F1-APP-02
 
 **Criterios de aceptación**
@@ -230,7 +230,7 @@ y criterios numerados en formato *Dado / cuando / entonces*.
 - **Sprint:** S3
 - **Puntos:** 5
 - **Prioridad:** High
-- **Estado:** To Do
+- **Estado:** Done
 - **Tareas:** F1-APP-01, F1-UX-01
 
 **Criterios de aceptación**

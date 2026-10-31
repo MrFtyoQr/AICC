@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/activity/presentation/activity_screen.dart';
 import '../../features/authentication/application/session_controller.dart';
 import '../../features/authentication/presentation/login_screen.dart';
 import '../../features/authentication/presentation/register_screen.dart';
@@ -13,6 +14,7 @@ abstract final class Routes {
   static const login = '/login';
   static const register = '/register';
   static const home = '/';
+  static const activity = '/activity';
 }
 
 /// Avisa a GoRouter cada vez que cambia la sesión para reevaluar las guardas.
@@ -43,6 +45,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: Routes.login, builder: (_, _) => const LoginScreen()),
       GoRoute(path: Routes.register, builder: (_, _) => const RegisterScreen()),
       GoRoute(path: Routes.home, builder: (_, _) => const HomeScreen()),
+      GoRoute(path: Routes.activity, builder: (_, _) => const ActivityScreen()),
     ],
   );
 });

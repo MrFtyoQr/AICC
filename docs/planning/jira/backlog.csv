@@ -229,7 +229,7 @@ Criterios de aceptación:
 3. Dado el contrato OpenAPI, cuando reviso, entonces todos los endpoints CRUD están documentados.
 
 Tareas: F1-BE-04
-Ref: docs/planning/historias-usuario.md#hu-12",F1,S3,,High,To Do,AICC S3,8
+Ref: docs/planning/historias-usuario.md#hu-12",F1,S3,,High,Done,AICC S3,8
 48,47,Sub-task,"[F1-BE-04] CRUD: workspaces, projects, environments, members (invitar por email: solo registro, sin envío aún)","Criterio de aceptación: OpenAPI actualizado
 
 Ref: docs/planning/plan-maestro.md",F1,be,Backend,Medium,To Do,AICC S3,
@@ -241,7 +241,7 @@ Criterios de aceptación:
 3. Dada la app, cuando abro Actividad, entonces veo la lista paginada en lenguaje claro.
 
 Tareas: F1-BE-03, F1-APP-02
-Ref: docs/planning/historias-usuario.md#hu-13",F1,S3,,High,To Do,AICC S3,5
+Ref: docs/planning/historias-usuario.md#hu-13",F1,S3,,High,Done,AICC S3,5
 50,49,Sub-task,[F1-BE-03] audit_logs + helper audit() usado en cada comando,"Criterio de aceptación: Cada endpoint de escritura audita
 
 Ref: docs/planning/plan-maestro.md",F1,be,Backend,Medium,To Do,AICC S3,
@@ -256,7 +256,7 @@ Criterios de aceptación:
 3. Dado el chip, cuando lo toco, entonces un panel inferior me deja cambiar de contexto.
 
 Tareas: F1-APP-01, F1-UX-01
-Ref: docs/planning/historias-usuario.md#hu-14",F1,S3,,High,To Do,AICC S3,5
+Ref: docs/planning/historias-usuario.md#hu-14",F1,S3,,High,Done,AICC S3,5
 53,52,Sub-task,[F1-APP-01] Selector de workspace / proyecto / ambiente siempre visible (M2),"Criterio de aceptación: Cambio de contexto en 1 toque
 
 Ref: docs/planning/plan-maestro.md",F1,app,App movil,Medium,To Do,AICC S3,

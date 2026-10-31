@@ -7,7 +7,8 @@ from fastapi import Depends, Header, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.application.workspaces import membership
+from app.application.audit import audit
+from app.application.workspaces import Scope, membership
 from app.core.config import Settings
 from app.core.permissions import Permission, can
 from app.core.security import InvalidTokenError, decode_access_token
@@ -59,6 +60,10 @@ class WorkspaceContext:
     workspace: Workspace
     role: str
 
+    @property
+    def scope(self) -> Scope:
+        return Scope(user_id=self.user.id, workspace_id=self.workspace.id, role=self.role)
+
 
 async def get_current_workspace(
     user: CurrentUser,
@@ -82,10 +87,26 @@ CurrentWorkspace = Annotated[WorkspaceContext, Depends(get_current_workspace)]
 
 
 def require(permission: Permission) -> Callable[..., WorkspaceContext]:
-    """Dependencia que exige un permiso de la matriz en el workspace actual (403 si falta)."""
+    """Dependencia que exige un permiso de la matriz en el workspace actual (403 si falta).
 
-    def check(ctx: CurrentWorkspace) -> WorkspaceContext:
+    Las denegaciones también quedan en el registro de actividad (HU-13).
+    """
+
+    async def check(
+        ctx: CurrentWorkspace, session: SessionDep, request: Request
+    ) -> WorkspaceContext:
         if not can(ctx.role, permission):
+            audit(
+                session,
+                workspace_id=ctx.workspace.id,
+                actor_id=ctx.user.id,
+                action=permission.value,
+                resource_type=permission.value.split(".", 1)[0],
+                resource_id=None,
+                outcome="denied",
+                summary=f"Intento sin permiso: {request.method} {request.url.path}",
+            )
+            await session.commit()
             raise HTTPException(status.HTTP_403_FORBIDDEN, "Tu rol no permite esta acción")
         return ctx
 
