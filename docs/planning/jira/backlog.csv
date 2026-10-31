@@ -270,7 +270,7 @@ Criterios de aceptación:
 2. Dada una tarea creada, cuando la abro, entonces veo su detalle y puedo cancelarla.
 
 Tareas: O1-BE-01, O1-BE-04, O1-APP-01, O1-UX-01
-Ref: docs/planning/historias-usuario.md#hu-15",O1,S4,,Highest,To Do,AICC S4,8
+Ref: docs/planning/historias-usuario.md#hu-15",O1,S4,,Highest,Done,AICC S4,8
 56,55,Sub-task,"[O1-BE-01] Modelo tasks (title, description, status, project_id, environment_id, created_by, version)","Criterio de aceptación: Migración
 
 Ref: docs/planning/plan-maestro.md",O1,be,Backend,Medium,To Do,AICC S4,
@@ -292,7 +292,7 @@ Criterios de aceptación:
 4. Dado cualquier estado, cuando se muestra al usuario, entonces usa el texto del diccionario de estados.
 
 Tareas: O1-BE-02, O1-BE-03, O1-BE-05, O1-UX-02
-Ref: docs/planning/historias-usuario.md#hu-16",O1,S4,,Highest,To Do,AICC S4,8
+Ref: docs/planning/historias-usuario.md#hu-16",O1,S4,,Highest,Done,AICC S4,8
 61,60,Sub-task,[O1-BE-02] domain/tasks/state_machine.py con tabla de transiciones explícita,"Criterio de aceptación: Test por cada transición válida e inválida
 
 Ref: docs/planning/plan-maestro.md",O1,be,Backend,Medium,To Do,AICC S4,
@@ -312,7 +312,7 @@ Criterios de aceptación:
 2. Dado cada estado, cuando se muestra, entonces lleva color, icono y texto.
 
 Tareas: O1-APP-02
-Ref: docs/planning/historias-usuario.md#hu-17",O1,S4,,High,To Do,AICC S4,3
+Ref: docs/planning/historias-usuario.md#hu-17",O1,S4,,High,Done,AICC S4,3
 66,65,Sub-task,[O1-APP-02] Lista de tareas con filtro por estado y tarjeta de estado,"Criterio de aceptación: Estados con color + icono + texto
 
 Ref: docs/planning/plan-maestro.md",O1,app,App movil,Medium,To Do,AICC S4,

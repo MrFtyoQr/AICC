@@ -72,7 +72,7 @@ void main() {
 
     expect(find.text('Hola, Ana'), findsOneWidget);
     expect(find.text('Espacio de Ana › General · Dev'), findsOneWidget);
-    expect(find.text('AICC está listo'), findsOneWidget);
+    expect(find.text('¿Qué necesitas?'), findsOneWidget);
     expect(await storage.read(), isNotNull);
   });
 

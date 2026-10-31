@@ -101,6 +101,26 @@
         "title": "Actor",
         "type": "object"
       },
+      "Command": {
+        "enum": [
+          "plan",
+          "plan_ready",
+          "plan_failed",
+          "policy_reject",
+          "approve",
+          "reject",
+          "request_changes",
+          "edit",
+          "enqueue",
+          "pause",
+          "resume",
+          "succeed",
+          "fail",
+          "cancel"
+        ],
+        "title": "Command",
+        "type": "string"
+      },
       "DependencyStatus": {
         "properties": {
           "detail": {
@@ -154,6 +174,30 @@
         "title": "EnvironmentCreate",
         "type": "object"
       },
+      "EnvironmentRef": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "kind"
+        ],
+        "title": "EnvironmentRef",
+        "type": "object"
+      },
       "EnvironmentResponse": {
         "properties": {
           "id": {
@@ -191,6 +235,42 @@
           "name"
         ],
         "title": "EnvironmentUpdate",
+        "type": "object"
+      },
+      "EventResponse": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "title": "Payload",
+            "type": "object"
+          },
+          "summary": {
+            "description": "Qué pasó, en el lenguaje del diccionario de estados",
+            "title": "Summary",
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "summary",
+          "payload",
+          "created_at"
+        ],
+        "title": "EventResponse",
         "type": "object"
       },
       "HTTPValidationError": {
@@ -511,6 +591,25 @@
         "title": "Readiness",
         "type": "object"
       },
+      "Ref": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "Ref",
+        "type": "object"
+      },
       "RefreshRequest": {
         "properties": {
           "refresh_token": {
@@ -581,6 +680,160 @@
         ],
         "title": "RoleChange",
         "type": "object"
+      },
+      "TaskCreate": {
+        "properties": {
+          "environment_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Environment Id"
+          },
+          "project_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Id"
+          },
+          "text": {
+            "description": "Lo que necesitas, en tus palabras",
+            "maxLength": 4000,
+            "minLength": 3,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "TaskCreate",
+        "type": "object"
+      },
+      "TaskPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/TaskResponse"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "TaskPage",
+        "type": "object"
+      },
+      "TaskResponse": {
+        "properties": {
+          "allowed_commands": {
+            "items": {
+              "$ref": "#/components/schemas/Command"
+            },
+            "title": "Allowed Commands",
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "environment": {
+            "$ref": "#/components/schemas/EnvironmentRef"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "project": {
+            "$ref": "#/components/schemas/Ref"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TaskStatus"
+          },
+          "status_label": {
+            "description": "Texto del diccionario de estados (principios-ux §6)",
+            "title": "Status Label",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "version": {
+            "description": "Envíala en cada comando (bloqueo optimista)",
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "description",
+          "status",
+          "status_label",
+          "project",
+          "environment",
+          "version",
+          "allowed_commands",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "TaskResponse",
+        "type": "object"
+      },
+      "TaskStatus": {
+        "enum": [
+          "DRAFT",
+          "PLANNING",
+          "PLANNING_FAILED",
+          "AWAITING_APPROVAL",
+          "REJECTED_BY_POLICY",
+          "REJECTED",
+          "APPROVED",
+          "RUNNING",
+          "PAUSED",
+          "DONE",
+          "FAILED",
+          "CANCELLED"
+        ],
+        "title": "TaskStatus",
+        "type": "string"
       },
       "TokenResponse": {
         "properties": {
@@ -679,6 +932,20 @@
           "type"
         ],
         "title": "ValidationError",
+        "type": "object"
+      },
+      "VersionedCommand": {
+        "properties": {
+          "version": {
+            "minimum": 1.0,
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "version"
+        ],
+        "title": "VersionedCommand",
         "type": "object"
       },
       "WorkspaceName": {
@@ -1995,6 +2262,434 @@
         "summary": "Renombrar ambiente",
         "tags": [
           "projects"
+        ]
+      }
+    },
+    "/api/v1/tasks": {
+      "get": {
+        "operationId": "list_tasks_api_v1_tasks_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/TaskStatus"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "project_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Project Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+            "in": "header",
+            "name": "X-Workspace-Id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+              "title": "X-Workspace-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "No existe o pertenece a otro workspace"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Tareas del workspace actual, más recientes primero",
+        "tags": [
+          "tasks"
+        ]
+      },
+      "post": {
+        "operationId": "create_task_api_v1_tasks_post",
+        "parameters": [
+          {
+            "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+            "in": "header",
+            "name": "X-Workspace-Id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+              "title": "X-Workspace-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "403": {
+            "description": "Tu rol no permite esta acción"
+          },
+          "404": {
+            "description": "No existe o pertenece a otro workspace"
+          },
+          "409": {
+            "description": "La acción rompe una regla (nombre repetido, último dueño…)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Crear una tarea en Borrador a partir de lo que pidió el usuario",
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/api/v1/tasks/{task_id}": {
+      "get": {
+        "operationId": "get_task_api_v1_tasks__task_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "task_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Task Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+            "in": "header",
+            "name": "X-Workspace-Id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+              "title": "X-Workspace-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "No existe o pertenece a otro workspace"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Detalle de tarea",
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/api/v1/tasks/{task_id}/cancel": {
+      "post": {
+        "operationId": "cancel_task_api_v1_tasks__task_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "task_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Task Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+            "in": "header",
+            "name": "X-Workspace-Id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+              "title": "X-Workspace-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionedCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "403": {
+            "description": "Tu rol no permite esta acción"
+          },
+          "404": {
+            "description": "No existe o pertenece a otro workspace"
+          },
+          "409": {
+            "description": "Estado que no permite cancelar o versión desactualizada"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Cancelar una tarea (desde cualquier estado no terminal)",
+        "tags": [
+          "tasks"
+        ]
+      }
+    },
+    "/api/v1/tasks/{task_id}/events": {
+      "get": {
+        "operationId": "task_events_api_v1_tasks__task_id__events_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "task_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Task Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+            "in": "header",
+            "name": "X-Workspace-Id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Workspace sobre el que se actúa; si falta, el workspace personal.",
+              "title": "X-Workspace-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/EventResponse"
+                  },
+                  "title": "Response Task Events Api V1 Tasks  Task Id  Events Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "No existe o pertenece a otro workspace"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Historial de la tarea (en O4 se sirve también por SSE)",
+        "tags": [
+          "tasks"
         ]
       }
     },

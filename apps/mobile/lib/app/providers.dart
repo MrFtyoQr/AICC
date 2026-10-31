@@ -10,6 +10,7 @@ import '../features/connection/data/health_repository.dart';
 import '../features/activity/data/activity_repository.dart';
 import '../features/context/application/context_controller.dart';
 import '../features/context/data/context_repository.dart';
+import '../features/tasks/data/task_repository.dart';
 
 /// Dependencias de la app. `bootstrap.dart` y las pruebas sobrescriben config, almacenamiento
 /// y, si hace falta, el cliente HTTP.
@@ -73,3 +74,14 @@ final contextProvider = AsyncNotifierProvider<ContextController, AppContext>(
 final activityRepositoryProvider = Provider<ActivityRepository>(
   (ref) => ActivityRepository(ref.watch(apiClientProvider)),
 );
+
+final taskRepositoryProvider = Provider<TaskRepository>(
+  (ref) => TaskRepository(ref.watch(apiClientProvider)),
+);
+
+/// Últimas tareas del workspace activo para el Command Center.
+final recentTasksProvider = FutureProvider<List<Task>>((ref) async {
+  // Espera al contexto: así la petición ya lleva el X-Workspace-Id correcto.
+  await ref.watch(contextProvider.future);
+  return ref.watch(taskRepositoryProvider).list(limit: 5);
+});

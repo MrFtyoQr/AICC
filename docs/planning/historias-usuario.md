@@ -249,7 +249,7 @@ y criterios numerados en formato *Dado / cuando / entonces*.
 - **Sprint:** S4
 - **Puntos:** 8
 - **Prioridad:** Highest
-- **Estado:** To Do
+- **Estado:** Done
 - **Tareas:** O1-BE-01, O1-BE-04, O1-APP-01, O1-UX-01
 
 **Criterios de aceptación**
@@ -263,7 +263,7 @@ y criterios numerados en formato *Dado / cuando / entonces*.
 - **Sprint:** S4
 - **Puntos:** 8
 - **Prioridad:** Highest
-- **Estado:** To Do
+- **Estado:** Done
 - **Tareas:** O1-BE-02, O1-BE-03, O1-BE-05, O1-UX-02
 
 **Criterios de aceptación**
@@ -279,7 +279,7 @@ y criterios numerados en formato *Dado / cuando / entonces*.
 - **Sprint:** S4
 - **Puntos:** 3
 - **Prioridad:** High
-- **Estado:** To Do
+- **Estado:** Done
 - **Tareas:** O1-APP-02
 
 **Criterios de aceptación**

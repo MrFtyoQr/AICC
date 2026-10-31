@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/providers.dart';
+import '../../authentication/application/session_controller.dart';
 import '../data/context_repository.dart';
 
 /// Dónde está trabajando el usuario: workspace › proyecto › ambiente (HU-14).
@@ -49,7 +50,10 @@ class ContextController extends AsyncNotifier<AppContext> {
   @override
   Future<AppContext> build() async {
     // Se recalcula al cambiar la sesión, para no mostrar el contexto de otro usuario.
-    ref.watch(sessionProvider);
+    if (ref.watch(sessionProvider) is! SignedIn) {
+      ref.read(activeWorkspaceProvider).id = null;
+      throw StateError('Sin sesión no hay contexto');
+    }
     final workspaces = await _repo.workspaces();
     return _load(workspaces, workspaces.first);
   }
