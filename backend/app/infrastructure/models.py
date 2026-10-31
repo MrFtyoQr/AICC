@@ -4,6 +4,7 @@ import uuid
 from datetime import UTC, datetime
 
 from sqlalchemy import (
+    BigInteger,
     CheckConstraint,
     DateTime,
     ForeignKey,
@@ -17,6 +18,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.permissions import Role
+from app.domain.tasks.state_machine import TaskStatus
 from app.infrastructure.database import Base
 
 
@@ -189,3 +191,62 @@ class AuditLog(Base):
     )
 
     actor: Mapped[User | None] = relationship(lazy="joined")
+
+
+# --- Orquestación (O1) --------------------------------------------------------
+
+TASK_STATUSES = tuple(status.value for status in TaskStatus)
+
+
+class Task(TimestampMixin, Base):
+    """Lo que el usuario pidió, con su ciclo de vida (orquestacion.md §3)."""
+
+    __tablename__ = "tasks"
+    __table_args__ = (
+        CheckConstraint(f"status IN {TASK_STATUSES}", name="status"),
+        Index("ix_tasks_workspace_status_created", "workspace_id", "status", "created_at"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    workspace_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("workspaces.id", ondelete="CASCADE"), nullable=False
+    )
+    project_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("projects.id", ondelete="CASCADE"), index=True, nullable=False
+    )
+    environment_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("environments.id", ondelete="CASCADE"), nullable=False
+    )
+    title: Mapped[str] = mapped_column(String(120), nullable=False)
+    description: Mapped[str] = mapped_column(String(4000), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False)
+    created_by: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL")
+    )
+    # Bloqueo optimista: SQLAlchemy incrementa `version` en cada UPDATE y falla si cambió.
+    version: Mapped[int] = mapped_column(default=1, nullable=False)
+
+    __mapper_args__ = {"version_id_col": version}  # noqa: RUF012 - API declarativa de SQLAlchemy
+
+    project: Mapped[Project] = relationship(lazy="joined")
+    environment: Mapped[Environment] = relationship(lazy="joined")
+
+
+class Event(Base):
+    """Hecho inmutable del sistema (append-only: un trigger impide modificarlo)."""
+
+    __tablename__ = "events"
+    __table_args__ = (Index("ix_events_task_id_id", "task_id", "id"),)
+
+    # Secuencial: ordena y permite reanudar el flujo SSE con Last-Event-ID (O4).
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    workspace_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("workspaces.id", ondelete="CASCADE"), index=True, nullable=False
+    )
+    task_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("tasks.id", ondelete="CASCADE"))
+    type: Mapped[str] = mapped_column(String(64), nullable=False)
+    payload: Mapped[dict] = mapped_column(JSONB, default=dict, nullable=False)
+    actor_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )

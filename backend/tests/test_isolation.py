@@ -37,6 +37,14 @@ WORKSPACE_ROUTES = [
     ("GET", "/api/v1/members", None),
     ("POST", "/api/v1/members/invitations", {"email": "eve2@example.com", "role": "owner"}),
     ("GET", "/api/v1/activity", None),
+    ("GET", "/api/v1/tasks", None),
+    ("POST", "/api/v1/tasks", {"text": "Tarea intrusa"}),
+]
+
+TASK_ROUTES = [
+    ("GET", "/api/v1/tasks/{task}", None),
+    ("GET", "/api/v1/tasks/{task}/events", None),
+    ("POST", "/api/v1/tasks/{task}/cancel", {"version": 1}),
 ]
 
 PROJECT_ROUTES = [
@@ -124,3 +132,25 @@ def test_attacks_leave_foreign_data_untouched(ana, eve, db):
     assert stored is not None
     assert stored.name == "General"
     assert str(stored.workspace_id) == ana.workspace_id
+
+
+@pytest.mark.parametrize("via", ["own-workspace", "foreign-workspace"])
+@pytest.mark.parametrize(("method", "path", "body"), TASK_ROUTES)
+def test_foreign_task_is_404(ana, eve, via, method, path, body):
+    task = ana.request("POST", "/api/v1/tasks", json={"text": "Tarea de Ana"}).json()
+    workspace = eve.workspace_id if via == "own-workspace" else ana.workspace_id
+
+    response = eve.request(method, path.format(task=task["id"]), workspace_id=workspace, json=body)
+
+    assert response.status_code == 404
+    assert ana.request("GET", f"/api/v1/tasks/{task['id']}").json()["status"] == "DRAFT"
+
+
+def test_foreign_project_cannot_host_my_task(ana, eve):
+    project = ana.first_project()
+
+    response = eve.request(
+        "POST", "/api/v1/tasks", json={"text": "Intruso", "project_id": project["id"]}
+    )
+
+    assert response.status_code == 404

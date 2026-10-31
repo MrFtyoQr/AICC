@@ -20,6 +20,8 @@ BACKEND_DIR = Path(__file__).resolve().parents[1]
 TEST_DB = "aicc_test"
 TEST_JWT_SECRET = "test-secret-only-for-pytest-0123456789abcdef"
 TABLES = (
+    "events",
+    "tasks",
     "audit_logs",
     "invitations",
     "environments",
