@@ -1,9 +1,10 @@
 from fastapi import APIRouter
 
-from app.api.v1 import auth, projects, tasks, workspaces
+from app.api.v1 import auth, catalog, projects, tasks, workspaces
 
 router = APIRouter(prefix="/api/v1")
 router.include_router(auth.router)
 router.include_router(workspaces.router)
 router.include_router(projects.router)
 router.include_router(tasks.router)
+router.include_router(catalog.router)

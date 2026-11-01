@@ -9,6 +9,7 @@ class Task {
     required this.description,
     required this.status,
     required this.statusLabel,
+    this.statusReason,
     required this.projectName,
     required this.environmentName,
     required this.environmentKind,
@@ -25,6 +26,7 @@ class Task {
       description: json['description'] as String,
       status: json['status'] as String,
       statusLabel: json['status_label'] as String,
+      statusReason: json['status_reason'] as String?,
       projectName: (json['project'] as Map<String, dynamic>)['name'] as String,
       environmentName: environment['name'] as String,
       environmentKind: environment['kind'] as String,
@@ -41,6 +43,9 @@ class Task {
   final String description;
   final String status;
   final String statusLabel;
+
+  /// Por qué está en este estado (p. ej. por qué no se pudo armar el plan).
+  final String? statusReason;
   final String projectName;
   final String environmentName;
   final String environmentKind;
@@ -49,6 +54,51 @@ class Task {
   final DateTime createdAt;
 
   bool get canCancel => allowedCommands.contains('cancel');
+  bool get canPlan => allowedCommands.contains('plan');
+  bool get canEdit => allowedCommands.contains('edit');
+}
+
+/// Propuesta de plan: una receta del catálogo con sus pasos fijos (ADR-007).
+class TaskPlan {
+  const TaskPlan({
+    required this.version,
+    required this.recipeTitle,
+    required this.steps,
+    required this.assumptions,
+  });
+
+  factory TaskPlan.fromJson(Map<String, dynamic> json) => TaskPlan(
+    version: json['version'] as int,
+    recipeTitle: json['recipe_title'] as String,
+    steps: [
+      for (final step in json['steps'] as List)
+        PlanStep.fromJson(step as Map<String, dynamic>),
+    ],
+    assumptions: (json['assumptions'] as List).cast<String>(),
+  );
+
+  final int version;
+  final String recipeTitle;
+  final List<PlanStep> steps;
+  final List<String> assumptions;
+}
+
+class PlanStep {
+  const PlanStep({
+    required this.title,
+    required this.riskLevel,
+    required this.riskLabel,
+  });
+
+  factory PlanStep.fromJson(Map<String, dynamic> json) => PlanStep(
+    title: json['title'] as String,
+    riskLevel: json['risk_level'] as String,
+    riskLabel: json['risk_label'] as String,
+  );
+
+  final String title;
+  final String riskLevel;
+  final String riskLabel;
 }
 
 class TaskEvent {
@@ -102,6 +152,29 @@ class TaskRepository {
     for (final json in await _client.getList('/api/v1/tasks/$id/events'))
       TaskEvent.fromJson(json),
   ];
+
+  /// La IA elige una receta y el backend la valida. No ejecuta nada.
+  Future<Task> plan(Task task) async => Task.fromJson(
+    await _client.postJson('/api/v1/tasks/${task.id}/plan', {
+      'version': task.version,
+    }),
+  );
+
+  Future<Task> edit(Task task, {String? text}) async => Task.fromJson(
+    await _client.postJson('/api/v1/tasks/${task.id}/edit', {
+      'version': task.version,
+      'text': ?text,
+    }),
+  );
+
+  /// Último plan de la tarea, o null si todavía no tiene.
+  Future<TaskPlan?> latestPlan(String id) async {
+    final json = await _client.getJson(
+      '/api/v1/tasks/$id/plan',
+      acceptedStatuses: const {200, 404},
+    );
+    return json.containsKey('steps') ? TaskPlan.fromJson(json) : null;
+  }
 
   Future<Task> cancel(Task task) async => Task.fromJson(
     await _client.postJson('/api/v1/tasks/${task.id}/cancel', {

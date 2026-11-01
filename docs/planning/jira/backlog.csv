@@ -323,7 +323,7 @@ Criterios de aceptación:
 2. Dada una capacidad nueva, cuando se registra sin esquema, entonces el arranque falla.
 
 Tareas: O2-BE-01
-Ref: docs/planning/historias-usuario.md#hu-18",O2,S5,,Highest,To Do,AICC S5,5
+Ref: docs/planning/historias-usuario.md#hu-18",O2,S5,,Highest,Done,AICC S5,5
 68,67,Sub-task,"[O2-BE-01] Catálogo de capabilities en código (registro + JSON Schema + risk_level) con 3 iniciales: llm.generate, http.get_allowlisted, notify.in_app","Criterio de aceptación: GET /capabilities
 
 Ref: docs/planning/plan-maestro.md",O2,be,Backend,Medium,To Do,AICC S5,
@@ -334,7 +334,7 @@ Criterios de aceptación:
 2. Dado el proveedor real, cuando se usa, entonces la clave solo existe en el backend.
 
 Tareas: O2-BE-02, O2-BE-03
-Ref: docs/planning/historias-usuario.md#hu-19",O2,S5,,Highest,To Do,AICC S5,5
+Ref: docs/planning/historias-usuario.md#hu-19",O2,S5,,Highest,Done,AICC S5,5
 70,69,Sub-task,[O2-BE-02] AgentRuntime + FakeRuntime determinista para pruebas,"Criterio de aceptación: Tests sin red
 
 Ref: docs/planning/plan-maestro.md",O2,be,Backend,Medium,To Do,AICC S5,
@@ -348,7 +348,7 @@ Criterios de aceptación:
 2. Dado un plan, cuando se guarda, entonces nada se ejecuta.
 
 Tareas: O2-BE-04, O2-BE-06, O2-DOC-01
-Ref: docs/planning/historias-usuario.md#hu-20",O2,S5,,Highest,To Do,AICC S5,8
+Ref: docs/planning/historias-usuario.md#hu-20",O2,S5,,Highest,Done,AICC S5,8
 73,72,Sub-task,[O2-BE-04] Planner: prompt versionado + salida estructurada (Pydantic),"Criterio de aceptación: Plan válido con FakeRuntime
 
 Ref: docs/planning/plan-maestro.md",O2,be,Backend,Medium,To Do,AICC S5,

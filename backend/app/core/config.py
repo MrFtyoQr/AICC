@@ -2,7 +2,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -31,6 +31,13 @@ class Settings(BaseSettings):
     rate_limit_login: int = 10
     rate_limit_register: int = 5
     rate_limit_refresh: int = 30
+
+    # Motor de IA (HU-19). "fake" = determinista y sin red (pruebas y desarrollo sin clave).
+    ai_provider: Literal["fake", "anthropic"] = "fake"
+    ai_model: str = "claude-opus-5-5"
+    ai_timeout_s: float = 60.0
+    # Solo en el backend; nunca se expone en respuestas, logs ni en la app.
+    anthropic_api_key: SecretStr | None = None
 
     model_config = SettingsConfigDict(
         env_file=REPO_ROOT / ".env",

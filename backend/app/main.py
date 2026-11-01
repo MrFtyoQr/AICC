@@ -9,6 +9,7 @@ from app.api import health, v1
 from app.core.config import Settings, get_settings
 from app.core.logging import configure_logging
 from app.core.middleware import BodySizeLimitMiddleware, RequestIdMiddleware
+from app.infrastructure.ai.runtime import build_runtime
 from app.infrastructure.database import create_engine
 from app.infrastructure.redis import create_redis
 
@@ -37,6 +38,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         lifespan=lifespan,
     )
     app.state.settings = settings
+    # Motor de IA del planner; las pruebas pueden sustituirlo (FakeRuntime por defecto).
+    app.state.runtime = build_runtime(settings)
     if settings.cors_origins:
         app.add_middleware(
             CORSMiddleware,

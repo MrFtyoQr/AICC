@@ -95,15 +95,32 @@ class TaskService:
         await self.session.commit()
         return task
 
-    async def apply(self, task_id: uuid.UUID, command: Command, expected_version: int) -> Task:
-        """Aplica un comando si la versión coincide; lanza InvalidTransition o StaleVersion."""
+    async def apply(
+        self,
+        task_id: uuid.UUID,
+        command: Command,
+        expected_version: int,
+        *,
+        reason: str | None = None,
+        **payload: Any,
+    ) -> Task:
+        """Aplica un comando si la versión coincide; lanza InvalidTransition o StaleVersion.
+
+        `reason` explica el nuevo estado al usuario (p. ej. por qué falló el plan) y queda también
+        en el evento. Lo añadido a la sesión antes de llamar se confirma en la misma transacción.
+        """
         task = await self.get(task_id)
         if task.version != expected_version:
             raise StaleVersion
         source = TaskStatus(task.status)
         target = next_status(source, command)
         task.status = target
-        self._event(task, "task.state_changed", command=command, **{"from": source, "to": target})
+        task.status_reason = reason
+        if reason is not None:
+            payload["reason"] = reason
+        self._event(
+            task, "task.state_changed", command=command, **{"from": source, "to": target}, **payload
+        )
         self._audit(task, f"task.{command}", _SUMMARIES[command].format(title=task.title))
         try:
             await self.session.commit()
@@ -112,6 +129,17 @@ class TaskService:
             await self.session.rollback()
             raise StaleVersion from exc
         return task
+
+    async def edit(self, task_id: uuid.UUID, expected_version: int, text: str | None) -> Task:
+        """Vuelve a Borrador tras un plan fallido o rechazado, opcionalmente con texto nuevo."""
+        if text is not None:
+            task = await self.get(task_id)
+            if task.version == expected_version:
+                task.title = title_from(text)
+                task.description = text.strip()
+        # Sin autoflush: el texto y el cambio de estado salen en un solo UPDATE (una versión).
+        with self.session.no_autoflush:
+            return await self.apply(task_id, Command.EDIT, expected_version)
 
     # --- Internos ---
 

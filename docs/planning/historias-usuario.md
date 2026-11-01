@@ -297,7 +297,7 @@ y criterios numerados en formato *Dado / cuando / entonces*.
 - **Sprint:** S5
 - **Puntos:** 5
 - **Prioridad:** Highest
-- **Estado:** To Do
+- **Estado:** Done
 - **Tareas:** O2-BE-01
 
 **Criterios de aceptación**
@@ -311,7 +311,7 @@ y criterios numerados en formato *Dado / cuando / entonces*.
 - **Sprint:** S5
 - **Puntos:** 5
 - **Prioridad:** Highest
-- **Estado:** To Do
+- **Estado:** Done
 - **Tareas:** O2-BE-02, O2-BE-03
 
 **Criterios de aceptación**
@@ -325,7 +325,7 @@ y criterios numerados en formato *Dado / cuando / entonces*.
 - **Sprint:** S5
 - **Puntos:** 8
 - **Prioridad:** Highest
-- **Estado:** To Do
+- **Estado:** Done
 - **Tareas:** O2-BE-04, O2-BE-06, O2-DOC-01
 
 **Criterios de aceptación**
